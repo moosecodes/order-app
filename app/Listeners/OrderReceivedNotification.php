@@ -6,8 +6,9 @@ use App\Events\OrderReceivedEvent;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class OrderReceivedNotification
+class OrderReceivedNotification implements ShouldQueue
 {
+    use InteractsWithQueue;
     /**
      * Create the event listener.
      *
@@ -26,6 +27,9 @@ class OrderReceivedNotification
      */
     public function handle(OrderReceivedEvent $event)
     {
-        //
+//        Http::withHeaders($headers)->post(
+//            env('SLACK_WEBHOOK_JETSTORM'),
+//            ['text' => $event->order->message]
+//        );
     }
 }
