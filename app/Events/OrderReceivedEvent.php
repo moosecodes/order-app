@@ -10,6 +10,8 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
+use Illuminate\Support\Facades\Http;
+
 class OrderReceivedEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
@@ -26,6 +28,17 @@ class OrderReceivedEvent implements ShouldBroadcast
     {
         $this->message = $data['message'];
         $this->metadata = $data['meta'];
+
+        $this->sendSlackNotification($data);
+    }
+
+    private function sendSlackNotification($data)
+    {
+        $headers = ['Content-type' => 'application/json'];
+        Http::withHeaders($headers)->post(
+            env('SLACK_WEBHOOK_JETSTORM'),
+            ['text' => $data['message']]
+        );
     }
 
     /**
