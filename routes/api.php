@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\WeatherController;
+use App\Http\Controllers\NewsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,3 +28,11 @@ Route::middleware('auth:sanctum')->get('/order/status/{id}', [OrderController::c
 Route::get('/weather', [WeatherController::class, 'index']);
 Route::get('/weather/all', [WeatherController::class, 'show']);
 Route::get('/weather/{zip}', [WeatherController::class, 'create']);
+
+
+Route::middleware([
+    'news'
+])->group(function() {
+    Route::get('/news/top', [NewsController::class, 'index']);
+});
+

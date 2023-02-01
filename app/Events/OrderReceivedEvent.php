@@ -29,13 +29,7 @@ class OrderReceivedEvent implements ShouldBroadcast
         $this->message = $data['message'];
         $this->metadata = $data['meta'];
 
-        $this->sendSlackNotification($data);
-    }
-
-    private function sendSlackNotification($data)
-    {
-        $headers = ['Content-type' => 'application/json'];
-        Http::withHeaders($headers)->post(
+        Http::withHeaders(['Content-type' => 'application/json'])->post(
             env('SLACK_WEBHOOK_JETSTORM'),
             ['text' => $data['message']]
         );

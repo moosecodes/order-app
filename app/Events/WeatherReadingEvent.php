@@ -24,17 +24,6 @@ class WeatherReadingEvent implements ShouldBroadcast
     public function __construct($data)
     {
         $this->weather = $data;
-
-//        $this->sendSlackNotification();
-    }
-
-    private function sendSlackNotification()
-    {
-        $headers = ['Content-type' => 'application/json'];
-        Http::withHeaders($headers)->post(
-            env('SLACK_WEBHOOK_JETSTORM'),
-            ['text' => $this->weather]
-        );
     }
 
     /**
@@ -44,6 +33,6 @@ class WeatherReadingEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel('weather-channel.1');
+        return new Channel('weather-channel');
     }
 }

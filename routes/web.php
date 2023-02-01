@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\WeatherController;
 
@@ -41,6 +42,15 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+    'weather'
+])->group(function() {
+    Route::get('/news', [NewsController::class, 'show'])->name('news');
     Route::get('/weather', [WeatherController::class, 'show'])->name('weather');
+    Route::get('/messaging', [WeatherController::class, 'show'])->name('messaging');
+    });
 });
 

@@ -27,9 +27,9 @@ class OrderReceivedNotification implements ShouldQueue
      */
     public function handle(OrderReceivedEvent $event)
     {
-//        Http::withHeaders($headers)->post(
-//            env('SLACK_WEBHOOK_JETSTORM'),
-//            ['text' => $event->order->message]
-//        );
+        Http::withHeaders(['Content-type' => 'application/json'])->post(
+            env('SLACK_WEBHOOK_JETSTORM'),
+            ['text' => $event->order->message]
+        );
     }
 }

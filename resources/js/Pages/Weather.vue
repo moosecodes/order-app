@@ -4,12 +4,13 @@ import { ref } from 'vue';
 import TextInput from "@/Components/TextInput.vue";
 
 defineProps({
-    weather: Object
+    weather: Object,
+    news: Object
 });
 
 Echo.channel('weather-channel')
-    .listen('WeatherReadingEvent', function(event) {
-        messageListRef = [...messageListRef, event.msg]
+    .listen('WeatherReadingEvent', (e) => {
+        messageListRef.value = [...messageListRef.value, e.weather]
     })
 
 let inputRef = ref('')
@@ -18,10 +19,10 @@ const send = () => {
     if(inputRef.value) {
         messageListRef.value = [...messageListRef.value, inputRef.value]
 
-        Echo.join(`weather-channel.1`)
-            .whisper('typing', {
-                msg: inputRef.value
-            });
+        // Echo.join(`weather-channel`)
+        //     .whisper('typing', {
+        //         msg: inputRef.value
+        //     });
 
         inputRef.value = ''
     }
@@ -32,7 +33,10 @@ const send = () => {
     <Head title="Weather and Messaging" />
 
     <div class="m-8">
-        <p class="text-xl text-gray-500 mb-2">Type message here</p>
+        <p v-if="messageListRef.length" class="text-xl text-gray-500 mt-4">News</p>
+        <p v-else class="text-xl text-gray-500 mt-4">Loading articles...</p>
+
+        <p class="text-xl text-gray-500 mb-2">Type new message here</p>
         <TextInput
             type="text"
             class="text-xl"
@@ -41,10 +45,13 @@ const send = () => {
             autofocus
         />
 
-        <p class="text-xl text-gray-500 mt-4">Messages</p>
+        <p v-if="messageListRef.length" class="text-xl text-gray-500 mt-4">Messages</p>
+        <p v-else class="text-xl text-gray-500 mt-4">Loading messages...</p>
+
         <ul>
-            <li v-for="msg in messageListRef" class="text-sm">{{msg}}</li>
+            <li v-for="msg in messageListRef">{{msg}}</li>
         </ul>
+
         <div>
             <p class="text-xl text-gray-500 mt-8 mb-4">  Weather for {{ $page.props.weather.city }}, {{ $page.props.weather.region }}</p>
             <ul>
