@@ -1,12 +1,9 @@
 <script setup>
 import { Head } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import AppLayout from "../Layouts/AppLayout.vue";
 import TextInput from "@/Components/TextInput.vue";
-
-defineProps({
-    weather: Object,
-    news: Object
-});
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 Echo.channel('weather-channel')
     .listen('WeatherReadingEvent', (e) => {
@@ -30,33 +27,36 @@ const send = () => {
 </script>
 
 <template>
-    <Head title="Weather and Messaging" />
+    <AppLayout title="Weather">
+        <template #header>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                Weather
+            </h2>
+            <small>source: <a href="https://www.weatherapi.com" target="_blank">weatherapi.com</a></small>
+        </template>
 
-    <div class="m-8">
-        <p v-if="messageListRef.length" class="text-xl text-gray-500 mt-4">News</p>
-        <p v-else class="text-xl text-gray-500 mt-4">Loading articles...</p>
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                    <Head title="Weather" />
 
-        <p class="text-xl text-gray-500 mb-2">Type new message here</p>
-        <TextInput
-            type="text"
-            class="text-xl"
-            v-model="inputRef"
-            @keydown.enter="send"
-            autofocus
-        />
+                    <div class="m-8">
+                        <div>
+                            <p class="text-xl text-gray-500 mt-8 mb-4">  Weather for {{ $page.props.weather.city }}, {{ $page.props.weather.region }}</p>
+                            <p v-if="!messageListRef.length" class="text-xl text-gray-500 mb-4">Loading weather...</p>
+                            <ul class="text-xl text-gray-500 mt-4 mb-4">
+                                <li v-for="msg in messageListRef">{{msg}} F</li>
+                            </ul>
 
-        <p v-if="messageListRef.length" class="text-xl text-gray-500 mt-4">Messages</p>
-        <p v-else class="text-xl text-gray-500 mt-4">Loading messages...</p>
+                            <PrimaryButton @click="getWeather" class="mb-4">Get Weather</PrimaryButton>
 
-        <ul>
-            <li v-for="msg in messageListRef">{{msg}}</li>
-        </ul>
-
-        <div>
-            <p class="text-xl text-gray-500 mt-8 mb-4">  Weather for {{ $page.props.weather.city }}, {{ $page.props.weather.region }}</p>
-            <ul>
-                <li v-for="(item, i) in $page.props.weather" :key="item"><b>({{i}})</b> {{ item }}</li>
-            </ul>
+                            <ul>
+                                <li v-for="(item, i) in $page.props.weather" :key="item"><b>({{i}})</b> {{ item }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </AppLayout>
 </template>

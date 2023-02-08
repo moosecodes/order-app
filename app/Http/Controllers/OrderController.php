@@ -16,7 +16,7 @@ class OrderController extends Controller
     public function index()
     {
         $data = [
-            'message' => 'asdfasdfsdafasdf',
+            'message' => 'this message comes from OrderController',
             'meta' => '@@@@@'
         ];
         OrderReceivedEvent::dispatch($data);
