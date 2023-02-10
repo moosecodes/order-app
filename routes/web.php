@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StockController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -51,6 +52,7 @@ Route::middleware([
     Route::get('/news', [NewsController::class, 'show'])->name('news');
     Route::get('/weather', [WeatherController::class, 'show'])->name('weather');
     Route::get('/messaging', [WeatherController::class, 'show'])->name('messaging');
+    Route::get('/stocks', [StockController::class, 'show'])->name('stocks');
     });
 });
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\WeatherReadingEvent;
-use App\Models\TopHeadlines;
+use App\Models\TopHeadline;
 use App\Models\WeatherReading;
 
 use Illuminate\Database\Eloquent\Collection;
@@ -73,7 +73,6 @@ class WeatherController extends Controller
 
         return Inertia::render('Weather', [
             'weather' => WeatherReading::orderBy('id', 'DESC')->first(),
-            'news' => TopHeadlines::all()
         ]);
     }
 
