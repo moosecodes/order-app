@@ -34,7 +34,8 @@ Route::middleware([
     'news'
 ])->group(function() {
     Route::get('/news/top', [NewsController::class, 'index']);
-    Route::get('/news/like', [NewsController::class, 'like']);
-    Route::get('/news/search', [NewsController::class, 'search']);
+    Route::put('/news/like', [NewsController::class, 'like']);
+    Route::put('/news/read', [NewsController::class, 'like']);
+    Route::post('/news/search', [NewsController::class, 'search']);
 });
 
