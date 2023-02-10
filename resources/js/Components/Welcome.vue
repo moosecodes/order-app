@@ -10,7 +10,7 @@ import ApplicationLogo from '@/Components/ApplicationLogo.vue';
             </div>
 
             <div class="mt-8 text-2xl">
-                Welcome to Mustafa's example app!
+                Welcome!
             </div>
 
             <div class="mt-6 text-gray-500">
