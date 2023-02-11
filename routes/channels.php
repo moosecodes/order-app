@@ -21,7 +21,7 @@ Broadcast::channel('home', function() {
     return false;
 });
 
-Broadcast::channel('weather-channel.{$user->id}', function ($user, $roomId) {
+Broadcast::channel('weather-channel', function ($user, $roomId) {
     return ['id' => $user->id, 'name' => $user->name];
     //    if ($user->canJoinRoom($roomId)) {
 //        return ['id' => $user->id, 'name' => $user->name];
