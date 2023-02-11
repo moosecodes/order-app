@@ -21,8 +21,3 @@ createInertiaApp({
         color: '#4B5563',
     },
 });
-
-Echo.channel('home')
-    .listen('OrderReceivedEvent', function(event) {
-    console.log(event)
-})

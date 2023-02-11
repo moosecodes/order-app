@@ -13,10 +13,6 @@ defineProps({
             Dashboard
         </div>
 
-        <div class="mt-8 text-2xl">
-            Top stories here based on likes.
-        </div>
-
         <ApplicationLogo
             :laravelVersion="laravelVersion"
             :phpVersion="phpVersion"

@@ -1,26 +1,13 @@
 <script setup>
 import { Head } from '@inertiajs/vue3';
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import AppLayout from "../Layouts/AppLayout.vue";
-import TextInput from "@/Components/Inertia/TextInput.vue";
-import PrimaryButton from "@/Components/Inertia/PrimaryButton.vue";
-
-Echo.channel('weather-channel')
-    .listen('WeatherReadingEvent', (e) => {
-        messageListRef.value = [...messageListRef.value, e.weather]
-    })
 
 let inputRef = ref('')
 let messageListRef = ref([])
 const send = () => {
     if(inputRef.value) {
         messageListRef.value = [...messageListRef.value, inputRef.value]
-
-        // Echo.join(`weather-channel`)
-        //     .whisper('typing', {
-        //         msg: inputRef.value
-        //     });
-
         inputRef.value = ''
     }
 }

@@ -3,25 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Events\WeatherReadingEvent;
-use App\Models\TopHeadline;
 use App\Models\WeatherReading;
-
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Foundation\Application;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Inertia\Response;
 
 class WeatherController extends Controller
 {
-    public function index()
+    public function all()
     {
         return WeatherReading::all();
     }
 
-    public function show()
+    public function show(): \Inertia\Response
     {
         WeatherReadingEvent::dispatch(WeatherReading::orderBy('id', 'DESC')->first()->temp_f);
 
@@ -32,7 +25,7 @@ class WeatherController extends Controller
 
     public function create($zip)
     {
-        $response = Http::get("https://api.weatherapi.com/v1/current.json", [
+        $response = Http::get(env('WEATHER_API_URL'), [
             'key' => env('WEATHER_API_KEY'),
             'q' => $zip
         ]);

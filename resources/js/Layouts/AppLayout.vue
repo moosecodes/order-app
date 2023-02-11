@@ -1,18 +1,12 @@
 <script setup>
 import {onMounted, ref} from 'vue';
-import { Head, Link, router } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import ApplicationMark from '@/Components/Inertia/ApplicationMark.vue';
 import Banner from '@/Components/Inertia/Banner.vue';
 import Dropdown from '@/Components/Inertia/Dropdown.vue';
 import DropdownLink from '@/Components/Inertia/DropdownLink.vue';
 import NavLink from '@/Components/Inertia/NavLink.vue';
 import ResponsiveNavLink from '@/Components/Inertia/ResponsiveNavLink.vue';
-import {getWeather} from '../utils/weather'
-
-Echo.channel('weather-channel')
-    .listen('WeatherReadingEvent', (e) => {
-        currentWeather.value = e.weather
-    })
 
 defineProps({
     title: String,
@@ -20,12 +14,6 @@ defineProps({
 });
 
 const showingNavigationDropdown = ref(false);
-
-let currentWeather = ref('')
-
-onMounted(() => {
-    getWeather()
-})
 
 const switchToTeam = (team) => {
     router.put(route('current-team.update'), {
@@ -45,7 +33,6 @@ const logout = () => {
         <Head :title="title" />
 
         <Banner />
-
         <div class="min-h-screen bg-gray-100">
             <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
