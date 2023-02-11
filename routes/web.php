@@ -43,10 +43,10 @@ Route::middleware([
     'verified',
     'weather'
 ])->group(function() {
-    Route::get('/news', [NewsController::class, 'show'])->name('news');
-    Route::get('/weather', [WeatherController::class, 'show'])->name('weather');
-    Route::get('/messaging', [WeatherController::class, 'show'])->name('messaging');
-    Route::get('/stocks', [StockController::class, 'show'])->name('stocks');
+        Route::get('/news', [NewsController::class, 'show'])->name('news');
+        Route::get('/weather', [WeatherController::class, 'show'])->name('weather');
+        Route::get('/messaging', [WeatherController::class, 'show'])->name('messaging');
+        Route::get('/stocks', [StockController::class, 'show'])->name('stocks');
     });
 });
 
