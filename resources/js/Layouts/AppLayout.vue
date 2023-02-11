@@ -7,6 +7,7 @@ import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
+import {getWeather} from '../utils/weather'
 
 Echo.channel('weather-channel')
     .listen('WeatherReadingEvent', (e) => {
@@ -26,15 +27,6 @@ onMounted(() => {
     getWeather()
 })
 
-const getWeather = (zip = '90004') => {
-    axios.get(`/api/weather/${zip}`)
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}
 const switchToTeam = (team) => {
     router.put(route('current-team.update'), {
         team_id: team.id,

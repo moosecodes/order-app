@@ -48,8 +48,6 @@ const send = () => {
                                 <li v-for="msg in messageListRef">{{msg}} F</li>
                             </ul>
 
-                            <PrimaryButton @click="getWeather" class="mb-4">Get Weather</PrimaryButton>
-
                             <ul>
                                 <li v-for="(item, i) in $page.props.weather" :key="item"><b>({{i}})</b> {{ item }}</li>
                             </ul>

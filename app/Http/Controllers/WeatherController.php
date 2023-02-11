@@ -21,6 +21,15 @@ class WeatherController extends Controller
         return WeatherReading::all();
     }
 
+    public function show()
+    {
+        WeatherReadingEvent::dispatch(WeatherReading::orderBy('id', 'DESC')->first()->temp_f);
+
+        return Inertia::render('Weather', [
+            'weather' => WeatherReading::orderBy('id', 'DESC')->first(),
+        ]);
+    }
+
     public function create($zip)
     {
         $response = Http::get("https://api.weatherapi.com/v1/current.json", [
@@ -38,14 +47,5 @@ class WeatherController extends Controller
         $weatherReading->save();
 
         return $weatherReading->orderBy('id', 'DESC')->first();
-    }
-
-    public function show()
-    {
-        WeatherReadingEvent::dispatch(WeatherReading::orderBy('id', 'DESC')->first()->temp_f);
-
-        return Inertia::render('Weather', [
-            'weather' => WeatherReading::orderBy('id', 'DESC')->first(),
-        ]);
     }
 }
