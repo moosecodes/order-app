@@ -7,17 +7,6 @@ defineProps({
     query: String,
 })
 
-const read = (id) => {
-    axios.put('/api/news/read', {
-        id: id
-    })
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}
 const like = (id) => {
     axios.put('/api/news/like', {
         id: id
@@ -36,7 +25,7 @@ const like = (id) => {
 
     <article class="m-8">
 
-        <header v-if="articles.length" class="text-xl text-gray-500 mt-4 mb-8">
+        <header v-if="articles.length" class="text-xl text-gray-600 mt-4 mb-8">
             <p v-if="query" class="text-3xl">Search results for "{{query}}"</p>
             <p v-else class="text-3xl">Breaking News</p>
         </header>
@@ -50,17 +39,15 @@ const like = (id) => {
                     @click="read(article.id)"
                 >
                     <p class="text-gray-500">{{article.source}}</p>
-                    <p class="text-sm text-gray-400 mb-4">{{article.author}}</p>
+                    <p class="text-sm text-gray-500 mb-4">{{article.author}}</p>
                     <img
-                        class="rounded mb-4"
+                        class="rounded mb-4 aspect-video"
                         :src="article.urlToImage"
                         :alt="article.title"
                     />
-                    <p class="font-bold text-gray-500 mb-2 line-clamp-2">{{article.title}}</p>
+                    <p class="font-bold text-gray-600 mb-2 line-clamp-2">{{article.title}}</p>
                     <PrimaryButton @click.prevent="like(article.id)" class="mr-2">Like</PrimaryButton>
-                    <PrimaryButton @click.prevent="read(article.id)">Mark Read</PrimaryButton>
-                    <p class="text-gray-400 mt-2">likes: {{article.favs}}</p>
-                    <p class="text-gray-400 mt-2">read count: {{article.readCount}}</p>
+                    <span class="text-gray-600 mt-2 ml-4">Likes: {{article.favs}}</span>
                 </a>
             </div>
         </section>
