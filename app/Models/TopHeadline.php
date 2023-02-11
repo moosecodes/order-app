@@ -8,7 +8,7 @@ use Laravel\Scout\Searchable;
 
 class TopHeadline extends Model
 {
-    use HasFactory, Searchable;
+    use HasFactory;
 
     protected $fillable = [
         'favs'
