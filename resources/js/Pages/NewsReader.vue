@@ -6,7 +6,7 @@ import AppLayout from "../Layouts/AppLayout.vue";
 import TopHeadlines from "@/Components/TopHeadlines.vue";
 import PrimaryButton from "../Components/PrimaryButton.vue";
 import TextInput from "../Components/TextInput.vue";
-import axios from "axios";
+import { searchNews } from '../utils/news.js'
 
 const props = defineProps({
     news: Object,
@@ -14,21 +14,16 @@ const props = defineProps({
 });
 const searchQuery = ref('')
 
-const handleSearch = () => {
-    axios.post('/api/news/search', {
-        searchQuery
-    })
-}
 </script>
 
 <template>
     <AppLayout title="News Reader">
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-4">
-                Search News Reader
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                News Reader
             </h2>
-            <TextInput type="text" v-model="searchQuery" />
-            <PrimaryButton class="ml-2" @click="handleSearch">Search</PrimaryButton>
+<!--            <TextInput type="text" v-model="searchQuery" />-->
+<!--            <PrimaryButton class="ml-2" @click="searchNews(searchQuery)">Search</PrimaryButton>-->
         </template>
 
         <div class="py-12">

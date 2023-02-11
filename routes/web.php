@@ -34,19 +34,19 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
+        return Inertia::render('Dashboard', [
+            'laravelVersion' => Application::VERSION,
+            'phpVersion' => PHP_VERSION,
+        ]);
     })->name('dashboard');
+});
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
-    'weather'
 ])->group(function() {
-        Route::get('/news', [NewsController::class, 'show'])->name('news');
-        Route::get('/weather', [WeatherController::class, 'show'])->name('weather');
-        Route::get('/messaging', [WeatherController::class, 'show'])->name('messaging');
-        Route::get('/stocks', [StockController::class, 'show'])->name('stocks');
-    });
+    Route::get('/news', [NewsController::class, 'show'])->name('news');
+    Route::get('/weather', [WeatherController::class, 'show'])->name('weather');
+    Route::get('/stocks', [StockController::class, 'show'])->name('stocks');
 });
-
