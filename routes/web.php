@@ -19,14 +19,14 @@ use App\Http\Controllers\WeatherController;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+Route::get('/', [NewsController::class, 'showLandingPage'])->name('news');
+
+//Route::get('/', function () {
+//    return Inertia::render('LandingPage', [
+//        'canLogin' => Route::has('login'),
+//        'canRegister' => Route::has('register')
+//    ]);
+//});
 
 Route::middleware([
     'auth:sanctum',

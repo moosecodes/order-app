@@ -1,12 +1,12 @@
 <script setup>
 import {onMounted, ref} from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
-import ApplicationMark from '@/Components/ApplicationMark.vue';
-import Banner from '@/Components/Banner.vue';
-import Dropdown from '@/Components/Dropdown.vue';
-import DropdownLink from '@/Components/DropdownLink.vue';
-import NavLink from '@/Components/NavLink.vue';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
+import ApplicationMark from '@/Components/Inertia/ApplicationMark.vue';
+import Banner from '@/Components/Inertia/Banner.vue';
+import Dropdown from '@/Components/Inertia/Dropdown.vue';
+import DropdownLink from '@/Components/Inertia/DropdownLink.vue';
+import NavLink from '@/Components/Inertia/NavLink.vue';
+import ResponsiveNavLink from '@/Components/Inertia/ResponsiveNavLink.vue';
 import {getWeather} from '../utils/weather'
 
 Echo.channel('weather-channel')
@@ -54,9 +54,9 @@ const logout = () => {
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link href="/">
+                                <a href="/">
                                     <ApplicationMark class="block h-9 w-auto" />
-                                </Link>
+                                </a>
                             </div>
 
                             <!-- Navigation Links -->

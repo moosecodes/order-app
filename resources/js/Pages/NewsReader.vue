@@ -1,11 +1,10 @@
 <script setup>
-import { computed } from 'vue'
 import { ref } from 'vue'
 
 import AppLayout from "../Layouts/AppLayout.vue";
 import TopHeadlines from "@/Components/TopHeadlines.vue";
-import PrimaryButton from "../Components/PrimaryButton.vue";
-import TextInput from "../Components/TextInput.vue";
+import PrimaryButton from "../Components/Inertia/PrimaryButton.vue";
+import TextInput from "../Components/Inertia/TextInput.vue";
 import { searchNews } from '../utils/news.js'
 
 const props = defineProps({
@@ -29,7 +28,7 @@ const searchQuery = ref('')
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <TopHeadlines :articles="news" :query="query"/>
+                    <TopHeadlines :news="news" :query="query"/>
                 </div>
             </div>
         </div>

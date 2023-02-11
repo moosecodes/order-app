@@ -2,8 +2,8 @@
 import { Head } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
 import AppLayout from "../Layouts/AppLayout.vue";
-import TextInput from "@/Components/TextInput.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TextInput from "@/Components/Inertia/TextInput.vue";
+import PrimaryButton from "@/Components/Inertia/PrimaryButton.vue";
 
 Echo.channel('weather-channel')
     .listen('WeatherReadingEvent', (e) => {

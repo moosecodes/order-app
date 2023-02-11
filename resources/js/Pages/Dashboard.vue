@@ -1,6 +1,6 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import Welcome from '@/Components/Welcome.vue';
+import DashboardContent from '@/Components/DashboardContent.vue';
 
 defineProps({
     laravelVersion: String,
@@ -19,7 +19,10 @@ defineProps({
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <Welcome :laravelVersion="laravelVersion" :phpVersion="phpVersion" />
+                    <DashboardContent
+                        :laravelVersion="laravelVersion"
+                        :phpVersion="phpVersion"
+                    />
                 </div>
             </div>
         </div>

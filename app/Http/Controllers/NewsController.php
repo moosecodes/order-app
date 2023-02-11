@@ -6,6 +6,7 @@ use App\Models\TopHeadline;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 class NewsController extends Controller
 {
@@ -22,7 +23,21 @@ class NewsController extends Controller
 
         return Inertia::render('NewsReader', [
             'news' => $topHeadlines::orderBy('id', 'DESC')->limit(50)->get(),
-            'query' => $this->query
+            'query' => $this->query,
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register')
+        ]);
+    }
+
+    public function showLandingPage(TopHeadline $topHeadlines)
+    {
+        $this->fetchNews();
+
+        return Inertia::render('NewsReaderZeroAuth', [
+            'news' => $topHeadlines::orderBy('id', 'DESC')->limit(50)->get(),
+            'query' => $this->query,
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register')
         ]);
     }
 

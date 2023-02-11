@@ -25,7 +25,7 @@ class WeatherController extends Controller
     {
         WeatherReadingEvent::dispatch(WeatherReading::orderBy('id', 'DESC')->first()->temp_f);
 
-        return Inertia::render('Weather', [
+        return Inertia::render('WeatherViewer', [
             'weather' => WeatherReading::orderBy('id', 'DESC')->first(),
         ]);
     }

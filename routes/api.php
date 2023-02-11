@@ -20,15 +20,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
 Route::middleware([
     'weather'
 ])->group(function() {
     Route::get('/weather/all', [WeatherController::class, 'index']);
     Route::get('/weather/{zip}', [WeatherController::class, 'create']);
 });
-
-
 
 Route::middleware([
     'news'
@@ -37,4 +34,3 @@ Route::middleware([
     Route::put('/news/like', [NewsController::class, 'like']);
     Route::post('/news/search', [NewsController::class, 'search']);
 });
-

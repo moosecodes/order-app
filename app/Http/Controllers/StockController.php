@@ -24,7 +24,7 @@ class StockController extends Controller
 
     public function show(StockPrice $stockPrice): Response
     {
-        return Inertia::render('Stocks', [
+        return Inertia::render('StocksViewer', [
             'stocks' => $this->stock()
         ]);
     }
