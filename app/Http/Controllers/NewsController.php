@@ -11,17 +11,6 @@ class NewsController extends Controller
 {
     private string $query;
 
-    public function like(Request $request) {
-        $headline = TopHeadline::find($request->id);
-        $headline?->update(['favs' => $headline->favs + 1]);
-    }
-
-    public function readIn(Request $request) {
-        // TODO fix this!!
-        $headline = TopHeadline::find($request->id);
-        $headline?->update(['readCount' => $headline->readCount + 1]);
-    }
-
     public function __construct($query = '')
     {
         $this->query = $query;
@@ -39,6 +28,11 @@ class NewsController extends Controller
 
     public function search() {
         return TopHeadline::search('TMZ')->get();
+    }
+
+    public function like(Request $request) {
+        $headline = TopHeadline::find($request->id);
+        $headline?->update(['favs' => $headline->favs + 1]);
     }
 
     public function fetchNews()

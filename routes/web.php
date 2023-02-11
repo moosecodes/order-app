@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 use App\Http\Controllers\NewsController;
-use App\Http\Controllers\OrderController;
 use App\Http\Controllers\WeatherController;
 
 /*
@@ -28,11 +27,6 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-
-Route::get('/shop', [OrderController::class, 'index']);
-Route::get('/order', [OrderController::class, 'index']);
-Route::get('/message', [OrderController::class, 'index']);
-
 
 Route::middleware([
     'auth:sanctum',
