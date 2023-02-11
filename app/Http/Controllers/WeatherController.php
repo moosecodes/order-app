@@ -29,7 +29,10 @@ class WeatherController extends Controller
         ]);
         $reading = $response->json();
 
+        dd($reading);
+
         $weatherReading = new WeatherReading;
+
         $weatherReading->temp_f = $reading['current']['temp_f'];
         $weatherReading->temp_c = $reading['current']['temp_c'];
         $weatherReading->city = $reading['location']['name'];
