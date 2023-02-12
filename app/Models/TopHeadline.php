@@ -11,6 +11,7 @@ class TopHeadline extends Model
     use HasFactory;
 
     protected $fillable = [
-        'favs'
+        'favs',
+        'views'
     ];
 }

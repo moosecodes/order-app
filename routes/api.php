@@ -33,4 +33,5 @@ Route::middleware([
     Route::get('/news/top', [NewsController::class, 'index']);
     Route::put('/news/like', [NewsController::class, 'like']);
     Route::post('/news/search', [NewsController::class, 'search']);
+    Route::post('/news/articleViewed', [NewsController::class, 'articleViewed']);
 });

@@ -24,6 +24,7 @@ defineProps({
 <!--                    <Link v-if="canRegister" :href="route('register')" class="ml-4  text-right text-sm text-gray-700 dark:text-gray-500 underline">Register</Link>-->
 <!--                </template>-->
 <!--            </div>-->
+
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <TopHeadlines :news="news" />
             </div>

@@ -39,6 +39,12 @@ class NewsController extends Controller
         return $headline;
     }
 
+    public function articleViewed(Request $request) {
+        $article = TopHeadline::find($request->id);
+        $article?->update(['views' => $article->views + 1]);
+        return $article;
+    }
+
     public function fetchNews($country = 'us')
     {
         $response = Http::get('https://newsapi.org/v2/top-headlines', [

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('source')->nullable();
             $table->string('author')->nullable();
+            $table->integer('favs')->default(0);
+            $table->integer('views')->default(0);
             $table->string('category')->nullable();
             $table->longText('title')->nullable();
             $table->longText('description')->nullable();
@@ -24,8 +26,6 @@ return new class extends Migration
             $table->longText('urlToImage')->nullable();
             $table->string('publishedAt')->nullable();
             $table->longText('content')->nullable();
-            $table->integer('favs')->default(0);
-            $table->integer('readCount')->default(0);
             $table->timestamps();
         });
     }
