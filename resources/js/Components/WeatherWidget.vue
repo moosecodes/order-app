@@ -23,11 +23,11 @@ function getWeather(zip = '90004') {
 </script>
 
 <template>
-    <div class="my-4">
-        <p v-if="currentTemp.length" class="flex justify-around text-gray-500">
+    <div class="my-4 text-gray-500 text-left">
+        <p v-if="currentTemp.length" class="flex justify-between">
             <span v-for="temp in currentTemp">{{temp}}</span>
         </p>
-        <p v-else class="text-gray-500">
+        <p v-else>
             Loading Weather...
         </p>
     </div>
