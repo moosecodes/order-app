@@ -36,6 +36,7 @@ class NewsController extends Controller
     public function like(Request $request) {
         $headline = TopHeadline::find($request->id);
         $headline?->update(['favs' => $headline->favs + 1]);
+        return $headline;
     }
 
     public function fetchNews()

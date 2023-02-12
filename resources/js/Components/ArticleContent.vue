@@ -1,10 +1,23 @@
 <script setup>
 import PrimaryButton from "./Inertia/PrimaryButton.vue";
-import { likeArticle } from "@/utils/news.js"
 
-defineProps({
+const props = defineProps({
     news: Object
 })
+
+const likeArticle = (id) => {
+    axios.put('/api/news/like', {
+        id
+    })
+        .then(function (response) {
+            const id = response.data.id
+            const article = props.news.filter(a =>  a.id === id)
+            article[0].favs = response.data.favs
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
 </script>
 
 <template>

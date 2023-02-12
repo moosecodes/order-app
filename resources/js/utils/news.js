@@ -6,12 +6,10 @@ const searchNews = (searchQuery) => {
     })
 }
 
-const likeArticle = (id) => {
-    axios.put('/api/news/like', {
-        id: id
-    })
+const likeArticle = async (id) => {
+    axios.put('/api/news/like', { id })
         .then(function (response) {
-            console.log(response);
+            return response.data.favs
         })
         .catch(function (error) {
             console.log(error);
