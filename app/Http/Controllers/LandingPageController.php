@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Events\LandingPageVisitEvent;
-use App\Models\TopHeadline;
 use App\Models\LandingPageVisit;
-use Illuminate\Support\Facades\Http;
+use App\Models\TopHeadline;
 use Inertia\Inertia;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 class LandingPageController extends Controller
@@ -19,11 +17,13 @@ class LandingPageController extends Controller
         $this->query = $query;
     }
 
-    public function show(TopHeadline $topHeadlines)
+    public function show(TopHeadline $topHeadlines, LandingPageVisit $visit)
     {
-        $this->fetchNews();
-//        LandingPageVisitEvent::dispatch(LandingPageVisit::orderBy('id', 'DESC')->first());
-        LandingPageVisitEvent::dispatch(['message' => $_SERVER['REMOTE_ADDR']]);
+        $this->save();
+
+        $message = [ 'message' => $_SERVER['REMOTE_ADDR']];
+
+        LandingPageVisitEvent::dispatch($message);
 
         return Inertia::render('NewsReaderZeroAuth', [
             'news' => $topHeadlines::orderBy('id', 'DESC')->limit(50)->get(),
@@ -33,43 +33,10 @@ class LandingPageController extends Controller
         ]);
     }
 
-    public function fetchNews()
+    public function save()
     {
-        $response = Http::get('https://newsapi.org/v2/top-headlines', [
-            'country' => 'us',
-            'apiKey' => env('NEWSAPI_ORG_KEY')
-        ]);
-
-        $articles = $response->json()['articles'];
-
-        $allArticles = $articles;
-
-        if(isset($this->query) && $this->query != '') {
-            $search = Http::get('https://newsapi.org/v2/everything', [
-                'q' => $this->query,
-                'apiKey' => env('NEWSAPI_ORG_KEY')
-            ]);
-            $searchJson = $search->json()['articles'];
-            $allArticles = array_merge($articles, $searchJson);
-        }
-
-        for($x = 0; $x < count($allArticles); $x++) {
-            if (
-                isset($allArticles[$x]['author']) &&
-                isset($allArticles[$x]['content']) &&
-                ! TopHeadline::where('title', $allArticles[$x]['title'])->exists()
-            ) {
-                $top = new TopHeadline;
-                $top->source = $allArticles[$x]['source']['name'];
-                $top->author = $allArticles[$x]['author'];
-                $top->title = $allArticles[$x]['title'];
-                $top->description = $allArticles[$x]['description'];
-                $top->url = $allArticles[$x]['url'];
-                $top->urlToImage = $allArticles[$x]['urlToImage'];
-                $top->publishedAt = $allArticles[$x]['publishedAt'];
-                $top->content = $allArticles[$x]['content'];
-                $top->save();
-            }
-        }
+        $visit = new LandingPageVisit;
+        $visit->source = $_SERVER['REMOTE_ADDR'];
+        $visit->save();
     }
 }
