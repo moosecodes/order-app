@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\LandingPageVisitEvent;
 use App\Models\TopHeadline;
+use App\Models\LandingPageVisit;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-class NewsController extends Controller
+class LandingPageController extends Controller
 {
     private string $query;
 
@@ -20,22 +22,15 @@ class NewsController extends Controller
     public function show(TopHeadline $topHeadlines)
     {
         $this->fetchNews();
+//        LandingPageVisitEvent::dispatch(LandingPageVisit::orderBy('id', 'DESC')->first());
+        LandingPageVisitEvent::dispatch(['message' => $_SERVER['REMOTE_ADDR']]);
 
-        return Inertia::render('NewsReader', [
+        return Inertia::render('NewsReaderZeroAuth', [
             'news' => $topHeadlines::orderBy('id', 'DESC')->limit(50)->get(),
             'query' => $this->query,
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register')
         ]);
-    }
-
-    public function search() {
-        return TopHeadline::search('TMZ')->get();
-    }
-
-    public function like(Request $request) {
-        $headline = TopHeadline::find($request->id);
-        $headline?->update(['favs' => $headline->favs + 1]);
     }
 
     public function fetchNews()

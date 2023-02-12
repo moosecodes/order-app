@@ -12,13 +12,11 @@ use Illuminate\Queue\SerializesModels;
 
 use Illuminate\Support\Facades\Http;
 
-class OrderReceivedEvent implements ShouldBroadcast
+class LandingPageVisitEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public mixed $message;
-    public mixed $metadata;
-
     /**
      * Create a new event instance.
      *
@@ -27,11 +25,10 @@ class OrderReceivedEvent implements ShouldBroadcast
     public function __construct($data)
     {
         $this->message = $data['message'];
-        $this->metadata = $data['meta'];
 
         Http::withHeaders(['Content-type' => 'application/json'])->post(
             env('SLACK_WEBHOOK_JETSTORM'),
-            ['text' => $data['message']]
+            ['text' => $this->message]
         );
     }
 

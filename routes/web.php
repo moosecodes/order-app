@@ -1,14 +1,12 @@
 <?php
 
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StockController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\WeatherController;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +19,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 |
 */
 
-Route::get('/', [NewsController::class, 'showLandingPage'])->name('news');
+Route::get('/', [LandingPageController::class, 'show'])->name('news');
 
 Route::middleware([
     'auth:sanctum',
