@@ -10,21 +10,23 @@ const props = defineProps({
 onMounted(() => {
     searchResult.value = [...props.news]
 })
+
 let searchQuery = ref('')
-const searchResult = ref([])
+let searchResult = ref([])
+
 const searchNews = (query) => {
     axios.post('/api/news/search', { searchQuery: query }).then(res => {
         if(!res.data.length) {
             searchResult.value = [{
-                "id":19,"source":"Not Found","author":"Please try searching again",
-                "title":"Your search did not find anything",
-                "description":"Leading theories suggest that the first energy used by life was either from the sun or from geothermal heat and chemistry at the bottom of the ocean.",
+                "id":9999,
+                "source":"Not Found","author":"Please try searching again",
+                "title":"No content matched your search",
                 "url":"https:\/\/www.moosecodes.com\/404",
-                "urlToImage":"https:\/\/cdn.mos.cms.futurecdn.net\/m5LRyF95WHb5AYRfZswX7b-1200-80.jpg",
+                "urlToImage":"https:\/\/placekitten.com\/500\/300",
+                "notfound": true
             }]
         } else {
             searchResult.value = [...res.data]
-            console.log(searchResult.value)
         }
     })
 }
@@ -68,9 +70,11 @@ const likeArticle = (id) => {
                 />
                 <p class="font-bold text-gray-600 mb-2 line-clamp-2">{{article.title}}</p>
 
-                <PrimaryButton @click.prevent="likeArticle(article.id)" class="mr-2">Like</PrimaryButton>
-
-                <span class="text-gray-600 mt-2 ml-4">Likes: {{article.favs}}</span>
+                <div v-if="!article.notfound">
+                    <PrimaryButton v-if="true" @click.prevent="likeArticle(article.id)" class="mr-2">Like</PrimaryButton>
+                    <PrimaryButton v-else :disabled="true" class="mr-2">Liked</PrimaryButton>
+                    <span class="text-gray-600 mt-2 ml-4">Likes: {{article.favs}}</span>
+                </div>
             </a>
         </div>
     </div>
