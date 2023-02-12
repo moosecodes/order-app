@@ -39,10 +39,10 @@ class NewsController extends Controller
         return $headline;
     }
 
-    public function fetchNews()
+    public function fetchNews($country = 'us')
     {
         $response = Http::get('https://newsapi.org/v2/top-headlines', [
-            'country' => 'us',
+            'country' => $country,
             'apiKey' => env('NEWSAPI_ORG_KEY')
         ]);
 

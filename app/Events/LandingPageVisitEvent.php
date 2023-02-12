@@ -16,15 +16,10 @@ class LandingPageVisitEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public mixed $message;
-    /**
-     * Create a new event instance.
-     *
-     * @return void
-     */
+    public string $message;
+
     public function __construct($data)
     {
-
         $this->message = $data['message'];
 
         app('App\Http\Controllers\NewsController')->fetchNews();
@@ -35,11 +30,6 @@ class LandingPageVisitEvent implements ShouldBroadcast
         );
     }
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
     public function broadcastOn()
     {
         return new Channel('home');

@@ -6,7 +6,6 @@ defineProps({
     canLogin: Boolean,
     canRegister: Boolean,
     news: Object,
-    query: String,
 });
 
 </script>
@@ -17,16 +16,16 @@ defineProps({
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            <div v-if="canLogin" class="hidden sm:block text-right">
-                <Link v-if="$page.props.user" :href="route('dashboard')" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</Link>
+<!--            <div v-if="canLogin" class="hidden sm:block text-right">-->
+<!--                <Link v-if="$page.props.user" :href="route('dashboard')" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</Link>-->
 
-                <template v-else>
-                    <Link :href="route('login')" class=" text-right text-sm text-gray-700 dark:text-gray-500 underline">Log in</Link>
-                    <Link v-if="canRegister" :href="route('register')" class="ml-4  text-right text-sm text-gray-700 dark:text-gray-500 underline">Register</Link>
-                </template>
-            </div>
+<!--                <template v-else>-->
+<!--                    <Link :href="route('login')" class=" text-right text-sm text-gray-700 dark:text-gray-500 underline">Log in</Link>-->
+<!--                    <Link v-if="canRegister" :href="route('register')" class="ml-4  text-right text-sm text-gray-700 dark:text-gray-500 underline">Register</Link>-->
+<!--                </template>-->
+<!--            </div>-->
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <TopHeadlines :news="news" :query="query"/>
+                <TopHeadlines :news="news" />
             </div>
         </div>
     </div>

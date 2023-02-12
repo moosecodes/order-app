@@ -2,6 +2,7 @@
 import PrimaryButton from "./Inertia/PrimaryButton.vue";
 import TextInput from "./Inertia/TextInput.vue";
 import {ref, onMounted} from "vue";
+import dummyResults from './dummyResults.js'
 
 const props = defineProps({
     news: Object
@@ -17,14 +18,7 @@ let searchResult = ref([])
 const searchNews = (query) => {
     axios.post('/api/news/search', { searchQuery: query }).then(res => {
         if(!res.data.length) {
-            searchResult.value = [{
-                "id":9999,
-                "source":"Not Found","author":"Please try searching again",
-                "title":"No content matched your search",
-                "url":"https:\/\/www.moosecodes.com\/404",
-                "urlToImage":"https:\/\/placekitten.com\/500\/300",
-                "notfound": true
-            }]
+            searchResult.value = dummyResults
         } else {
             searchResult.value = [...res.data]
         }

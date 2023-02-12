@@ -14,7 +14,6 @@ class LandingPageController extends Controller
 
     public function __construct($query = '')
     {
-        $this->query = $query;
     }
 
     public function show(TopHeadline $topHeadlines)
@@ -27,7 +26,6 @@ class LandingPageController extends Controller
 
         return Inertia::render('NewsReaderZeroAuth', [
             'news' => $topHeadlines::orderBy('id', 'DESC')->limit(50)->get(),
-            'query' => $this->query,
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register')
         ]);
