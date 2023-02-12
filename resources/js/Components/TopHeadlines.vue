@@ -1,7 +1,7 @@
 <script setup>
 import { Head } from '@inertiajs/vue3';
-import ArticleContent from "./ArticleContent.vue";
-import WeatherWidget from "@/Components/WeatherWidget.vue";
+import ArticleContent from './ArticleContent.vue';
+import WeatherWidget from '@/Components/WeatherWidget.vue';
 
 defineProps({
     news: Object,

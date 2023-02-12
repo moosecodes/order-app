@@ -1,17 +1,11 @@
 <script setup>
-import { ref } from 'vue'
-
 import AppLayout from "../Layouts/AppLayout.vue";
 import TopHeadlines from "@/Components/TopHeadlines.vue";
-import PrimaryButton from "../Components/Inertia/PrimaryButton.vue";
-import TextInput from "../Components/Inertia/TextInput.vue";
-import { searchNews } from '../utils/news.js'
 
 const props = defineProps({
     news: Object,
     query: String,
 });
-const searchQuery = ref('')
 
 </script>
 
@@ -21,8 +15,6 @@ const searchQuery = ref('')
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 News Reader
             </h2>
-<!--            <TextInput type="text" v-model="searchQuery" />-->
-<!--            <PrimaryButton class="ml-2" @click="searchNews(searchQuery)">Search</PrimaryButton>-->
         </template>
 
         <div class="py-12">

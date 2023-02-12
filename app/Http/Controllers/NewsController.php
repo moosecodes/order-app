@@ -29,8 +29,8 @@ class NewsController extends Controller
         ]);
     }
 
-    public function search() {
-        return TopHeadline::search('TMZ')->get();
+    public function search(Request $request) {
+        return TopHeadline::where('title', 'LIKE', "%{$request->searchQuery}%")->get();
     }
 
     public function like(Request $request) {
