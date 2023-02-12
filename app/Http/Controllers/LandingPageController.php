@@ -17,7 +17,7 @@ class LandingPageController extends Controller
         $this->query = $query;
     }
 
-    public function show(TopHeadline $topHeadlines, LandingPageVisit $visit)
+    public function show(TopHeadline $topHeadlines)
     {
         $this->save();
 
@@ -35,8 +35,16 @@ class LandingPageController extends Controller
 
     public function save()
     {
-        $visit = new LandingPageVisit;
-        $visit->source = $_SERVER['REMOTE_ADDR'];
-        $visit->save();
+        $returnVisit = LandingPageVisit::where('source', '=', $_SERVER['REMOTE_ADDR'])->first();
+
+        if(isset($returnVisit->count) && $returnVisit->count > 0) {
+            $returnVisit->count += 1;
+            $returnVisit->save();
+        } else {
+            $newVisit = new LandingPageVisit;
+            $newVisit->source = $_SERVER['REMOTE_ADDR'];
+            $newVisit->count = 1;
+            $newVisit->save();
+        }
     }
 }

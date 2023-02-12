@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('landing_page_visits', function (Blueprint $table) {
             $table->id();
             $table->string('source');
+            $table->integer('count');
             $table->timestamps();
         });
     }
