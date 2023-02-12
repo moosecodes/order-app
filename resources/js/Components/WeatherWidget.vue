@@ -3,7 +3,7 @@ import {onMounted, ref} from 'vue';
 
 const currentTemp = ref([])
 const locations = [
-    '90004', '60601', '10001'
+    '90004', '60601', '10001', '33101', '73301', '98101'
 ]
 onMounted(() => {
     locations.forEach(l => getWeather(l))
@@ -24,9 +24,9 @@ function getWeather(zip = '90004') {
 
 <template>
     <div class="my-4 text-gray-500 text-left">
-        <p v-if="currentTemp.length" class="flex justify-between">
-            <span v-for="temp in currentTemp">{{temp}}</span>
-        </p>
+        <div v-if="currentTemp.length" class="flex justify-between flex-wrap flex-col">
+            <div v-for="temp in currentTemp">{{temp}}</div>
+        </div>
         <p v-else>
             Loading Weather...
         </p>
