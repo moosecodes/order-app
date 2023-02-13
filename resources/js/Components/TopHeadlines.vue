@@ -49,7 +49,7 @@ const searchNews = (query) => {
             />
         </div>
 
-        <p>{{searchResult.length}} articles</p>
+        <div class="my-4">{{searchResult.length}} articles</div>
 
         <ArticleContent :news="searchResult" />
 

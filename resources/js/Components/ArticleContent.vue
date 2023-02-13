@@ -48,8 +48,8 @@ const track = (id) => {
             </a>
             <section v-if="!article.notfound" class="my-8">
                 <PrimaryButton @click.stop="likeArticle(article.id)" class="mr-2">Like</PrimaryButton>
-                <small class="text-gray-600 mt-2 ml-4">{{article.favs}} likes</small>
-                <small v-if="article.views > 1" class="text-gray-600 mt-2 ml-4">{{article.views }} views</small>
+                <small v-if="article.favs > 0" class="text-gray-600 mt-2 ml-4">{{article.favs}} likes</small>
+                <small v-if="article.views > 0" class="text-gray-600 mt-2 ml-4">{{article.views }} views</small>
             </section>
         </article>
     </div>
