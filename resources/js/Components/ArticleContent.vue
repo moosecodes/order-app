@@ -43,9 +43,10 @@ const track = (id) => {
                     :src="article.urlToImage"
                     :alt="article.title"
                 />
-                <p class="font-bold text-gray-600 mb-2 line-clamp-2">{{article.title}}</p>
+                <p class="font-bold text-gray-600 mb-2">{{article.title}}</p>
+                <p class="text-sm text-gray-500 mb-2">{{article.description}}</p>
 
-                <section v-if="!article.notfound">
+                <section v-if="!article.notfound" class="my-8">
                     <PrimaryButton @click.prevent="likeArticle(article.id)" class="mr-2">Like</PrimaryButton>
                     <small class="text-gray-600 mt-2 ml-4">{{article.favs}} likes</small>
                     <small v-if="article.views > 1" class="text-gray-600 mt-2 ml-4">{{article.views }} views</small>

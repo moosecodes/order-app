@@ -36,12 +36,24 @@ class NewsController extends Controller
     public function like(Request $request) {
         $headline = TopHeadline::find($request->id);
         $headline?->update(['favs' => $headline->favs + 1]);
+
+        Http::withHeaders(['Content-type' => 'application/json'])->post(
+            env('SLACK_WEBHOOK_JETSTORM'),
+            ['text' => '$headline->title']
+        );
+
         return $headline;
     }
 
     public function articleViewed(Request $request) {
         $article = TopHeadline::find($request->id);
         $article?->update(['views' => $article->views + 1]);
+
+        Http::withHeaders(['Content-type' => 'application/json'])->post(
+            env('SLACK_WEBHOOK_JETSTORM'),
+            ['text' => 'article read!']
+        );
+
         return $article;
     }
 

@@ -1,9 +1,6 @@
 <script setup>
-import { Head } from '@inertiajs/vue3';
 import ArticleContent from './ArticleContent.vue';
 import WeatherWidget from '@/Components/WeatherWidget.vue';
-import PrimaryButton from "./Inertia/PrimaryButton.vue";
-import TextInput from "./Inertia/TextInput.vue";
 import {ref, onMounted} from "vue";
 import dummyResults from './dummyResults.js'
 import SearchPrimitive from "./SearchPrimitive.vue";
@@ -38,21 +35,21 @@ const searchNews = (query) => {
 </script>
 
 <template>
-    <Head title="Top Headlines" />
-
     <section class="m-8">
         <WeatherWidget />
 
-
-        <header v-if="news?.length" class="text-xl text-gray-600 mt-4 mb-8">
+        <div v-if="news?.length" class="text-xl text-gray-600 mt-4 mb-8">
             <p class="text-3xl">Breaking News</p>
-        </header>
-        <header v-else class="text-xl text-gray-500 mt-4">Loading news...</header>
-
-        <div class="flex justify-end font-semibold text-xl text-gray-600 leading-tight mb-8">
-            <SearchPrimitive @search="(searchEvent) => searchNews(searchEvent)" />
-            <!--        <PrimaryButton class="ml-2" @click="clear()" :disabled="!searchQuery.length">Clear</PrimaryButton>-->
         </div>
+        <div v-else class="text-xl text-gray-500 mt-4">Loading news...</div>
+
+        <div class="flex flex-col justify-end font-semibold text-xl text-gray-600">
+            <SearchPrimitive
+                @search="(searchEvent) => searchNews(searchEvent)"
+            />
+        </div>
+
+        <p>{{searchResult.length}} articles</p>
 
         <ArticleContent :news="searchResult" />
 

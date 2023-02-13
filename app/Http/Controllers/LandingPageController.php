@@ -14,6 +14,7 @@ class LandingPageController extends Controller
 
     public function __construct($query = '')
     {
+        
     }
 
     public function show(TopHeadline $topHeadlines)

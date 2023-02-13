@@ -1,6 +1,5 @@
 <script setup>
 import {onMounted, ref} from 'vue';
-
 const currentTemp = ref([])
 const locations = [
     '90004', '60601', '10001', '33101', '73301', '98101'
