@@ -39,7 +39,7 @@ class NewsController extends Controller
 
         Http::withHeaders(['Content-type' => 'application/json'])->post(
             env('SLACK_WEBHOOK_JETSTORM'),
-            ['text' => '$headline->title']
+            ['text' => 'article liked!']
         );
 
         return $headline;

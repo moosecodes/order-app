@@ -45,13 +45,12 @@ const track = (id) => {
                 />
                 <p class="font-bold text-gray-600 mb-2">{{article.title}}</p>
                 <p class="text-sm text-gray-500 mb-2">{{article.description}}</p>
-
-                <section v-if="!article.notfound" class="my-8">
-                    <PrimaryButton @click.prevent="likeArticle(article.id)" class="mr-2">Like</PrimaryButton>
-                    <small class="text-gray-600 mt-2 ml-4">{{article.favs}} likes</small>
-                    <small v-if="article.views > 1" class="text-gray-600 mt-2 ml-4">{{article.views }} views</small>
-                </section>
             </a>
+            <section v-if="!article.notfound" class="my-8">
+                <PrimaryButton @click.stop="likeArticle(article.id)" class="mr-2">Like</PrimaryButton>
+                <small class="text-gray-600 mt-2 ml-4">{{article.favs}} likes</small>
+                <small v-if="article.views > 1" class="text-gray-600 mt-2 ml-4">{{article.views }} views</small>
+            </section>
         </article>
     </div>
     <footer class="text-gray-500 my-12">
