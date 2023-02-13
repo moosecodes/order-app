@@ -2,7 +2,7 @@
 import PrimaryButton from "./Inertia/PrimaryButton.vue";
 
 const props = defineProps({
-    news: Object
+    newsdata_api: Object
 })
 
 const likeArticle = (id) => {
@@ -28,33 +28,27 @@ const track = (id) => {
 
 <template>
     <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xl text-gray-700">
-        <article v-for="(article, i) in news" :key="i">
+        <article v-for="(article, i) in newsdata_api" :key="i">
             <a
-                :href="article.url"
+                :href="article.link"
                 target="_blank"
-                @click="track(article.id)"
             >
                 <p class="text-gray-500 my-2">{{article.source}}</p>
-                <p class="text-sm text-gray-500 my-2">{{article.author || article.source }}</p>
-                <img
-                    class="rounded mb-4 aspect-video"
-                    :src="article.urlToImage"
-                    :alt="article.title"
-                />
+                <p class="text-sm text-gray-500 my-2">{{article.creator}}</p>
                 <p class="font-bold text-gray-600 mb-2 line-clamp-2">{{article.title}}</p>
                 <p class="text-sm text-gray-500 mb-2 line-clamp-3">{{article.description}}</p>
             </a>
             <section v-if="!article.notfound" class="my-8">
                 <PrimaryButton @click.stop="likeArticle(article.id)" class="mr-2">Like</PrimaryButton>
                 <small v-if="article.favs > 0" class="text-gray-600 mt-2 ml-4">{{article.favs}} likes</small>
-                <small v-if="article.views > 0" class="text-gray-600 mt-2 ml-4">{{article.views }} views</small>
+                <small v-if="article.views > 0" class="text-gray-600 mt-2 ml-4">{{article.views}} views</small>
             </section>
         </article>
     </div>
 
     <footer class="text-gray-500 my-12">
         <small>
-            source: <a href="https://www.newsapi.org" target="_blank">newsapi.org</a>
+            source: <a href="https://www.newsapi.org" target="_blank">newsdata</a>
         </small>
     </footer>
 </template>

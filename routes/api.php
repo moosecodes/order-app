@@ -31,6 +31,9 @@ Route::middleware([
     'news'
 ])->group(function() {
     Route::get('/news/top', [NewsController::class, 'index']);
+    Route::get('/news/newscatcher/latest', [NewsController::class, 'fetchFromNewsCatcherAPI']);
+    Route::get('/news/newscatcher/search', [NewsController::class, 'searchNewsCatcherAPI']);
+    Route::get('/news/newsdata/news', [NewsController::class, 'fetchFromNewsDataAPI']);
     Route::put('/news/like', [NewsController::class, 'like']);
     Route::post('/news/search', [NewsController::class, 'search']);
     Route::post('/news/articleViewed', [NewsController::class, 'articleViewed']);

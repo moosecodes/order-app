@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('top_headlines', function (Blueprint $table) {
             $table->id();
+            $table->string('api_source')->nullable();
             $table->string('source')->nullable();
             $table->string('author')->nullable();
             $table->integer('favs')->default(0);

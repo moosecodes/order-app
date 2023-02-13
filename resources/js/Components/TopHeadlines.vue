@@ -4,9 +4,13 @@ import WeatherWidget from '@/Components/WeatherWidget.vue';
 import {ref, onMounted} from "vue";
 import dummyResults from './dummyResults.js'
 import SearchPrimitive from "./SearchPrimitive.vue";
+import NewsCatcherArticles from "../Components/NewsCatcherArticles.vue";
+import NewsDataArticles from "../Components/NewsDataArticles.vue";
 
 const props = defineProps({
-    news: Object
+    news: Object,
+    newscatcher_api: Object,
+    newsdata_api: Object
 })
 
 const searchQuery = ref('')
@@ -17,19 +21,20 @@ onMounted(() => {
 })
 
 const searchNews = (query) => {
-    axios.post('/api/news/search', { searchQuery: query }).then(res => {
-        console.log(res)
+    axios.post('/api/news/search', { searchQuery: query })
+        .then(res => {
+            console.log(res)
 
-        if(!res.data.length) {
-            console.log(res.data)
-            searchResult.value = dummyResults
-        } else {
-            console.log('got results')
-            searchResult.value = [...res.data, ...searchResult.value]
-        }
+            if(!res.data.length) {
+                console.log(res.data)
+                searchResult.value = dummyResults
+            } else {
+                console.log('got results')
+                searchResult.value = [...res.data, ...searchResult.value]
+            }
 
-        searchQuery.value = ''
-    })
+            searchQuery.value = ''
+        })
 }
 
 </script>
@@ -52,6 +57,7 @@ const searchNews = (query) => {
         <div class="my-4">{{searchResult.length}} articles</div>
 
         <ArticleContent :news="searchResult" />
-
+        <NewsCatcherArticles :newscatcher_api="newscatcher_api" />
+        <NewsDataArticles :newsdata_api="newsdata_api" />
     </section>
 </template>
