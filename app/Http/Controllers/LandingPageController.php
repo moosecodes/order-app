@@ -59,67 +59,67 @@ class LandingPageController extends Controller
         NewsCatcherArticle $newsCatcherArticle,
         NewsDataArticle $newsDataArticle
     ) {
-            $this->saveVisitCount();
+        $this->saveVisitCount();
 
-//            $this->getStockTicker();
+//        $this->getStockTicker();
 //
-//            $latestHeadline = $topHeadlines::latest('created_at')->first();
-//            if(isset($latestHeadline)) {
-//                $latestTimestamp = $latestHeadline->created_at;
-//                // $latestTimestamp is at least one hour ago
-//                if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
-//                    try {
-//                        $this->fetchNewsFromNewsAPI();
-//                    } catch(\Exception $e) {
-//
-//                    }
-//                }
-//            } else {
-//                try {
-//                    $this->fetchNewsFromNewsAPI();
-//                } catch(\Exception $e) {
-////                    dd($e);
-//                }
-//            }
+        $latestHeadline = $topHeadlines::latest('created_at')->first();
+        if(isset($latestHeadline)) {
+            $latestTimestamp = $latestHeadline->created_at;
+            // $latestTimestamp is at least one hour ago
+            if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
+                try {
+                    $this->fetchNewsFromNewsAPI();
+                } catch(\Exception $e) {
 
-//            $latestHeadline = $newsCatcherArticle::latest('created_at')->first();
-//            if(isset($latestHeadline)) {
-//                $latestTimestamp = $latestHeadline->created_at;
-//                // $latestTimestamp is at least one hour ago
-//                if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
-//                    try {
-//                        $this->fetchFromNewsCatcherAPI($newsCatcherArticle);
-//                    } catch(\Exception $e) {
-//
-//                    }
-//                }
-//            } else {
+                }
+            }
+        } else {
+            try {
+                $this->fetchNewsFromNewsAPI();
+            } catch(\Exception $e) {
+//                    dd($e);
+            }
+        }
+
+        $latestHeadline = $newsDataArticle::latest('created_at')->first();
+
+        if(isset($latestHeadline)) {
+            $latestTimestamp = $latestHeadline->created_at;
+            if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
+                try {
+                    $this->fetchFromNewsDataAPI($newsDataArticle);
+                } catch(\Exception $e) {
+
+                }
+            }
+        } else {
+            try {
+                $this->fetchFromNewsDataAPI($newsDataArticle);
+            } catch(\Exception $e) {
+//                    dd($e);
+
+            }
+        }
+
+//        $latestHeadline = $newsCatcherArticle::latest('created_at')->first();
+//        if(isset($latestHeadline)) {
+//            $latestTimestamp = $latestHeadline->created_at;
+//            // $latestTimestamp is at least one hour ago
+//            if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
 //                try {
 //                    $this->fetchFromNewsCatcherAPI($newsCatcherArticle);
 //                } catch(\Exception $e) {
-////                    dd($e);
-//                }
-//            }
-//
-//            $latestHeadline = $newsDataArticle::latest('created_at')->first();
-//
-//            if(isset($latestHeadline)) {
-//                $latestTimestamp = $latestHeadline->created_at;
-//                if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
-//                    try {
-//                        $this->fetchFromNewsDataAPI($newsDataArticle);
-//                    } catch(\Exception $e) {
-//
-//                    }
-//                }
-//            } else {
-//                try {
-//                    $this->fetchFromNewsDataAPI($newsDataArticle);
-//                } catch(\Exception $e) {
-////                    dd($e);
 //
 //                }
 //            }
+//        } else {
+//            try {
+//                $this->fetchFromNewsCatcherAPI($newsCatcherArticle);
+//            } catch(\Exception $e) {
+////                    dd($e);
+//            }
+//        }
 
         // Slack notification
         LandingPageVisitEvent::dispatch([ 'message' => $_SERVER['REMOTE_ADDR']]);
