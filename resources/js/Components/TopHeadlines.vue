@@ -11,50 +11,50 @@ const props = defineProps({
     newsdata_api: Object
 })
 
-const searchQuery = ref('')
-const searchResult = ref([])
+const query = ref('')
+const result = ref([])
 
 onMounted(() => {
-    searchResult.value = [...props.newsapi_api]
+    result.value = [...props.newsapi_api]
 })
 
 const newsStatus = computed(() => {
-    return !searchQuery.value.length ? 'Breaking News' : `Search results for "${searchQuery.value}"`
+    return !query.value.length ? 'Breaking News' : `Search results for "${query.value}"`
 })
 
 const searchNews = (query) => {
-    searchQuery.value = query;
+    query.value = query;
 
-    axios.post('/api/news/search', { searchQuery: searchQuery.value })
+    axios.post('/api/news/search', { query: query.value })
         .then(res => {
             if(!res.data.length) {
                 console.log(res.data)
-                searchResult.value = dummyResults
+                result.value = dummyResults
             } else {
-                searchResult.value = res.data
+                result.value = res.data
             }
         })
 }
-
 </script>
 
 <template>
     <section class="m-8">
         <div
             v-if="props.newsapi_api?.length || props.newscatcher_api?.length || props.newsdata_api?.length"
-            class="flex max-sm:flex-col justify-between text-xl text-gray-600 mb-12"
+            class="flex justify-between text-gray-600"
         >
-            <p class="max-sm:mb-12 text-3xl text-red-700 self-center">{{ newsStatus }}</p>
-            <SearchPrimitive class="items-center"
-                @search="(searchEvent) => searchNews(searchEvent)"
+            <p class="text-3xl text-red-700 self-center">{{ newsStatus }}</p>
+
+            <SearchPrimitive class="my-4"
+                @search="(query) => searchNews(query)"
             />
         </div>
         <div v-else class="text-xl text-gray-500 mt-4">Loading news...</div>
 
-        <WeatherWidget />
+        <WeatherWidget class="text-sm self-center"/>
 
         <NewsApiArticles
-            :newsapi_api="searchResult"
+            :newsapi_api="result"
             :newscatcher_api="newscatcher_api"
             :newsdata_api="newsdata_api"
         />
