@@ -27,22 +27,22 @@ class LandingPageController extends Controller
         try{
             $this->saveVisitorIpAddress();
         } catch(\Exception $e) {
-
+            dd($e);
         }
         try{
             $this->fetchNewsFromNewsAPI();
         } catch(\Exception $e) {
-
+            dd($e);
         }
         try{
             $this->fetchFromNewsCatcherAPI();
         } catch(\Exception $e) {
-
+            dd($e);
         }
         try{
             $this->fetchFromNewsDataAPI();
         } catch(\Exception $e) {
-
+            dd($e);
         }
 
         // slack notification
