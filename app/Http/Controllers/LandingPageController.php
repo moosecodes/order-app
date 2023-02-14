@@ -24,25 +24,25 @@ class LandingPageController extends Controller
         NewsCatcherArticle $newsCatcherArticle,
         NewsDataArticle $newsDataArticle
     ) {
-        try{
+        try {
             $this->saveVisitorIpAddress();
         } catch(\Exception $e) {
 //            dd($e);
         }
-        try{
+        try {
             $this->fetchNewsFromNewsAPI();
         } catch(\Exception $e) {
-            dd($e);
+//            dd($e);
         }
-        try{
+        try {
             $this->fetchFromNewsCatcherAPI();
         } catch(\Exception $e) {
-            dd($e);
+//            dd($e);
         }
-        try{
+        try {
             $this->fetchFromNewsDataAPI();
         } catch(\Exception $e) {
-            dd($e);
+//            dd($e);
         }
 
         // slack notification
@@ -184,38 +184,40 @@ class LandingPageController extends Controller
             'apiKey' => env('NEWSAPI_ORG_KEY')
         ]);
 
-        dd($response);
+        if(
+            ! $response->json()['status'] === 'error' &&
+            ! $response->json()['code'] === 'rateLimited'
+        ) {
+            $articles = $response->json()['articles'];
+            $allArticles = $articles;
 
-        $articles = $response->json()['articles'];
+            if(isset($this->query) && $this->query != '') {
+                $search = Http::get(env('NEWSAPI_ORG_URL'), [
+                    'q' => $this->query,
+                    'apiKey' => env('NEWSAPI_ORG_KEY')
+                ]);
+                $searchJson = $search->json()['articles'];
+                $allArticles = array_merge($articles, $searchJson);
+            }
 
-        $allArticles = $articles;
-
-        if(isset($this->query) && $this->query != '') {
-            $search = Http::get(env('NEWSAPI_ORG_URL'), [
-                'q' => $this->query,
-                'apiKey' => env('NEWSAPI_ORG_KEY')
-            ]);
-            $searchJson = $search->json()['articles'];
-            $allArticles = array_merge($articles, $searchJson);
-        }
-
-        for($x = 0; $x < count($allArticles); $x++) {
-            if (
-                isset($allArticles[$x]['author']) &&
-                isset($allArticles[$x]['content']) &&
-                ! TopHeadline::where('title', $allArticles[$x]['title'])->exists()
-            ) {
-                $top = new TopHeadline;
-                $top->api_source = env('NEWSAPI_ORG_URL');
-                $top->source = $allArticles[$x]['source']['name'];
-                $top->author = $allArticles[$x]['author'];
-                $top->title = $allArticles[$x]['title'];
-                $top->description = $allArticles[$x]['description'];
-                $top->url = $allArticles[$x]['url'];
-                $top->urlToImage = $allArticles[$x]['urlToImage'];
-                $top->publishedAt = $allArticles[$x]['publishedAt'];
-                $top->content = $allArticles[$x]['content'];
-                $top->save();
+            for($x = 0; $x < count($allArticles); $x++) {
+                if (
+                    isset($allArticles[$x]['author']) &&
+                    isset($allArticles[$x]['content']) &&
+                    ! TopHeadline::where('title', $allArticles[$x]['title'])->exists()
+                ) {
+                    $top = new TopHeadline;
+                    $top->api_source = env('NEWSAPI_ORG_URL');
+                    $top->source = $allArticles[$x]['source']['name'];
+                    $top->author = $allArticles[$x]['author'];
+                    $top->title = $allArticles[$x]['title'];
+                    $top->description = $allArticles[$x]['description'];
+                    $top->url = $allArticles[$x]['url'];
+                    $top->urlToImage = $allArticles[$x]['urlToImage'];
+                    $top->publishedAt = $allArticles[$x]['publishedAt'];
+                    $top->content = $allArticles[$x]['content'];
+                    $top->save();
+                }
             }
         }
     }
