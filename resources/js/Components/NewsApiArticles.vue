@@ -50,6 +50,13 @@ const track = (id) => {
                     :alt="article.title"
                     class="rounded mb-4 aspect-video m-auto"
                 />
+                <small class="text-gray-400">
+                    {{
+                        new Date(article.publishedAt).toLocaleDateString() ||
+                        new Date(article.published_date).toLocaleDateString() ||
+                        new Date(article.pubDate).toLocaleDateString()
+                    }}
+                </small>
                 <p class="font-bold text-gray-600 mb-2 hover:text-red-700 line-clamp-2">{{article.title}}</p>
                 <p class="text-sm text-gray-500 mt-2 hover:text-red-700 line-clamp-3">{{article.description || article.excerpt}}</p>
             </a>
