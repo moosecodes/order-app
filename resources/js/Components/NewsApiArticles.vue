@@ -50,7 +50,7 @@ const track = (id) => {
                     :alt="article.title"
                     class="rounded mb-4 aspect-video m-auto"
                 />
-                <small class="text-gray-400">
+                <small class="font-bold text-gray-400">
                     {{
                         new Date(article.publishedAt).toLocaleDateString() ||
                         new Date(article.published_date).toLocaleDateString() ||
