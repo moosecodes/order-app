@@ -70,5 +70,7 @@ const track = (id) => {
                 <small v-if="article.views > 0" class="text-gray-600 mt-2 ml-4">{{article.views}} views</small>
             </div>
         </article>
+        <small>source: {{k}}</small>
     </section>
+    <hr class="my-12">
 </template>
