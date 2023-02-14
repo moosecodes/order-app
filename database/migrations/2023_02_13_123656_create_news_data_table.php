@@ -24,11 +24,11 @@ return new class extends Migration
             $table->string('creator')->nullable();
             $table->string('video_url')->nullable();
             $table->string('pubDate')->nullable();
-            $table->string('image_url')->nullable();
             $table->string('source_id')->nullable();
             $table->string('category')->nullable();
             $table->string('country')->nullable();
             $table->string('language')->nullable();
+            $table->longText('image_url')->nullable();
             $table->longText('description')->nullable();
             $table->longText('content')->nullable();
             $table->timestamps();
