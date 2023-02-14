@@ -45,7 +45,7 @@ const searchNews = (query) => {
             class="flex justify-between text-xl text-gray-600 mb-12"
         >
             <p class="text-3xl text-red-700 self-center">{{ newsStatus }}</p>
-            <SearchPrimitive class="font-semibold text-xl text-gray-600"
+            <SearchPrimitive class="font-semibold text-xl text-gray-600 items-center"
                 @search="(searchEvent) => searchNews(searchEvent)"
             />
         </div>
