@@ -42,9 +42,9 @@ const searchNews = (query) => {
     <section class="m-8">
         <div
             v-if="props.newsapi_api?.length || props.newscatcher_api?.length || props.newsdata_api?.length"
-            class="flex justify-between text-xl text-gray-600 mb-12"
+            class="flex max-sm:flex-col justify-between text-xl text-gray-600 mb-12"
         >
-            <p class="max-sm:text-sm text-3xl text-red-700 self-center">{{ newsStatus }}</p>
+            <p class="max-sm:mb-12 text-3xl text-red-700 self-center">{{ newsStatus }}</p>
             <SearchPrimitive class="items-center"
                 @search="(searchEvent) => searchNews(searchEvent)"
             />

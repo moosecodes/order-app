@@ -15,9 +15,17 @@ return new class extends Migration
     {
         Schema::create('stock_prices', function (Blueprint $table) {
             $table->id();
-            $table->string('symbol');
-            $table->string('name');
-            $table->string('price');
+            $table->string('symbol')->nullable();
+            $table->string('name')->nullable();
+            $table->string('market')->nullable();
+            $table->string('locale')->nullable();
+            $table->string('primary_exchange')->nullable();
+            $table->string('type')->nullable();
+            $table->boolean('active')->nullable();
+            $table->string('currency_name')->nullable();
+            $table->string('cik')->nullable();
+            $table->string('composite_figi')->nullable();
+            $table->string('last_updated_utc')->nullable();
             $table->timestamps();
         });
     }

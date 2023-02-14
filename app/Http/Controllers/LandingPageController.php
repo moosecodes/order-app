@@ -7,16 +7,51 @@ use App\Events\LandingPageVisitEvent;
 use App\Models\LandingPageVisit;
 use App\Models\NewsCatcherArticle;
 use App\Models\NewsDataArticle;
+use App\Models\StockPrice;
 use App\Models\TopHeadline;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
+use JetBrains\PhpStorm\NoReturn;
 
 class LandingPageController extends Controller
 {
     public function __construct()
     {
 
+    }
+    public function getStockTicker()
+    {
+        $response = Http::get("https://api.polygon.io/v3/reference/tickers", [
+            'apiKey' => env('POLYGON_API_KEY'),
+            'active' => true
+        ]);
+
+        $ticker = $response->json()['results'];
+
+        for($x = 0; $x < count($ticker); $x++) {
+            if (
+                ! StockPrice::where('symbol', $ticker[$x]['ticker'])->exists() &&
+                isset($ticker[$x]['primary_exchange']) &&
+                isset($ticker[$x]['cik']) &&
+                isset($ticker[$x]['composite_figi'])
+            ) {
+                $stockPrice = new StockPrice;
+
+                $stockPrice->symbol = $ticker[$x]['ticker'];
+                $stockPrice->name = $ticker[$x]['name'];
+                $stockPrice->market = $ticker[$x]['market'];
+                $stockPrice->locale = $ticker[$x]['locale'];
+                $stockPrice->type = $ticker[$x]['type'];
+                $stockPrice->active = $ticker[$x]['active'];
+                $stockPrice->currency_name = $ticker[$x]['currency_name'];
+                    $stockPrice->cik = $ticker[$x]['cik'];
+                    $stockPrice->primary_exchange = $ticker[$x]['primary_exchange'];
+                    $stockPrice->composite_figi = $ticker[$x]['composite_figi'];
+                $stockPrice->last_updated_utc = $ticker[$x]['last_updated_utc'];
+                $stockPrice->save();
+            }
+        }
     }
 
     public function showNews(
@@ -26,65 +61,65 @@ class LandingPageController extends Controller
     ) {
             $this->saveVisitCount();
 
-            $latestHeadline = $topHeadlines::latest('created_at')->first();
-            if(isset($latestHeadline)) {
-                $latestTimestamp = $latestHeadline->created_at;
-                // $latestTimestamp is at least one hour ago
-                if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
-                    try {
-                        $this->fetchNewsFromNewsAPI($topHeadlines);
-                    } catch(\Exception $e) {
+//            $this->getStockTicker();
+//
+//            $latestHeadline = $topHeadlines::latest('created_at')->first();
+//            if(isset($latestHeadline)) {
+//                $latestTimestamp = $latestHeadline->created_at;
+//                // $latestTimestamp is at least one hour ago
+//                if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
+//                    try {
+//                        $this->fetchNewsFromNewsAPI();
+//                    } catch(\Exception $e) {
+//
+//                    }
+//                }
+//            } else {
+//                try {
+//                    $this->fetchNewsFromNewsAPI();
+//                } catch(\Exception $e) {
+////                    dd($e);
+//                }
+//            }
 
-                    }
-                }
-            } else {
-                try {
-                    // no articles, $latestHeadline is null
-                    $this->fetchNewsFromNewsAPI($topHeadlines);
-                } catch(\Exception $e) {
-
-                }
-            }
-
-            $latestHeadline = $newsCatcherArticle::latest('created_at')->first();
-            if(isset($latestHeadline)) {
-                $latestTimestamp = $latestHeadline->created_at;
-                // $latestTimestamp is at least one hour ago
-                if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
-                    try {
-                        $this->fetchFromNewsCatcherAPI($newsCatcherArticle);
-                    } catch(\Exception $e) {
-
-                    }
-                }
-            } else {
-                try {
-                    // no articles, $latestHeadline is null
-                    $this->fetchFromNewsCatcherAPI($newsCatcherArticle);
-                } catch(\Exception $e) {
-
-                }
-            }
-
-            $latestHeadline = $newsDataArticle::latest('created_at')->first();
-            if(isset($latestHeadline)) {
-                $latestTimestamp = $latestHeadline->created_at;
-                // $latestTimestamp is at least one hour ago
-                if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
-                    try {
-                        $this->fetchFromNewsDataAPI($newsDataArticle);
-                    } catch(\Exception $e) {
-
-                    }
-                }
-            } else {
-                try {
-                    // no articles, $latestHeadline is null
-                    $this->fetchFromNewsDataAPI($newsDataArticle);
-                } catch(\Exception $e) {
-
-                }
-            }
+//            $latestHeadline = $newsCatcherArticle::latest('created_at')->first();
+//            if(isset($latestHeadline)) {
+//                $latestTimestamp = $latestHeadline->created_at;
+//                // $latestTimestamp is at least one hour ago
+//                if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
+//                    try {
+//                        $this->fetchFromNewsCatcherAPI($newsCatcherArticle);
+//                    } catch(\Exception $e) {
+//
+//                    }
+//                }
+//            } else {
+//                try {
+//                    $this->fetchFromNewsCatcherAPI($newsCatcherArticle);
+//                } catch(\Exception $e) {
+////                    dd($e);
+//                }
+//            }
+//
+//            $latestHeadline = $newsDataArticle::latest('created_at')->first();
+//
+//            if(isset($latestHeadline)) {
+//                $latestTimestamp = $latestHeadline->created_at;
+//                if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
+//                    try {
+//                        $this->fetchFromNewsDataAPI($newsDataArticle);
+//                    } catch(\Exception $e) {
+//
+//                    }
+//                }
+//            } else {
+//                try {
+//                    $this->fetchFromNewsDataAPI($newsDataArticle);
+//                } catch(\Exception $e) {
+////                    dd($e);
+//
+//                }
+//            }
 
         // Slack notification
         LandingPageVisitEvent::dispatch([ 'message' => $_SERVER['REMOTE_ADDR']]);
@@ -215,7 +250,7 @@ class LandingPageController extends Controller
     }
 
     // News API
-    public function fetchNewsFromNewsAPI(TopHeadline $topHeadline)
+    public function fetchNewsFromNewsAPI()
     {
         $response = Http::get('https://newsapi.org/v2/top-headlines', [
             'country' => 'us',
@@ -238,8 +273,9 @@ class LandingPageController extends Controller
             if (
                 isset($allArticles[$x]['author']) &&
                 isset($allArticles[$x]['content']) &&
-                ! $topHeadline::where('title', $allArticles[$x]['title'])->exists()
+                ! TopHeadline::where('title', $allArticles[$x]['title'])->exists()
             ) {
+                $topHeadline = new TopHeadline;
                 $topHeadline->api_source = 'newsapi.org';
 
                 $topHeadline->source = $allArticles[$x]['source']['name'];
