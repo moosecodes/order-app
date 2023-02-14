@@ -27,7 +27,7 @@ class LandingPageController extends Controller
         try{
             $this->saveVisitorIpAddress();
         } catch(\Exception $e) {
-            dd($e);
+//            dd($e);
         }
         try{
             $this->fetchNewsFromNewsAPI();
@@ -183,6 +183,8 @@ class LandingPageController extends Controller
             'country' => $country,
             'apiKey' => env('NEWSAPI_ORG_KEY')
         ]);
+
+        dd($response);
 
         $articles = $response->json()['articles'];
 
