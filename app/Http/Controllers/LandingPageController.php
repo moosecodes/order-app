@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Events\LandingPageVisitEvent;
 use App\Models\LandingPageVisit;
 use App\Models\NewsCatcherArticle;
@@ -13,37 +14,50 @@ use Illuminate\Support\Facades\Route;
 
 class LandingPageController extends Controller
 {
-
     public function __construct()
     {
 
     }
 
-    public function show(
+    public function showNews(
         TopHeadline $topHeadlines,
         NewsCatcherArticle $newsCatcherArticle,
         NewsDataArticle $newsDataArticle
     ) {
-        try {
             $this->saveVisitorIpAddress();
-        } catch(\Exception $e) {
-//            dd($e);
-        }
-        try {
-            $this->fetchNewsFromNewsAPI();
-        } catch(\Exception $e) {
-//            dd($e);
-        }
-        try {
-            $this->fetchFromNewsCatcherAPI();
-        } catch(\Exception $e) {
-//            dd($e);
-        }
-        try {
-            $this->fetchFromNewsDataAPI();
-        } catch(\Exception $e) {
-//            dd($e);
-        }
+
+            $latestHeadline = $topHeadlines::latest('created_at')->first();
+            if(isset($latestHeadline)) {
+                $latestTimestamp = $latestHeadline->created_at;
+                // $latestTimestamp is at least one hour ago
+                if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
+                    $this->fetchNewsFromNewsAPI();
+                }
+            } else {
+                $this->fetchNewsFromNewsAPI();
+            }
+
+            $latestHeadline = $newsCatcherArticle::latest('created_at')->first();
+            if(isset($latestHeadline)) {
+                $latestTimestamp = $latestHeadline->created_at;
+                // $latestTimestamp is at least one hour ago
+                if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
+                    $this->fetchFromNewsCatcherAPI();
+                }
+            } else {
+//                $this->fetchFromNewsCatcherAPI();
+            }
+
+            $latestHeadline = $newsDataArticle::latest('created_at')->first();
+            if(isset($latestHeadline)) {
+                $latestTimestamp = $latestHeadline->created_at;
+                // $latestTimestamp is at least one hour ago
+                if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
+                    $this->fetchFromNewsDataAPI();
+                }
+            } else {
+                $this->fetchFromNewsDataAPI();
+            }
 
         // slack notification
         LandingPageVisitEvent::dispatch([ 'message' => $_SERVER['REMOTE_ADDR']]);

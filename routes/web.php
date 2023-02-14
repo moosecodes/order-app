@@ -19,7 +19,7 @@ use App\Http\Controllers\WeatherController;
 |
 */
 
-Route::get('/', [LandingPageController::class, 'show'])->name('landingPage');
+Route::get('/', [LandingPageController::class, 'showNews'])->name('landingPage');
 
 Route::middleware([
     'auth:sanctum',
