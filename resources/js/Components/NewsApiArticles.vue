@@ -44,15 +44,13 @@ const track = (id) => {
                 target="_blank"
                 @click="track(article.id)"
             >
-                <p class="text-gray-500 my-2 line-clamp-1">{{article.twitter_account || article.author || '&nbsp;'}}</p>
-                <p class="text-sm text-gray-500 my-2">{{article.author || article.source || article.creator || '&nbsp;'}}</p>
                 <img
                     v-if="article.urlToImage || article.media"
-                    class="rounded mb-4 aspect-video"
+                    class="rounded mb-4 aspect-video m-auto"
                     :src="article.urlToImage || article.media"
                     :alt="article.title"
                 />
-                <p v-if="article.title" class="font-bold text-gray-600 mb-2 line-clamp-3">{{article.title}}</p>
+                <p class="font-bold text-gray-600 mb-2 line-clamp-3 hover:text-red-700">{{article.title}}</p>
                 <p class="text-sm text-gray-500 mt-2 line-clamp-3">{{article.description}}</p>
             </a>
             <section v-if="!article.notfound" class="my-8">
@@ -61,6 +59,5 @@ const track = (id) => {
                 <small v-if="article.views > 0" class="text-gray-600 mt-2 ml-4">{{article.views}} views</small>
             </section>
         </article>
-        <small class="text-gray-500"><b>source: {{k}}</b></small>
     </div>
 </template>

@@ -40,21 +40,19 @@ const searchNews = (query) => {
 
 <template>
     <section class="m-8">
-        <WeatherWidget />
-
         <div
             v-if="props.newsapi_api?.length || props.newscatcher_api?.length || props.newsdata_api?.length"
-             class="text-xl text-gray-600 mt-4 mb-8"
+            class="flex justify-between text-xl text-gray-600 mt-4 mb-8"
         >
-            <p class="text-3xl">{{ newsStatus }}</p>
-        </div>
-        <div v-else class="text-xl text-gray-500 mt-4">Loading news...</div>
-
-        <div class="flex flex-col justify-end font-semibold text-xl text-gray-600">
-            <SearchPrimitive
+            <p class="text-3xl text-red-700">{{ newsStatus }}</p>
+            <SearchPrimitive class="font-semibold text-xl text-gray-600"
                 @search="(searchEvent) => searchNews(searchEvent)"
             />
         </div>
+        <div v-else class="text-xl text-gray-500 mt-4">Loading news...</div>
+
+        <WeatherWidget />
+
         <NewsApiArticles
             :newsapi_api="searchResult"
             :newscatcher_api="newscatcher_api"
