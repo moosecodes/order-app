@@ -22,7 +22,7 @@ class LandingPageVisitEvent implements ShouldBroadcast
     {
         $this->message = $data['message'];
 
-        app('App\Http\Controllers\NewsController')->fetchNewsFromNewsAPI();
+        app('App\Http\Controllers\LandingPageController')->fetchNewsFromNewsAPI();
 
         Http::withHeaders(['Content-type' => 'application/json'])->post(
             env('SLACK_WEBHOOK_JETSTORM'),

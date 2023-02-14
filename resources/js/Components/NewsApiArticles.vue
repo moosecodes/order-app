@@ -24,11 +24,15 @@ const track = (id) => {
         .then(function (response) {
             console.log(response)
         })
-        .catch()
+        .catch(function (error) {
+            console.log(error);
+        })
 }
 </script>
 
 <template>
+    <div class="my-4 text-gray-500">{{props['newsapi_api'].length + props['newscatcher_api'].length + props['newsdata_api'].length}} articles</div>
+
     <div
         v-for="(source, k) in props"
         :key="k"
@@ -40,8 +44,8 @@ const track = (id) => {
                 target="_blank"
                 @click="track(article.id)"
             >
-                <p class="text-gray-500 my-2">{{article.source || article.twitter_account || article.authors}}</p>
-                <p class="text-sm text-gray-500 my-2">{{article.author || article.source || article.creator }}</p>
+                <p class="text-gray-500 my-2 line-clamp-1">{{article.twitter_account || article.author || '&nbsp;'}}</p>
+                <p class="text-sm text-gray-500 my-2">{{article.author || article.source || article.creator || '&nbsp;'}}</p>
                 <img
                     v-if="article.urlToImage || article.media"
                     class="rounded mb-4 aspect-video"
@@ -59,6 +63,4 @@ const track = (id) => {
         </article>
         <small class="text-gray-500"><b>source: {{k}}</b></small>
     </div>
-
-
 </template>

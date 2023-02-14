@@ -29,7 +29,8 @@ defineProps({
                 <TopHeadlines
                     :newsapi_api="newsapi_api"
                     :newscatcher_api="newscatcher_api"
-                    :newsdata_api="newsdata_api" />
+                    :newsdata_api="newsdata_api"
+                />
             </div>
         </div>
     </div>

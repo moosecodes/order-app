@@ -55,9 +55,6 @@ const searchNews = (query) => {
                 @search="(searchEvent) => searchNews(searchEvent)"
             />
         </div>
-
-        <div class="my-4">{{searchResult.length}} articles</div>
-
         <NewsApiArticles
             :newsapi_api="searchResult"
             :newscatcher_api="newscatcher_api"
