@@ -31,7 +31,7 @@ class LandingPageController extends Controller
         LandingPageVisitEvent::dispatch($message);
 
         return Inertia::render('NewsReaderZeroAuth', [
-            'news' => $topHeadlines::orderBy('id', 'DESC')->limit(10)->get(),
+            'newsapi_api' => $topHeadlines::orderBy('id', 'DESC')->limit(10)->get(),
             'newscatcher_api' => $newsCatcherArticle::orderBy('id', 'DESC')->limit(10)->get(),
             'newsdata_api' => $newsDataArticle::orderBy('id', 'DESC')->limit(10)->get(),
             'canLogin' => Route::has('login'),

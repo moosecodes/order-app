@@ -5,7 +5,7 @@ import TopHeadlines from "@/Components/TopHeadlines.vue";
 defineProps({
     canLogin: Boolean,
     canRegister: Boolean,
-    news: Object,
+    newsapi_api: Object,
     newscatcher_api: Object,
     newsdata_api: Object
 });
@@ -27,7 +27,7 @@ defineProps({
 <!--            </div>-->
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <TopHeadlines
-                    :news="news"
+                    :newsapi_api="newsapi_api"
                     :newscatcher_api="newscatcher_api"
                     :newsdata_api="newsdata_api" />
             </div>

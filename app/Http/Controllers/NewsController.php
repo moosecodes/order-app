@@ -66,7 +66,7 @@ class NewsController extends Controller
             'apikey' => env('NEWSDATA_API_KEY'),
             'country' => 'us',
 //            'category' => 'sports,health',
-//            'language' => 'en',
+            'language' => 'en',
         ]);
 
         $articles = $response['results'];
@@ -91,10 +91,10 @@ class NewsController extends Controller
                 $newsdata->description = $articles[$x]['description'];
                 $newsdata->content = $articles[$x]['content'];
 
-                $newsdata->keywords = implode(', ', $articles[$x]['keywords']);
-                $newsdata->creator = implode(', ', $articles[$x]['creator']);
-                $newsdata->category = implode(', ', $articles[$x]['category']);
-                $newsdata->country = implode(', ', $articles[$x]['country']);
+//                $newsdata->keywords = implode(', ', $articles[$x]['keywords']);
+//                $newsdata->creator = implode(', ', $articles[$x]['creator']);
+//                $newsdata->category = implode(', ', $articles[$x]['category']);
+//                $newsdata->country = implode(', ', $articles[$x]['country']);
 
                 $newsdata->save();
             }

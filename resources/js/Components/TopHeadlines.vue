@@ -1,14 +1,12 @@
 <script setup>
-import ArticleContent from './ArticleContent.vue';
+import NewsApiArticles from './NewsApiArticles.vue';
 import WeatherWidget from '@/Components/WeatherWidget.vue';
-import {ref, onMounted} from "vue";
+import {ref, onMounted, computed} from "vue";
 import dummyResults from './dummyResults.js'
 import SearchPrimitive from "./SearchPrimitive.vue";
-import NewsCatcherArticles from "../Components/NewsCatcherArticles.vue";
-import NewsDataArticles from "../Components/NewsDataArticles.vue";
 
 const props = defineProps({
-    news: Object,
+    newsapi_api: Object,
     newscatcher_api: Object,
     newsdata_api: Object
 })
@@ -17,23 +15,24 @@ const searchQuery = ref('')
 const searchResult = ref([])
 
 onMounted(() => {
-    searchResult.value = [...props.news]
+    searchResult.value = [...props.newsapi_api]
+})
+
+const newsStatus = computed(() => {
+    return !searchQuery.value.length ? 'Breaking News' : `Search results for "${searchQuery.value}"`
 })
 
 const searchNews = (query) => {
-    axios.post('/api/news/search', { searchQuery: query })
-        .then(res => {
-            console.log(res)
+    searchQuery.value = query;
 
+    axios.post('/api/news/search', { searchQuery: searchQuery.value })
+        .then(res => {
             if(!res.data.length) {
                 console.log(res.data)
                 searchResult.value = dummyResults
             } else {
-                console.log('got results')
-                searchResult.value = [...res.data, ...searchResult.value]
+                searchResult.value = res.data
             }
-
-            searchQuery.value = ''
         })
 }
 
@@ -43,8 +42,11 @@ const searchNews = (query) => {
     <section class="m-8">
         <WeatherWidget />
 
-        <div v-if="news?.length" class="text-xl text-gray-600 mt-4 mb-8">
-            <p class="text-3xl">Breaking News</p>
+        <div
+            v-if="props.newsapi_api?.length || props.newscatcher_api?.length || props.newsdata_api?.length"
+             class="text-xl text-gray-600 mt-4 mb-8"
+        >
+            <p class="text-3xl">{{ newsStatus }}</p>
         </div>
         <div v-else class="text-xl text-gray-500 mt-4">Loading news...</div>
 
@@ -56,8 +58,10 @@ const searchNews = (query) => {
 
         <div class="my-4">{{searchResult.length}} articles</div>
 
-        <ArticleContent :news="searchResult" />
-        <NewsCatcherArticles :newscatcher_api="newscatcher_api" />
-        <NewsDataArticles :newsdata_api="newsdata_api" />
+        <NewsApiArticles
+            :newsapi_api="searchResult"
+            :newscatcher_api="newscatcher_api"
+            :newsdata_api="newsdata_api"
+        />
     </section>
 </template>
