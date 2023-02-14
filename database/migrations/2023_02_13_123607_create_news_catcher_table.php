@@ -32,9 +32,9 @@ return new class extends Migration
             $table->string('country')->nullable();
             $table->string('language')->nullable();
             $table->string('authors')->nullable();
-            $table->string('media')->nullable();
             $table->string('twitter_account')->nullable();
             $table->string('_id')->nullable();
+            $table->longText('media')->nullable();
             $table->longText('excerpt')->nullable();
             $table->longText('summary')->nullable();
             $table->timestamps();

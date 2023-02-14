@@ -50,11 +50,11 @@ const track = (id) => {
                     :src="article.urlToImage || article.media"
                     :alt="article.title"
                 />
-                <p class="font-bold text-gray-600 mb-2 line-clamp-3 hover:text-red-700">{{article.title}}</p>
-                <p class="text-sm text-gray-500 mt-2 line-clamp-3">{{article.description}}</p>
+                <p class="font-bold text-gray-600 mb-2 hover:text-red-700 line-clamp-2">{{article.title}}</p>
+                <p class="text-sm text-gray-500 mt-2 hover:text-red-700 line-clamp-3">{{article.description || article.excerpt}}</p>
             </a>
             <section v-if="!article.notfound" class="my-8">
-                <PrimaryButton v-if="k === 0" @click.stop="likeArticle(article.id)" class="mr-2">Like</PrimaryButton>
+                <PrimaryButton v-if="k === 'newsapi_api'" @click.stop="likeArticle(article.id)" class="mr-2">Like</PrimaryButton>
                 <small v-if="article.favs > 0" class="text-gray-600 mt-2 ml-4">{{article.favs}} likes</small>
                 <small v-if="article.views > 0" class="text-gray-600 mt-2 ml-4">{{article.views}} views</small>
             </section>
