@@ -12,7 +12,7 @@ const query = ref('')
 </script>
 
 <template>
-    <div class="flex justify-end font-semibold text-xl text-gray-600 leading-tight mb-8">
+    <div class="flex justify-end text-red-700">
         <TextInput
             type="text"
             v-model="query"

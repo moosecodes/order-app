@@ -24,10 +24,26 @@ class LandingPageController extends Controller
         NewsCatcherArticle $newsCatcherArticle,
         NewsDataArticle $newsDataArticle
     ) {
-        $this->saveVisitorIpAddress();
-        $this->fetchNewsFromNewsAPI();
-        $this->fetchFromNewsCatcherAPI();
-        $this->fetchFromNewsDataAPI();
+        try{
+            $this->saveVisitorIpAddress();
+        } catch(\Exception $e) {
+
+        }
+        try{
+            $this->fetchNewsFromNewsAPI();
+        } catch(\Exception $e) {
+
+        }
+        try{
+            $this->fetchFromNewsCatcherAPI();
+        } catch(\Exception $e) {
+
+        }
+        try{
+            $this->fetchFromNewsDataAPI();
+        } catch(\Exception $e) {
+
+        }
 
         // slack notification
         LandingPageVisitEvent::dispatch([ 'message' => $_SERVER['REMOTE_ADDR']]);
