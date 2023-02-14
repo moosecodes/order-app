@@ -31,7 +31,11 @@ class LandingPageController extends Controller
                 $latestTimestamp = $latestHeadline->created_at;
                 // $latestTimestamp is at least one hour ago
                 if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
-                    $this->fetchNewsFromNewsAPI($topHeadlines);
+                    try {
+                        $this->fetchNewsFromNewsAPI($topHeadlines);
+                    } catch(\Exception $e) {
+
+                    }
                 }
             } else {
                 try {
@@ -47,7 +51,11 @@ class LandingPageController extends Controller
                 $latestTimestamp = $latestHeadline->created_at;
                 // $latestTimestamp is at least one hour ago
                 if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
-                    $this->fetchFromNewsCatcherAPI($newsCatcherArticle);
+                    try {
+                        $this->fetchFromNewsCatcherAPI($newsCatcherArticle);
+                    } catch(\Exception $e) {
+
+                    }
                 }
             } else {
                 try {
@@ -63,7 +71,11 @@ class LandingPageController extends Controller
                 $latestTimestamp = $latestHeadline->created_at;
                 // $latestTimestamp is at least one hour ago
                 if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
-                    $this->fetchFromNewsDataAPI($newsDataArticle);
+                    try {
+                        $this->fetchFromNewsDataAPI($newsDataArticle);
+                    } catch(\Exception $e) {
+
+                    }
                 }
             } else {
                 try {
