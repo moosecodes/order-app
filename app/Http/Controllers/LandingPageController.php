@@ -61,24 +61,24 @@ class LandingPageController extends Controller
         $this->saveVisitCount();
 
 //        $this->getStockTicker();
-////
-//        $latestHeadline = $topHeadlines::latest('created_at')->first();
-//        if(isset($latestHeadline)) {
-//            $latestTimestamp = $latestHeadline->created_at;
-//            if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
-//                try {
-//                    $this->fetchNewsFromNewsAPI($topHeadlines);
-//                } catch(\Exception $e) {
-////                    dd($e);
-//                }
-//            }
-//        } else {
-//            try {
-//                $this->fetchNewsFromNewsAPI($topHeadlines);
-//            } catch(\Exception $e) {
+
+        $latestHeadline = $topHeadlines::latest('created_at')->first();
+        if(isset($latestHeadline)) {
+            $latestTimestamp = $latestHeadline->created_at;
+            if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
+                try {
+                    $this->fetchNewsFromNewsAPI($topHeadlines);
+                } catch(\Exception $e) {
 //                    dd($e);
-//            }
-//        }
+                }
+            }
+        } else {
+            try {
+                $this->fetchNewsFromNewsAPI($topHeadlines);
+            } catch(\Exception $e) {
+                    dd($e);
+            }
+        }
 //
 //        $latestHeadline = $newsDataArticle::latest('created_at')->first();
 //        if(isset($latestHeadline)) {
