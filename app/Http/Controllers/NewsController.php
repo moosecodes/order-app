@@ -30,7 +30,7 @@ class NewsController extends Controller
     }
 
     public function search(Request $request) {
-        return TopHeadline::where('title', 'LIKE', "%{$request->query}%")->get();
+        return TopHeadline::where('title', 'LIKE', "%{$request->searchQuery}%")->get();
     }
 
     public function like(Request $request) {

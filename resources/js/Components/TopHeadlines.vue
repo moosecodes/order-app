@@ -22,11 +22,14 @@ const newsStatus = computed(() => {
     return !query.value.length ? 'Breaking News' : `Search results for "${query.value}"`
 })
 
-const searchNews = (query) => {
-    query.value = query;
+const searchNews = (searchQuery) => {
+    query.value = searchQuery;
 
-    axios.post('/api/news/search', { query: query.value })
+    console.log(query.value)
+
+    axios.post('/api/news/search', { searchQuery: query.value })
         .then(res => {
+            console.log(res)
             if(!res.data.length) {
                 console.log(res.data)
                 result.value = dummyResults
