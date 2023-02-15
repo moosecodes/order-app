@@ -18,13 +18,13 @@ use App\Http\Controllers\WeatherController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', [HomepageController::class, 'showHomePage'])->name('homepage');
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function() {
-    Route::get('/', [HomepageController::class, 'showHomePage'])->name('homepage');
     Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
     Route::get('/stocks', [StockController::class, 'show'])->name('stocks');
 });
