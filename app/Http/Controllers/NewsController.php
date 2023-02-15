@@ -12,18 +12,14 @@ use Inertia\Inertia;
 
 class NewsController extends Controller
 {
-    private string $query;
-
-    public function __construct($query = '')
+    public function __construct()
     {
-        $this->query = $query;
     }
 
     public function show(TopHeadline $topHeadlines)
     {
         return Inertia::render('NewsReader', [
             'news' => $topHeadlines::orderBy('id', 'DESC')->limit(10)->get(),
-            'query' => $this->query,
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register')
         ]);
@@ -34,30 +30,34 @@ class NewsController extends Controller
     }
 
     public function like(Request $request) {
-        $headline = TopHeadline::find($request->article_id);
-        $headline?->update(['favs' => $headline->favs + 1]);
-
-        Http::withHeaders(['Content-type' => 'application/json'])->post(
-            env('SLACK_WEBHOOK_JETSTORM'),
-            ['text' => 'article liked! ' . $request->article_id]
-        );
-
-        return $headline;
-    }
-
-    public function articleViewed(Request $request) {
-
         $article = TopHeadline::find($request->article_id);
-        $article?->update(['views' => $article->views + 1]);
+        $article?->update(['favs' => $article->favs + 1]);
 
         Http::withHeaders(['Content-type' => 'application/json'])->post(
             env('SLACK_WEBHOOK_JETSTORM'),
-            ['text' => 'article viewed! ' . $request->article_id]
+            [
+                'text' =>
+                    "👍 Article {$article->id} liked! - {$article->favs} total likes\n" .
+                    substr($article->title, 0, 140) . "\n\n"
+            ]
         );
 
         return $article;
     }
 
-    // News Data API
+    public function articleViewed(Request $request) {
+        $article = TopHeadline::find($request->article_id);
+        $article?->update(['views' => $article->views + 1]);
 
+        Http::withHeaders(['Content-type' => 'application/json'])->post(
+            env('SLACK_WEBHOOK_JETSTORM'),
+            [
+                'text' =>
+                    "🤓 Article (id: {$article->id}) viewed! - {$article->views} total views\n" .
+                    substr($article->title, 0, 140) . "\n\n"
+            ]
+        );
+
+        return $article;
+    }
 }

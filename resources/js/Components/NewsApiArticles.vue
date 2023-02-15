@@ -1,6 +1,6 @@
 <script setup>
-import PrimaryButton from "./Inertia/PrimaryButton.vue";
-import LikeButton from "./LikeButton.vue";
+import LikeButton from "./LikeButton.vue"
+import { likeArticle, track } from './utils.js'
 
 const props = defineProps({
     newsapi_api: Object,
@@ -8,34 +8,18 @@ const props = defineProps({
     newsdata_api: Object
 })
 
-const likeArticle = ({article_id, api_source}) => {
-    axios.put('/api/news/like', { article_id, api_source })
-        .then(function (response) {
-            console.log(response)
-            const article = props[api_source].filter(a =>  a.id === response.data.id)
-            article[0].favs = response.data.favs
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-}
-
-const track = ({article_id, api_source}) => {
-    console.log(props[api_source])
-    axios.post('/api/news/articleViewed', { article_id, api_source })
-        .then(function (response) {
-            console.log(response)
-            const article = props[api_source].filter(a =>  a.id === response.data.id)
-            article[0].views = response.data.views
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-}
 </script>
 
 <template>
-    <div class="my-4 text-gray-500">{{props['newsapi_api'].length + props['newscatcher_api'].length + props['newsdata_api'].length}} articles</div>
+    <div class="my-4 text-gray-500">
+        {{
+            props.newsapi_api.length +
+            props.newscatcher_api.length +
+            props.newsdata_api.length
+        }} articles
+    </div>
+
+    {{props.newsdata_api}}
 
     <section
         v-for="(source, api) in props"
@@ -46,7 +30,7 @@ const track = ({article_id, api_source}) => {
             <a
                 :href="article.link || article.url"
                 target="_blank"
-                @click="track({article_id: article.id, api_source: api})"
+                @click="track({article_id: article.id, api_source: api, props})"
             >
                 <img
                     v-if="article.urlToImage || article.media"
@@ -68,6 +52,7 @@ const track = ({article_id, api_source}) => {
                 <LikeButton
                     :article_id="article.id"
                     :api_source="api"
+                    :props="props"
                     @liked="likeArticle"
                 />
                 <small v-if="article.favs > 0" class="text-gray-600 mt-2 ml-4">{{article.favs}} likes</small>

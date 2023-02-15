@@ -2,8 +2,8 @@
 import NewsApiArticles from './NewsApiArticles.vue';
 import WeatherWidget from '@/Components/WeatherWidget.vue';
 import {ref, onMounted, computed} from "vue";
-import dummyResults from './dummyResults.js'
 import SearchPrimitive from "./SearchPrimitive.vue";
+import dummyResults from "./dummyResults";
 
 const props = defineProps({
     newsapi_api: Object,
@@ -11,33 +11,31 @@ const props = defineProps({
     newsdata_api: Object
 })
 
-const query = ref('')
-const result = ref([])
+let userSearchQuery = ref('')
+let result = ref([])
 
-onMounted(() => {
-    result.value = [...props.newsapi_api]
-})
+const searchNews = async (searchQuery) => {
+    userSearchQuery.value = searchQuery
 
-const newsStatus = computed(() => {
-    return !query.value.length ? 'Breaking News' : `Search results for "${query.value}"`
-})
-
-const searchNews = (searchQuery) => {
-    query.value = searchQuery;
-
-    console.log(query.value)
-
-    axios.post('/api/news/search', { searchQuery: query.value })
+    axios.post('/api/news/search', { searchQuery: searchQuery })
         .then(res => {
-            console.log(res)
             if(!res.data.length) {
-                console.log(res.data)
-                result.value = dummyResults
+                result.value = [...dummyResults]
             } else {
-                result.value = res.data
+                result.value = [...res.data]
             }
+        }).then(() => {
+            console.log(result.value)
         })
 }
+
+onMounted(() => {
+    result.value = [...props.newsapi_api, ...props.newscatcher_api, ...props.newsdata_api]
+})
+
+const breakingNewsTitle = computed(() => {
+    return !userSearchQuery.value.length ? 'Breaking News' : `Search results for "${userSearchQuery.value}"`
+})
 </script>
 
 <template>
@@ -46,10 +44,10 @@ const searchNews = (searchQuery) => {
             v-if="props.newsapi_api?.length || props.newscatcher_api?.length || props.newsdata_api?.length"
             class="flex justify-between text-gray-600"
         >
-            <p class="text-3xl text-red-700 self-center">{{ newsStatus }}</p>
+            <p class="text-3xl text-red-700 self-center">{{ breakingNewsTitle }}</p>
 
             <SearchPrimitive class="my-4"
-                @search="(query) => searchNews(query)"
+                @search="q => searchNews(q)"
             />
         </div>
         <div v-else class="text-xl text-gray-500 mt-4">Loading news...</div>
@@ -57,7 +55,7 @@ const searchNews = (searchQuery) => {
         <WeatherWidget class="text-sm self-center"/>
 
         <NewsApiArticles
-            :newsapi_api="result"
+            :newsapi_api="newsapi_api"
             :newscatcher_api="newscatcher_api"
             :newsdata_api="newsdata_api"
         />
