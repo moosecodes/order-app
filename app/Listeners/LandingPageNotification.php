@@ -2,11 +2,8 @@
 
 namespace App\Listeners;
 
-use App\Events\LandingPageVisitEvent;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\Http;
-use Carbon\Carbon;
 
 class LandingPageNotification implements ShouldQueue
 {
@@ -16,7 +13,8 @@ class LandingPageNotification implements ShouldQueue
     {
     }
 
-    public function __invoke() {
+    public function __invoke()
+    {
 
     }
 }

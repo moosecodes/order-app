@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware([
     'weather'
 ])->group(function() {
-    Route::get('/weather/all', [WeatherController::class, 'index']);
+    Route::get('/weather/all', [WeatherController::class, 'show']);
     Route::get('/weather/{zip}', [WeatherController::class, 'create']);
 });
 

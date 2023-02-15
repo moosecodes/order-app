@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StockController;
 use Illuminate\Support\Facades\Route;
@@ -19,7 +19,7 @@ use App\Http\Controllers\WeatherController;
 |
 */
 
-Route::get('/', [LandingPageController::class, 'showHomePage'])->name('landingPage');
+Route::get('/', [HomepageController::class, 'showHomePage'])->name('landingPage');
 
 Route::middleware([
     'auth:sanctum',

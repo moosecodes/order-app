@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\TopHeadline;
-use App\Models\NewsDataArticle;
-use App\Models\NewsCatcherArticle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;

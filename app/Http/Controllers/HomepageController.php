@@ -14,7 +14,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use JetBrains\PhpStorm\NoReturn;
 
-class LandingPageController extends Controller
+class HomepageController extends Controller
 {
     public function __construct()
     {
@@ -76,8 +76,9 @@ class LandingPageController extends Controller
     {
         $this->saveVisitCount();
 
-// TODO: this does not need to be called every time the homepage is loaded, refine this logic
-//        $this->getStockTicker();
+// TODO:    getStockTicker does not need to be called every time the homepage is loaded
+//          refine this logic
+//      $this->getStockTicker();
 
         $this->callNewsApiTopHeadlines();
 //        $this->callNewsDataApi();
