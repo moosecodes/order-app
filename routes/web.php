@@ -19,22 +19,12 @@ use App\Http\Controllers\WeatherController;
 |
 */
 
-Route::get('/', [HomepageController::class, 'showHomePage'])->name('landingPage');
-
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
-});
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function() {
-    Route::get('/news', [NewsController::class, 'show'])->name('news');
-    Route::get('/weather', [WeatherController::class, 'show'])->name('weather');
+    Route::get('/', [HomepageController::class, 'showHomePage'])->name('homepage');
+    Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
     Route::get('/stocks', [StockController::class, 'show'])->name('stocks');
 });

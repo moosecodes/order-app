@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref} from 'vue';
+import {ref} from 'vue';
 import { Head, router } from '@inertiajs/vue3';
 import ApplicationMark from '@/Components/Inertia/ApplicationMark.vue';
 import Banner from '@/Components/Inertia/Banner.vue';
@@ -51,24 +51,7 @@ const logout = () => {
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
-                                <NavLink :href="route('news')" :active="route().current('news')">
-                                    News
-                                </NavLink>
-                                <NavLink :href="route('weather')" :active="route().current('weather')">
-                                    Weather
-                                </NavLink>
-                                <NavLink :href="route('stocks')" :active="route().current('stocks')">
-                                    Stocks
-                                </NavLink>
-<!--                                <NavLink :href="route('cats')" :active="route().current('cats')">-->
-<!--                                    Cats-->
-<!--                                </NavLink>-->
                             </div>
-
-<!--                            <div v-if="$page.props.weather">-->
-<!--                                Weather for {{ $page.props.weather.city }}, {{ $page.props.weather.region }} is-->
-<!--                                {{$page.props.weather.temp_f}} F-->
-<!--                            </div>-->
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">

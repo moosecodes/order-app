@@ -57,6 +57,7 @@ const props = defineProps({
                 <small v-if="article.views > 0" class="text-gray-600 mt-2 ml-4">{{article.views}} views</small>
             </div>
         </article>
-        <small v-if="source.length">source: {{api}}</small>
+        <small v-if="source.length">above articles from source: {{api}}</small>
+        <small v-else>no articles from source: {{api}}</small>
     </section>
 </template>

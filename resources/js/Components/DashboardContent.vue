@@ -1,5 +1,5 @@
 <script setup>
-import ApplicationLogo from '@/Components/Inertia/ApplicationLogo.vue';
+import MadeWithPanel from '@/Components/MadeWithPanel.vue';
 
 defineProps({
     laravelVersion: String,
@@ -9,11 +9,7 @@ defineProps({
 
 <template>
     <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
-        <div class="mt-8 text-2xl">
-            Dashboard
-        </div>
-
-        <ApplicationLogo
+        <MadeWithPanel
             :laravelVersion="laravelVersion"
             :phpVersion="phpVersion"
         />
