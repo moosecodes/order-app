@@ -12,7 +12,6 @@ use App\Models\TopHeadline;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
-use JetBrains\PhpStorm\NoReturn;
 
 class LandingPageController extends Controller
 {
@@ -62,45 +61,43 @@ class LandingPageController extends Controller
         $this->saveVisitCount();
 
 //        $this->getStockTicker();
+////
+//        $latestHeadline = $topHeadlines::latest('created_at')->first();
+//        if(isset($latestHeadline)) {
+//            $latestTimestamp = $latestHeadline->created_at;
+//            if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
+//                try {
+//                    $this->fetchNewsFromNewsAPI($topHeadlines);
+//                } catch(\Exception $e) {
+////                    dd($e);
+//                }
+//            }
+//        } else {
+//            try {
+//                $this->fetchNewsFromNewsAPI($topHeadlines);
+//            } catch(\Exception $e) {
+//                    dd($e);
+//            }
+//        }
 //
-        $latestHeadline = $topHeadlines::latest('created_at')->first();
-        if(isset($latestHeadline)) {
-            $latestTimestamp = $latestHeadline->created_at;
-            // $latestTimestamp is at least one hour ago
-            if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
-                try {
-                    $this->fetchNewsFromNewsAPI();
-                } catch(\Exception $e) {
-
-                }
-            }
-        } else {
-            try {
-                $this->fetchNewsFromNewsAPI();
-            } catch(\Exception $e) {
+//        $latestHeadline = $newsDataArticle::latest('created_at')->first();
+//        if(isset($latestHeadline)) {
+//            $latestTimestamp = $latestHeadline->created_at;
+//            if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
+//                try {
+//                    $this->fetchFromNewsDataAPI($newsDataArticle);
+//                } catch(\Exception $e) {
+//
+//                }
+//            }
+//        } else {
+//            try {
+//                $this->fetchFromNewsDataAPI($newsDataArticle);
+//            } catch(\Exception $e) {
 //                    dd($e);
-            }
-        }
-
-        $latestHeadline = $newsDataArticle::latest('created_at')->first();
-
-        if(isset($latestHeadline)) {
-            $latestTimestamp = $latestHeadline->created_at;
-            if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
-                try {
-                    $this->fetchFromNewsDataAPI($newsDataArticle);
-                } catch(\Exception $e) {
-
-                }
-            }
-        } else {
-            try {
-                $this->fetchFromNewsDataAPI($newsDataArticle);
-            } catch(\Exception $e) {
-//                    dd($e);
-
-            }
-        }
+//
+//            }
+//        }
 
 //        $latestHeadline = $newsCatcherArticle::latest('created_at')->first();
 //        if(isset($latestHeadline)) {
@@ -117,7 +114,7 @@ class LandingPageController extends Controller
 //            try {
 //                $this->fetchFromNewsCatcherAPI($newsCatcherArticle);
 //            } catch(\Exception $e) {
-////                    dd($e);
+//                    dd($e);
 //            }
 //        }
 
@@ -147,7 +144,45 @@ class LandingPageController extends Controller
             $visit->save();
         }
     }
+    public function fetchNewsFromNewsAPI(TopHeadline $topHeadline)
+    {
+        $response = Http::get('https://newsapi.org/v2/top-headlines', [
+            'country' => 'us',
+            'apiKey' => env('NEWSAPI_ORG_KEY')
+        ]);
 
+        $articles = $response->json()['articles'];
+        $allArticles = $articles;
+
+        if(isset($this->query) && $this->query != '') {
+            $search = Http::get(env('NEWSAPI_ORG_URL'), [
+                'q' => $this->query,
+                'apiKey' => env('NEWSAPI_ORG_KEY')
+            ]);
+            $searchJson = $search->json()['articles'];
+            $allArticles = array_merge($articles, $searchJson);
+        }
+
+        for($x = 0; $x < count($allArticles); $x++) {
+            if (
+                isset($allArticles[$x]['author']) &&
+                isset($allArticles[$x]['content']) &&
+                ! TopHeadline::where('title', $allArticles[$x]['title'])->exists()
+            ) {
+                $topHeadline->api_source = 'newsapi.org';
+
+                $topHeadline->source = $allArticles[$x]['source']['name'];
+                $topHeadline->author = $allArticles[$x]['author'];
+                $topHeadline->title = $allArticles[$x]['title'];
+                $topHeadline->description = $allArticles[$x]['description'];
+                $topHeadline->url = $allArticles[$x]['url'];
+                $topHeadline->urlToImage = $allArticles[$x]['urlToImage'];
+                $topHeadline->publishedAt = $allArticles[$x]['publishedAt'];
+                $topHeadline->content = $allArticles[$x]['content'];
+                $topHeadline->save();
+            }
+        }
+    }
     public function fetchFromNewsDataAPI(NewsDataArticle $newsDataArticle)
     {
         // https://newsdata.io/documentation
@@ -187,8 +222,6 @@ class LandingPageController extends Controller
             }
         }
     }
-
-    // News Catcher API
     public function fetchFromNewsCatcherAPI(NewsCatcherArticle $newsCatcherArticle)
     {
         // https://docs.newscatcherapi.com/api-docs/endpoints/latest-headlines
@@ -232,8 +265,6 @@ class LandingPageController extends Controller
             }
         }
     }
-
-    // News Catcher Search
     public function searchNewsCatcherAPI()
     {
         // https://docs.newscatcherapi.com/api-docs/endpoints/search-news
@@ -248,47 +279,4 @@ class LandingPageController extends Controller
 
         return $response;
     }
-
-    // News API
-    public function fetchNewsFromNewsAPI()
-    {
-        $response = Http::get('https://newsapi.org/v2/top-headlines', [
-            'country' => 'us',
-            'apiKey' => env('NEWSAPI_ORG_KEY')
-        ]);
-
-        $articles = $response->json()['articles'];
-        $allArticles = $articles;
-
-        if(isset($this->query) && $this->query != '') {
-            $search = Http::get(env('NEWSAPI_ORG_URL'), [
-                'q' => $this->query,
-                'apiKey' => env('NEWSAPI_ORG_KEY')
-            ]);
-            $searchJson = $search->json()['articles'];
-            $allArticles = array_merge($articles, $searchJson);
-        }
-
-        for($x = 0; $x < count($allArticles); $x++) {
-            if (
-                isset($allArticles[$x]['author']) &&
-                isset($allArticles[$x]['content']) &&
-                ! TopHeadline::where('title', $allArticles[$x]['title'])->exists()
-            ) {
-                $topHeadline = new TopHeadline;
-                $topHeadline->api_source = 'newsapi.org';
-
-                $topHeadline->source = $allArticles[$x]['source']['name'];
-                $topHeadline->author = $allArticles[$x]['author'];
-                $topHeadline->title = $allArticles[$x]['title'];
-                $topHeadline->description = $allArticles[$x]['description'];
-                $topHeadline->url = $allArticles[$x]['url'];
-                $topHeadline->urlToImage = $allArticles[$x]['urlToImage'];
-                $topHeadline->publishedAt = $allArticles[$x]['publishedAt'];
-                $topHeadline->content = $allArticles[$x]['content'];
-                $topHeadline->save();
-            }
-        }
-    }
-
 }

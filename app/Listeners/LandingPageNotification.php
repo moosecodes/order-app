@@ -15,4 +15,8 @@ class LandingPageNotification implements ShouldQueue
     public function __construct()
     {
     }
+
+    public function __invoke() {
+
+    }
 }
