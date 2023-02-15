@@ -19,8 +19,6 @@ const props = defineProps({
         }} articles
     </div>
 
-    {{props.newsdata_api}}
-
     <section
         v-for="(source, api) in props"
         :key="api"
