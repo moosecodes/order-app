@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use App\Events\LandingPageVisitEvent;
+use App\Events\HomepageEvent;
 use App\Models\LandingPageVisit;
 use App\Models\NewsCatcherArticle;
 use App\Models\NewsDataArticle;
-use App\Models\StockPrice;
 use App\Models\TopHeadline;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
@@ -22,14 +21,15 @@ class HomepageController extends Controller
     }
     public function saveVisitCount()
     {
-        $revisit = LandingPageVisit::where('source', '=', $_SERVER['REMOTE_ADDR'])->first();
+        $revisit = LandingPageVisit::where('remote_addr', '=', $_SERVER['REMOTE_ADDR'])->first();
 
         if(isset($revisit->count) && $revisit->count > 0) {
             $revisit->count += 1;
             $revisit->save();
         } else {
             $visit = new LandingPageVisit;
-            $visit->source = $_SERVER['REMOTE_ADDR'];
+            $visit->remote_addr = $_SERVER['REMOTE_ADDR'];
+            $visit->server_name = $_SERVER['SERVER_NAME'];
             $visit->count = 1;
             $visit->save();
         }
@@ -81,11 +81,11 @@ class HomepageController extends Controller
 //      $this->getStockTicker();
 
         $this->callNewsApiTopHeadlines();
-//        $this->callNewsDataApi();
+        $this->callNewsDataApi();
 //        $this->callNewsCatcherLatest();
 
         // Slack notification
-        LandingPageVisitEvent::dispatch([ 'message' => $_SERVER['REMOTE_ADDR']]);
+        HomepageEvent::dispatch([ 'message' => $_SERVER['REMOTE_ADDR']]);
 
         // render homepage
         return Inertia::render('NewsReaderZeroAuth', [

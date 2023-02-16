@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 
 use Illuminate\Support\Facades\Http;
 
-class LandingPageVisitEvent implements ShouldBroadcast
+class HomepageEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

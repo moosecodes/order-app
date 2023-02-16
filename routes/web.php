@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\StockController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\NewsController;
@@ -26,5 +25,4 @@ Route::middleware([
     'verified',
 ])->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
-    Route::get('/stocks', [StockController::class, 'show'])->name('stocks');
 });
