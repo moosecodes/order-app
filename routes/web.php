@@ -17,7 +17,7 @@ use App\Http\Controllers\WeatherController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', [HomepageController::class, 'showHomePage'])->name('homepage');
+Route::get('/', [HomepageController::class, 'showHomepage'])->name('homepage');
 
 Route::middleware([
     'auth:sanctum',
