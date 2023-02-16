@@ -21,14 +21,19 @@ defineProps({
         <p>was made with the following technologies!</p>
 
         <div class="my-12 flex justify-evenly items-center">
+            <VueLogo class="flex-col"><span class="text-gray-500">Vue 3 is used as the frontend UI framework</span></VueLogo>
+        </div>
+
+        <div class="my-12 flex justify-evenly items-center">
+            <ViteLogo class="flex-col"><span class="text-gray-500">Vite is a package bundler much like Webpack</span></ViteLogo>
+        </div>
+
+        <div class="my-12 flex justify-evenly items-center">
             <LaravelLogo />
             <JetstreamLogo />
             <InertiaLogo />
         </div>
-        <div class="my-12 flex justify-evenly items-center">
-            <VueLogo />
-            <ViteLogo />
-        </div>
+
         <div class="my-12 flex justify-evenly items-center">
             <div>MySQL</div>
             <div>Docker</div>

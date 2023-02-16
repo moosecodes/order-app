@@ -20,4 +20,5 @@
             </linearGradient>
         </defs>
     </svg>
+    <slot />
 </template>

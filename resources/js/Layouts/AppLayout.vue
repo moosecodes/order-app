@@ -7,11 +7,18 @@ import Dropdown from '@/Components/Inertia/Dropdown.vue';
 import DropdownLink from '@/Components/Inertia/DropdownLink.vue';
 import NavLink from '@/Components/Inertia/NavLink.vue';
 import ResponsiveNavLink from '@/Components/Inertia/ResponsiveNavLink.vue';
+import { storeToRefs } from 'pinia'
+import { useCounterStore } from '@/stores/counter'
+
+const store = useCounterStore()
+const { name, doubleCount } = storeToRefs(store)
+const { increment } = store
 
 defineProps({
     title: String,
     weather: Object
 });
+console.log(name)
 
 const showingNavigationDropdown = ref(false);
 

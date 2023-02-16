@@ -1,6 +1,6 @@
 <script setup>
 import LikeButton from './LikeButton.vue'
-import {likeArticle} from './utils'
+import {likeArticle, track} from './utils'
 
 const props = defineProps({
     result: Object
@@ -14,7 +14,7 @@ const props = defineProps({
             ({{ result.length }} articles)
         </div>
 
-        <section class="grid sm:grid-cols-1 md:grid-cols-4 gap-4 text-xl text-gray-700">
+        <section class="grid sm:grid-cols-1 md:grid-cols-5 gap-4 text-xl text-gray-700">
             <article v-for="(article, i) in result" :key="i">
                 <a
                     :href="article.link || article.url"

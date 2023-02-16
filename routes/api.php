@@ -33,14 +33,15 @@ Route::middleware([
     'news'
 ])->group(function() {
     Route::put('/like', [NewsAPIController::class, 'like']);
+    Route::put('/save', [NewsAPIController::class, 'save']);
     Route::post('/articleViewed', [NewsAPIController::class, 'articleViewed']);
 
     Route::get('/newsapi/fetch', [NewsAPIController::class, 'fetch']);
+    Route::get('/newsapi/trending', [NewsAPIController::class, 'trending']);
     Route::post('/newsapi/search', [NewsAPIController::class, 'search']);  // primitive search component
 
     Route::get('/newscatcher/fetch', [NewsCatcherAPIController::class, 'fetch']);
     Route::get('/newscatcher/search', [NewsCatcherAPIController::class, 'search']);  // not implemented yet
 
     Route::get('/newsdata/fetch', [NewsDataAPIController::class, 'fetch']);
-    Route::get('/newsapi/trending', [NewsAPIController::class, 'trendingHeadlines']);
 });

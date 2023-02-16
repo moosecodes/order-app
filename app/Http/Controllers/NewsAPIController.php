@@ -89,9 +89,14 @@ class NewsAPIController extends Controller
             'canRegister' => Route::has('register')
         ]);
     }
-    public function trendingHeadlines()
+    public function trending()
     {
         return NewsAPIArticle::orderBy('favs', 'DESC')->where('favs', '>', 0)->limit(4)->get();
+    }
+
+    public function save()
+    {
+//        return NewsAPIArticle::where()->update(['saved' => true]);
     }
 
     public function like(Request $request) {

@@ -22,7 +22,7 @@ function getWeather(zip = '90004') {
 </script>
 
 <template>
-    <div class="my-4 font-bold text-gray-400 text-left">
+    <div class="my-4 font-bold text-indigo-900 text-left">
         <div v-if="currentTemp.length" class="grid sm:grid-cols-1 lg:grid-cols-3">
             <div v-for="temp in currentTemp">{{temp}}</div>
         </div>

@@ -75,14 +75,14 @@ return [
 
     'statistics' => [
         /*
-         * This model will be used to store the statistics of the WebSocketsServer.
+         * This model will be used to stores the statistics of the WebSocketsServer.
          * The only requirement is that the model should extend
          * `WebSocketsStatisticsEntry` provided by this package.
          */
         'model' => \BeyondCode\LaravelWebSockets\Statistics\Models\WebSocketsStatisticsEntry::class,
 
         /**
-         * The Statistics Logger will, by default, handle the incoming statistics, store them
+         * The Statistics Logger will, by default, handle the incoming statistics, stores them
          * and then release them into the database on each interval defined below.
          */
         'logger' => BeyondCode\LaravelWebSockets\Statistics\Logger\HttpStatisticsLogger::class,
