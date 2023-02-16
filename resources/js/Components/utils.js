@@ -1,7 +1,7 @@
 import dummyResults from "./dummyResults";
 
 const likeArticle = ({article_id, api_source, props}) => {
-    axios.put('/api/news/like', { article_id, api_source })
+    axios.put('/api/like', { article_id, api_source })
         .then(function (response) {
             const article = props[api_source].filter(a =>  a.id === response.data.id)
             article[0].favs = response.data.favs
@@ -12,7 +12,7 @@ const likeArticle = ({article_id, api_source, props}) => {
 }
 
 const track = ({article_id, api_source, props}) => {
-    axios.post('/api/news/articleViewed', { article_id, api_source })
+    axios.post('/api/articleViewed', { article_id, api_source })
         .then(function (response) {
             const article = props[api_source].filter(a =>  a.id === response.data.id)
             article[0].views = response.data.views

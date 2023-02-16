@@ -11,12 +11,13 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="my-4 text-gray-500">
-        {{
+    <div class="my-4 text-gray-600">
+        <span class="text-2xl self-center my-4">Newest Articles</span>
+        ({{
             props.newsapi_api.length +
             props.newscatcher_api.length +
             props.newsdata_api.length
-        }} articles
+        }} articles)
     </div>
 
     <section

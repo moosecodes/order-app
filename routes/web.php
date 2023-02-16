@@ -4,7 +4,7 @@ use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\NewsController;
+use App\Http\Controllers\NewsAPIController;
 use App\Http\Controllers\WeatherController;
 
 /*

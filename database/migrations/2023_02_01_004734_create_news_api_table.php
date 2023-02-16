@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('top_headlines', function (Blueprint $table) {
+        Schema::create('news_api_articles', function (Blueprint $table) {
             $table->id();
             $table->string('api_source')->nullable();
             $table->string('source')->nullable();
@@ -38,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('top_headlines');
+        Schema::dropIfExists('news_api_articles');
     }
 };

@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\NewsCatcherAPIController;
+use App\Http\Controllers\NewsDataAPIController;
 use App\Http\Controllers\WeatherController;
-use App\Http\Controllers\NewsController;
+use App\Http\Controllers\NewsAPIController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,11 +32,15 @@ Route::middleware([
 Route::middleware([
     'news'
 ])->group(function() {
-    Route::get('/news/top', [NewsController::class, 'index']);
-    Route::get('/news/newscatcher/latest', [NewsController::class, 'fetchFromNewsCatcherAPI']);
-    Route::get('/news/newscatcher/search', [NewsController::class, 'searchNewsCatcherAPI']);  // not implemented yet
-    Route::get('/news/newsdata/news', [NewsController::class, 'fetchFromNewsDataAPI']);
-    Route::put('/news/like', [NewsController::class, 'like']);
-    Route::post('/news/search', [NewsController::class, 'search']);  // primitive search component
-    Route::post('/news/articleViewed', [NewsController::class, 'articleViewed']);
+    Route::put('/like', [NewsAPIController::class, 'like']);
+    Route::post('/articleViewed', [NewsAPIController::class, 'articleViewed']);
+
+    Route::get('/newsapi/fetch', [NewsAPIController::class, 'fetch']);
+    Route::post('/newsapi/search', [NewsAPIController::class, 'search']);  // primitive search component
+
+    Route::get('/newscatcher/fetch', [NewsCatcherAPIController::class, 'fetch']);
+    Route::get('/newscatcher/search', [NewsCatcherAPIController::class, 'search']);  // not implemented yet
+
+    Route::get('/newsdata/fetch', [NewsDataAPIController::class, 'fetch']);
+    Route::get('/newsapi/trending', [NewsAPIController::class, 'trendingHeadlines']);
 });
