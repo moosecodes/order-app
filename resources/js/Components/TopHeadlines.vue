@@ -1,22 +1,35 @@
 <script setup>
-import {ref} from "vue"
+import dummyResults from "./dummyResults";
+import {ref, onMounted, computed} from "vue"
+import { storeToRefs } from 'pinia'
+import { useNewsStore } from '../stores/news'
 import LoginLinks from "./LoginLinks.vue"
 import NewsArticles from './NewsArticles.vue'
-import WeatherWidget from '@/Components/WeatherWidget.vue'
-import TrendingHeadlines from "@/Components/TrendingHeadlines.vue"
+import WeatherWidget from '../Components/WeatherWidget.vue'
+import TrendingHeadlines from "../Components/TrendingHeadlines.vue"
 import SearchPrimitive from "./SearchPrimitive.vue";
 
-const props = defineProps({
-    newsapi_api: Object,
-    newscatcher_api: Object,
-    newsdata_api: Object
+const newsStore = useNewsStore()
+// let { searchResults, newest, trending } = storeToRefs(newsStore)
+
+let userInput = ref('')
+
+const searchNews = (searchQuery) => {
+    userInput.value = searchQuery
+    axios.post('/api/search', { searchQuery })
+        .then(res => {
+            if(res.data.length) {
+                newsStore.searchResults = [...res.data]
+            } else {
+                newsStore.searchResults = [...dummyResults]
+            }
+        })
+}
+
+const heading = computed(() => {
+    return !userInput.value.length ? 'Breaking News' : `Search results for "${userInput.value}"`
 })
 
-const result = ref([])
-
-const newsIsAvailable = () => {
-    return  props.newsapi_api?.length || props.newscatcher_api?.length || props.newsdata_api?.length
-}
 </script>
 
 <template>
@@ -25,25 +38,17 @@ const newsIsAvailable = () => {
 
         <LoginLinks
             v-if="$page.props.canLogin"
-            :vars="$page.props"
+            :props="$page.props"
         />
 
         <SearchPrimitive
-            :newsIsAvailable="newsIsAvailable"
-            @noResults="(e) => console.log('noResult', e)"
-            @results="(e) => console.log('results', e)"
+            :heading="heading"
+            :results="newsStore.searchResults"
+            @search="q => searchNews(q)"
         />
 
-        <TrendingHeadlines
-            :newsapi_api="newsapi_api"
-            :newscatcher_api="newscatcher_api"
-            :newsdata_api="newsdata_api"
-        />
+        <TrendingHeadlines :trending="$page.props.trending" />
 
-        <NewsArticles
-            :newsapi_api="newsapi_api"
-            :newscatcher_api="newscatcher_api"
-            :newsdata_api="newsdata_api"
-        />
+        <NewsArticles :articles="$page.props.articles" />
     </section>
 </template>

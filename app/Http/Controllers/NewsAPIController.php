@@ -6,8 +6,6 @@ use App\Models\NewsAPIArticle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 use JetBrains\PhpStorm\NoReturn;
 
 class NewsAPIController extends Controller
@@ -21,12 +19,7 @@ class NewsAPIController extends Controller
         $this->fetch();
     }
 
-    public function search(Request $request) {
-        return NewsAPIArticle::where('title', 'LIKE', "%{$request->searchQuery}%")->get();
-    }
-
     public function fetch() {
-
         $latestHeadline = NewsAPIArticle::latest('created_at')->first();
         if(isset($latestHeadline)) {
             $latestTimestamp = $latestHeadline->created_at;
@@ -81,51 +74,13 @@ class NewsAPIController extends Controller
             dd($e);
         }
     }
-    public function show(NewsAPIArticle $topHeadlines)
-    {
-        return Inertia::render('NewsReader', [
-            'news' => $topHeadlines::orderBy('id', 'DESC')->limit(10)->get(),
-            'canLogin' => Route::has('login'),
-            'canRegister' => Route::has('register')
-        ]);
-    }
-    public function trending()
-    {
-        return NewsAPIArticle::orderBy('favs', 'DESC')->where('favs', '>', 0)->limit(4)->get();
-    }
 
-    public function save()
-    {
-//        return NewsAPIArticle::where()->update(['saved' => true]);
-    }
-
-    public function like(Request $request) {
-        $article = NewsAPIArticle::find($request->article_id);
-        $article?->update(['favs' => $article->favs + 1]);
-
-        Http::withHeaders(['Content-type' => 'application/json'])->post(
-            env('SLACK_WEBHOOK_JETSTORM'),
-            [
-                'text' =>
-                    "👍 Article {$article->id} liked! - {$article->favs} total likes\n" .
-                    substr($article->title, 0, 140) . "\n\n"
-            ]
-        );
-
-        return $article;
-    }
-    public function articleViewed(Request $request) {
-        $article = NewsAPIArticle::find($request->article_id);
-        $article?->update(['views' => $article->views + 1]);
-
-        Http::withHeaders(['Content-type' => 'application/json'])->post(
-            env('SLACK_WEBHOOK_JETSTORM'),
-            [
-                'text' =>
-                    "🤓 Article (id: {$article->id}) viewed! - {$article->views} total views\n" .
-                    substr($article->title, 0, 140) . "\n\n"
-            ]
-        );
-        return $article;
-    }
+//    public function show(NewsAPIArticle $topHeadlines)
+//    {
+//        return Inertia::render('NewsReader', [
+//            'news' => $topHeadlines::orderBy('id', 'DESC')->limit(10)->get(),
+//            'canLogin' => Route::has('login'),
+//            'canRegister' => Route::has('register')
+//        ]);
+//    }
 }

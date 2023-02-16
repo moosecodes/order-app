@@ -3,19 +3,22 @@ import LikeButton from './LikeButton.vue'
 import {likeArticle, track} from './utils'
 
 const props = defineProps({
-    result: Object
+    results: Object
 })
 </script>
 
 <template>
     <div class="max-sm:hidden">
-        <div v-if="result.length" class="text-gray-600 self-center my-4">
+        <div v-if="results[0].length || results[1].length || results[2].length" class="text-gray-600 self-center my-4">
             <span class="text-2xl self-center my-4">Search Results</span>
-            ({{ result.length }} articles)
+            ({{ results[0].length + results[1].length + results[2].length }} articles)
         </div>
+        <div v-else>No search results</div>
 
-        <section class="grid sm:grid-cols-1 md:grid-cols-5 gap-4 text-xl text-gray-700">
-            <article v-for="(article, i) in result" :key="i">
+        <section
+            v-for="source in results"
+            class="grid sm:grid-cols-1 md:grid-cols-5 gap-4 text-xl text-gray-700">
+            <article v-for="(article, i) in source" :key="i">
                 <a
                     :href="article.link || article.url"
                     target="_blank"

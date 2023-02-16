@@ -23,11 +23,11 @@ class HomepageEvent implements ShouldBroadcast
         $this->message = $data['message'];
 
 //        app('App\Http\Controllers\LandingPageController')->callNewsApiTopHeadlines();
-
-        Http::withHeaders(['Content-type' => 'application/json'])->post(
-            env('SLACK_WEBHOOK_JETSTORM'),
-            ['text' => "🧑🏽‍💻 {$this->message}"]
-        );
+//
+//        Http::withHeaders(['Content-type' => 'application/json'])->post(
+//            env('SLACK_WEBHOOK_JETSTORM'),
+//            ['text' => "🧑🏽‍💻 {$this->message}"]
+//        );
     }
 
     public function broadcastOn()

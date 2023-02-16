@@ -16,6 +16,32 @@ class HomepageController extends Controller
     {
 
     }
+
+    public function show(NewsAPIArticle $newsAPIArticle, NewsCatcherArticle $newsCatcherArticle, NewsDataArticle $newsDataArticle
+    ): \Inertia\Response
+    {
+        $this->saveVisitCount();
+
+        // Slack notification
+        HomepageEvent::dispatch([ 'message' => $_SERVER['REMOTE_ADDR']]);
+
+        // render homepage
+        return Inertia::render('NewsReaderZeroAuth', [
+            'articles' => [
+                'newsapi' => $newsAPIArticle::orderBy('id', 'DESC')->limit(12)->get(),
+                'newscatcherapi' => $newsCatcherArticle::orderBy('id', 'DESC')->limit(12)->get(),
+                'newsdataapi' => $newsDataArticle::orderBy('id', 'DESC')->limit(12)->get(),
+            ],
+            'trending' => [
+                'newsapi' => NewsAPIArticle::orderBy('favs', 'DESC')->where('favs', '>', 0)->limit(2)->get(),
+                'newsdataapi' => NewsDataArticle::orderBy('favs', 'DESC')->where('favs', '>', 0)->limit(2)->get(),
+                'newscatcherapi' => NewsCatcherArticle::orderBy('favs', 'DESC')->where('favs', '>', 0)->limit(2)->get(),
+            ],
+            'canLogin'          => Route::has('login'),
+            'canRegister'       => Route::has('register')
+        ]);
+    }
+
     public function saveVisitCount()
     {
         $revisit = LandingPageVisit::where('remote_addr', '=', $_SERVER['REMOTE_ADDR'])->first();
@@ -30,26 +56,5 @@ class HomepageController extends Controller
             $visit->count = 1;
             $visit->save();
         }
-    }
-
-    public function showHomepage(
-        NewsAPIArticle     $topHeadlines,
-        NewsCatcherArticle $newsCatcherArticle,
-        NewsDataArticle    $newsDataArticle
-    ): \Inertia\Response
-    {
-        $this->saveVisitCount();
-
-        // Slack notification
-        HomepageEvent::dispatch([ 'message' => $_SERVER['REMOTE_ADDR']]);
-
-        // render homepage
-        return Inertia::render('NewsReaderZeroAuth', [
-            'newsapi_api'       => $topHeadlines::orderBy('id', 'DESC')->limit(12)->get(),
-            'newscatcher_api'   => $newsCatcherArticle::orderBy('id', 'DESC')->limit(12)->get(),
-            'newsdata_api'      => $newsDataArticle::orderBy('id', 'DESC')->limit(12)->get(),
-            'canLogin'          => Route::has('login'),
-            'canRegister'       => Route::has('register')
-        ]);
     }
 }
