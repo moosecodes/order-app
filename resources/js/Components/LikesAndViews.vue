@@ -12,7 +12,7 @@ defineEmits([
 </script>
 
 <template>
-    <div v-if="!article.notfound && $page.props.user" class="my-8">
+    <div v-if="!article.notfound && $page.props.user">
         <LikeButton
             :article_id="article.id"
             :api_source="api"

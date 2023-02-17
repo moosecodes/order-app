@@ -28,8 +28,8 @@ const props = defineProps({
                 @click="track({article_id: article.id, api_source: api_source, props})"
             >
                 <img
-                    v-if="article.urlToImage || article.media"
-                    :src="article.urlToImage || article.media"
+                    v-if="article.urlToImage || article.media || 'https://picsum.photos/375/210'"
+                    :src="article.urlToImage || article.media || 'https://picsum.photos/375/210'"
                     :alt="article.title"
                     class="rounded mb-4 aspect-video m-auto"
                 />
@@ -49,8 +49,6 @@ const props = defineProps({
                     :api="api_source"
                     :props="props"
                 />
-                <small v-if="article.favs > 0" class="text-indigo-900 mt-2 ml-4">{{article.favs}} likes</small>
-                <small v-if="article.views > 0" class="text-gray-600 mt-2 ml-4">{{article.views}} views</small>
             </div>
         </article>
     </section>
