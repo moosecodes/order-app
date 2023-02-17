@@ -26,7 +26,6 @@ let query = ref('')
                 type="text"
                 v-model="query"
                 @keydown.enter="$emit('search', query)"
-                @keyup.delete="queryWatcher"
             />
             <PrimaryButton
                 class="ml-2"

@@ -37,7 +37,7 @@ const news = computed(() => newsStore.searchResults)
                             :alt="article.title"
                             class="rounded mb-4 aspect-video m-auto"
                         />
-                        <p class="text-sm font-bold text-gray-600 mb-2 hover:text-red-700 line-clamp-3">{{article.title}}</p>
+                        <p class="text-sm font-bold text-gray-600 mb-2 hover:text-red-700">{{article.title}}</p>
                         <!--                <p class="text-sm text-gray-500 mt-2 hover:text-red-700 line-clamp-3">{{article.description || article.excerpt}}</p>-->
                     </a>
                     <div v-if="!article.notfound" class="my-4">
@@ -48,8 +48,8 @@ const news = computed(() => newsStore.searchResults)
                             @liked="likeArticle"
                             class=""
                         />
-                        <small v-if="article.favs > 0" class="text-gray-600 mt-2 ml-4">{{article.favs}} likes</small>
-                        <small v-if="article.views > 0" class="text-gray-600 mt-2 ml-4">{{article.views}} views</small>
+                        <small v-if="article.favs > 0" class="text-gray-600 mt-2 ml-4">{{article.favs === 1 ? `${article.favs} like`: `${article.favs} likes`}}</small>
+                        <small v-if="article.views > 0" class="text-gray-600 mt-2 ml-4">{{article.views === 1 ? 'view' : 'views'}}</small>
                     </div>
                 </article>
             </div>

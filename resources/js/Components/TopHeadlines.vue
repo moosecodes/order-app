@@ -26,7 +26,10 @@ const searchNews = (searchQuery) => {
             }
         })
 }
-
+const clear = () => {
+    newsStore.searchResults = []
+    userInput.value = ''
+}
 const heading = computed(() => {
     return !userInput.value.length ? 'Breaking News' : `Search results for "${userInput.value}"`
 })
@@ -46,7 +49,7 @@ const heading = computed(() => {
             :heading="heading"
             :results="newsStore.searchResults"
             @search="q => searchNews(q)"
-            @clear="newsStore.searchResults = []"
+            @clear="clear()"
         />
 
         <SearchResults
