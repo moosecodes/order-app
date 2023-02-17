@@ -19,11 +19,16 @@ const searchNews = (searchQuery) => {
     userInput.value = searchQuery
     axios.post('/api/search', { searchQuery })
         .then(res => {
-            if(res.data.length) {
-                newsStore.searchResults = [...res.data]
-            } else {
-                newsStore.searchResults = [...dummyResults]
+            if(Object.keys(res.data['newsapi']).length) {
+                newsStore.searchResults = [...res.data['newsapi']]
             }
+            if(Object.keys(res.data['newsdataapi']).length) {
+                newsStore.searchResults = [...newsStore.searchResults, ...res.data['newsdataapi']]
+            }
+            else {
+                // newsStore.searchResults = [...dummyResults]
+            }
+            console.log(newsStore.searchResults)
         })
 }
 const clear = () => {
@@ -33,7 +38,6 @@ const clear = () => {
 const heading = computed(() => {
     return !userInput.value.length ? 'Breaking News' : `Search results for "${userInput.value}"`
 })
-
 </script>
 
 <template>

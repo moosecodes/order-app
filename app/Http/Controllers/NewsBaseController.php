@@ -16,6 +16,7 @@ class NewsBaseController extends Controller
     }
 
     public function like(Request $request) {
+        $apiSource = $request->api_source;
         $article = NewsAPIArticle::find($request->article_id);
         $article?->update(['favs' => $article->favs + 1]);
 
@@ -53,14 +54,9 @@ class NewsBaseController extends Controller
 
     public function search(Request $request) {
         return array_filter([
-            NewsAPIArticle::where('title', 'LIKE', "%{$request->searchQuery}%")->get(),
-            NewsDataArticle::where('title', 'LIKE', "%{$request->searchQuery}%")->get(),
-            NewsCatcherArticle::where('title', 'LIKE', "%{$request->searchQuery}%")->get(),
-        ], function($item) {
-            if(count($item) > 0) {
-                return true;
-            }
-            return false;
-        });
+            'newsapi' => NewsAPIArticle::where('title', 'LIKE', "%{$request->searchQuery}%")->get(),
+            'newsdataapi' => NewsDataArticle::where('title', 'LIKE', "%{$request->searchQuery}%")->get(),
+            'newscatcherapi' => NewsCatcherArticle::where('title', 'LIKE', "%{$request->searchQuery}%")->get(),
+        ], function($item) { if(count($item) > 0) { return true; } return false; });
     }
 }

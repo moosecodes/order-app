@@ -12,12 +12,12 @@ defineEmits([
 </script>
 
 <template>
-    <div v-if="!article.notfound" class="my-8">
+    <div v-if="!article.notfound && $page.props.user" class="my-8">
         <LikeButton
             :article_id="article.id"
             :api_source="api"
             :props="props"
-            @liked="$emit('liked', {article, api, props})"
+            @liked="details => $emit('liked', details)"
         />
         <small v-if="article.favs > 0" class="text-gray-600 mt-2 ml-4">{{article.favs}} likes</small>
         <small v-if="article.views > 0" class="text-gray-600 mt-2 ml-4">{{article.views}} views</small>

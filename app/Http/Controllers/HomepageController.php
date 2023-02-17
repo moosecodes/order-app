@@ -26,7 +26,7 @@ class HomepageController extends Controller
         HomepageEvent::dispatch([ 'message' => $_SERVER['REMOTE_ADDR']]);
 
         // render homepage
-        return Inertia::render('NewsReaderZeroAuth', [
+        return Inertia::render('Homepage', [
             'articles' => [
                 'newsapi' => $newsAPIArticle::orderBy('id', 'DESC')->limit(12)->get(),
                 'newscatcherapi' => $newsCatcherArticle::orderBy('id', 'DESC')->limit(12)->get(),

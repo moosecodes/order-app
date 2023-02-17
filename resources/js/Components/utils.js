@@ -1,22 +1,22 @@
-import dummyResults from "./dummyResults";
 
-const saveArticle = ({article_id, api_source, props}) => {
-    axios.put('/api/save', { article_id, api_source })
+const likeArticle = ({article_id, api_source, props}) => {
+    axios.put('/api/like', { article_id, api_source })
         .then(function (response) {
-            const article = props[api_source].filter(a =>  a.id === response.data.id)
-            console.log(article)
+            console.log(response.data.data)
+            // const article = props.articles[api_source].filter(a =>  a.id === response.data.id)
             // article[0].favs = response.data.favs
+            // TODO:
+            //      add articles to store so that you can dynamically update article likes
         })
         .catch(function (error) {
             console.log(error);
         })
 }
-
-const likeArticle = ({article_id, api_source, props}) => {
-    axios.put('/api/like', { article_id, api_source })
+const saveArticle = ({article_id, api_source, props}) => {
+    axios.put('/api/save', { article_id, api_source })
         .then(function (response) {
-            const article = props[api_source].filter(a =>  a.id === response.data.id)
-            article[0].favs = response.data.favs
+            const article = props.articles[api_source].filter(a =>  a.id === response.data.id)
+            // article[0].favs = response.data.favs
         })
         .catch(function (error) {
             console.log(error);

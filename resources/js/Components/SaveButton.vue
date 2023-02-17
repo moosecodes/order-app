@@ -2,7 +2,7 @@
 import PrimaryButton from "./Inertia/PrimaryButton.vue";
 defineProps({
     article_id: Number,
-    api_source: String,
+    api_source: String|Number,
     props: Object
 })
 const emit = defineEmits([

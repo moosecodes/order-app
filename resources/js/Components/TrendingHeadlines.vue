@@ -2,8 +2,9 @@
 import LikeButton from "./LikeButton.vue";
 import SaveButton from "./SaveButton.vue";
 import { likeArticle, saveArticle, track } from "./utils";
+import LikesAndViews from "./LikesAndViews.vue";
 
-defineProps({
+const props = defineProps({
     trending: Object
 })
 </script>
@@ -19,7 +20,7 @@ defineProps({
         </div>
 
         <section
-            v-for="(source, j) in trending" :key="j"
+            v-for="(source, source_key) in trending" :key="source_key"
             class=" gap-4 text-xl text-gray-700">
             <article
                 v-for="(article, i) in source"
@@ -41,31 +42,20 @@ defineProps({
 
                 <div class="text-lg font-bold text-indigo-900 ml-4 mb-2 hover:text-red-700 line-clamp-2">
                     <p class="hover:text-red-700 line-clamp-2">{{article.title}}</p>
-                    <p class="text-sm text-gray-500 mt-2 hover:text-red-700">{{article.description || article.excerpt}}</p>
+                    <p class="text-sm text-gray-500 mt-2 hover:text-red-700">
+                        {{article.description || article.excerpt}}
+                    </p>
                     <div
-                        v-if="!article.notfound"
+                        v-if="!article.notfound && $page.props.user"
                         class="my-4"
                     >
-                        <LikeButton
-                            :article_id="article.id"
-                            :api_source="i"
-                            :props="$page.props"
+                        <LikesAndViews
+                            :article="article"
+                            :api="source_key"
+                            :props="props"
                             @liked="likeArticle"
                         />
-                        <SaveButton
-                            :article_id="article.id"
-                            :api_source="i"
-                            :props="$page.props"
-                            @saved="saveArticle"
-                        />
-
                     </div>
-                    <small v-if="article.favs > 0" class="mt-2">
-                        {{article.favs}} likes
-                    </small>
-                    <small v-if="article.views > 0" class="ml-4">
-                        {{article.views}} views
-                    </small>
                 </div>
             </article>
         </section>

@@ -1,6 +1,6 @@
 <script setup>
 import AppLayout from "../Layouts/AppLayout.vue";
-import TopHeadlines from "@/Components/TopHeadlines.vue";
+import TopHeadlines from "@/Components/TheNewsPage.vue";
 
 const props = defineProps({
     news: Object,
