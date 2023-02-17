@@ -25,7 +25,7 @@ const props = defineProps({
             <article
                 v-for="(article, i) in source"
                 :key="i"
-                class="grid grid-cols-2"
+                class="grid grid-cols-2 gap-4 mb-4"
             >
                 <a
                     :href="article.link || article.url"
@@ -36,30 +36,33 @@ const props = defineProps({
                         v-if="article.urlToImage || article.media"
                         :src="article.urlToImage || article.media"
                         :alt="article.title"
-                        class="rounded mb-4 aspect-video m-auto"
+                        class="rounded mb-4 aspect-video m-auto bg-black"
                     />
                 </a>
-                <a
-                    :href="article.link || article.url"
-                    target="_blank"
-                    @click="track({article_id: article.id, api_source: i, props})"
-                >
-                    <div class="flex flex-col font-bold text-indigo-900 ml-4 mb-2 hover:text-red-700">
-                        <p class="text-3xl hover:text-red-700">{{article.title}}</p>
-                        <p class="text-lg text-gray-700 mb-2">
-                            {{article.description || article.excerpt}}
-                        </p>
-                        <p class="text-xs text-gray-500 mb-8">
-                            {{article.content}}
-                        </p>
-                        <LikesAndViews
-                            :article="article"
-                            :api="source_key"
-                            :props="props"
-                            @liked="likeArticle"
-                        />
-                    </div>
-                </a>
+                <div>
+                    <a
+                        :href="article.link || article.url"
+                        target="_blank"
+                        @click="track({article_id: article.id, api_source: i, props})"
+                    >
+                        <div class="flex flex-col font-bold text-indigo-900 ml-4 mb-2 hover:text-red-700">
+                            <p class="text-3xl hover:text-red-700">{{article.title}}</p>
+                            <p class="text-sm text-gray-700 my-2">
+                                {{article.description || article.excerpt}}
+                            </p>
+                            <p class="text-xs text-gray-500 mb-4">
+                                {{article.content}}
+                            </p>
+                        </div>
+                    </a>
+                    <LikesAndViews
+                        class="ml-4"
+                        :article="article"
+                        :api="source_key"
+                        :props="props"
+                        @liked="likeArticle"
+                    />
+                </div>
             </article>
         </section>
     </div>
