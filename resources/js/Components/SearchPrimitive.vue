@@ -4,10 +4,10 @@ import { useNewsStore } from '../stores/news'
 import {ref} from "vue";
 import TextInput from "./Inertia/TextInput.vue";
 import PrimaryButton from "./Inertia/PrimaryButton.vue";
-import SearchResults from "./SearchResults.vue";
 
 defineEmits([
-    'search'
+    'search',
+    'clear'
 ])
 defineProps({
     results: Object,
@@ -26,6 +26,7 @@ let query = ref('')
                 type="text"
                 v-model="query"
                 @keydown.enter="$emit('search', query)"
+                @keyup.delete="queryWatcher"
             />
             <PrimaryButton
                 class="ml-2"
@@ -34,7 +35,16 @@ let query = ref('')
             >
                 Search
             </PrimaryButton>
+            <PrimaryButton
+                class="ml-2"
+                :disabled="!query.length"
+                @click="() => {
+                    query = ''
+                    $emit('clear')
+                }"
+            >
+                Clear
+            </PrimaryButton>
         </div>
     </div>
-    <SearchResults v-if="results?.length" :results="results"></SearchResults>
 </template>

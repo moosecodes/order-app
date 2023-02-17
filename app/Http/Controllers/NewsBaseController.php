@@ -52,10 +52,15 @@ class NewsBaseController extends Controller
     }
 
     public function search(Request $request) {
-        return [
+        return array_filter([
             NewsAPIArticle::where('title', 'LIKE', "%{$request->searchQuery}%")->get(),
             NewsDataArticle::where('title', 'LIKE', "%{$request->searchQuery}%")->get(),
             NewsCatcherArticle::where('title', 'LIKE', "%{$request->searchQuery}%")->get(),
-        ];
+        ], function($item) {
+            if(count($item) > 0) {
+                return true;
+            }
+            return false;
+        });
     }
 }

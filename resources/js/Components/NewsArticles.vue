@@ -3,7 +3,6 @@ import LikeButton from "./LikeButton.vue"
 import SaveButton from "./SaveButton.vue";
 import { likeArticle, saveArticle, track } from './utils.js'
 
-
 const props = defineProps({
     articles: Object
 })

@@ -8,6 +8,7 @@ import NewsArticles from './NewsArticles.vue'
 import WeatherWidget from '../Components/WeatherWidget.vue'
 import TrendingHeadlines from "../Components/TrendingHeadlines.vue"
 import SearchPrimitive from "./SearchPrimitive.vue";
+import SearchResults from "./SearchResults.vue";
 
 const newsStore = useNewsStore()
 // let { searchResults, newest, trending } = storeToRefs(newsStore)
@@ -45,6 +46,12 @@ const heading = computed(() => {
             :heading="heading"
             :results="newsStore.searchResults"
             @search="q => searchNews(q)"
+            @clear="newsStore.searchResults = []"
+        />
+
+        <SearchResults
+            v-if="newsStore.searchResults?.length"
+            :searchResults="newsStore.searchResults"
         />
 
         <TrendingHeadlines :trending="$page.props.trending" />
