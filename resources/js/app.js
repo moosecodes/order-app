@@ -1,13 +1,13 @@
-import './bootstrap';
-import '../css/app.css';
+import './bootstrap'
+import '../css/app.css'
 
-import { createApp, h } from 'vue';
+import { createApp, h } from 'vue'
 import { createPinia, defineStore } from 'pinia'
-import { createInertiaApp } from '@inertiajs/vue3';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
+import { createInertiaApp } from '@inertiajs/vue3'
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
+import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m'
 
-const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Moosecodes.com';
+const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Moosecodes.com'
 const pinia = createPinia()
 
 createInertiaApp({
@@ -18,9 +18,9 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue, Ziggy)
             .use(pinia)
-            .mount(el);
+            .mount(el)
     },
     progress: {
         color: '#4B5563',
     },
-});
+})

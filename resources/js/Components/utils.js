@@ -9,7 +9,7 @@ const likeArticle = ({article_id, api_source, props}) => {
             //      add articles to store so that you can dynamically update article likes
         })
         .catch(function (error) {
-            console.log(error);
+            console.log(error)
         })
 }
 const saveArticle = ({article_id, api_source, props}) => {
@@ -19,7 +19,7 @@ const saveArticle = ({article_id, api_source, props}) => {
             // article[0].favs = response.data.favs
         })
         .catch(function (error) {
-            console.log(error);
+            console.log(error)
         })
 }
 
@@ -30,7 +30,7 @@ const track = ({article_id, api_source, props}) => {
             article[0].views = response.data.views
         })
         .catch(function (error) {
-            console.log(error);
+            console.log(error)
         })
 }
 
