@@ -1,11 +1,21 @@
 <script setup>
+import {onMounted} from "vue";
+import { useInfoStore } from "../stores/info";
+
 import AppLayout from '@/Layouts/AppLayout.vue';
 import DashboardContent from '@/Components/DashboardContent.vue';
 
-defineProps({
+const infoStore = useInfoStore()
+
+const props = defineProps({
     laravelVersion: String,
-    phpVersion: String,
-});
+    phpVersion: String
+})
+
+onMounted(() => {
+    infoStore.laravelVersion = props.laravelVersion
+    infoStore.phpVersion = props.phpVersion
+})
 </script>
 
 <template>
@@ -19,8 +29,8 @@ defineProps({
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <DashboardContent
-                    :laravelVersion="laravelVersion"
-                    :phpVersion="phpVersion"
+                    :laravelVersion="infoStore.laravelVersion"
+                    :phpVersion="infoStore.phpVersion"
                 />
             </div>
         </div>

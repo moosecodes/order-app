@@ -1,3 +1,10 @@
+<script setup>
+const props = defineProps({
+    laravelVersion: Array,
+    phpVersion: Array
+})
+</script>
+
 <template>
     <div>
         <svg

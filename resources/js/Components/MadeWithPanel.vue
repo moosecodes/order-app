@@ -6,8 +6,8 @@ import VueLogo from "./svg/VueLogo.vue";
 import ViteLogo from "./svg/ViteLogo.vue";
 
 defineProps({
-    laravelVersion: String,
-    phpVersion: String,
+    laravelVersion: Array,
+    phpVersion: Array,
 });
 </script>
 
@@ -18,21 +18,14 @@ defineProps({
             This Application
         </div>
 
-        <p>was made with the following technologies!</p>
+        <p>was built with the Laravel, Vue 3, and MySQL!</p>
 
-        <div class="my-12 flex justify-evenly items-center">
-            <VueLogo class="flex-col"><span class="text-gray-500">Vue 3 is used as the frontend UI framework</span></VueLogo>
-        </div>
+        <VueLogo></VueLogo>
+        <ViteLogo></ViteLogo>
 
-        <div class="my-12 flex justify-evenly items-center">
-            <ViteLogo class="flex-col"><span class="text-gray-500">Vite is a package bundler much like Webpack</span></ViteLogo>
-        </div>
-
-        <div class="my-12 flex justify-evenly items-center">
-            <LaravelLogo />
-            <JetstreamLogo />
-            <InertiaLogo />
-        </div>
+        <LaravelLogo :laravelVersion="laravelVersion" :phpVersion="phpVersion" />
+        <JetstreamLogo />
+        <InertiaLogo />
 
         <div class="my-12 flex justify-evenly items-center">
             <div>MySQL</div>

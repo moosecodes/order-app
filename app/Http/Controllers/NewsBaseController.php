@@ -10,11 +10,6 @@ use Illuminate\Support\Facades\Http;
 
 class NewsBaseController extends Controller
 {
-    public function business()
-    {
-
-    }
-
     public function like(Request $request) {
         $apiSource = $request->api_source;
         $article = NewsAPIArticle::find($request->article_id);

@@ -12,7 +12,6 @@ defineProps({
     title: String,
     weather: Object
 });
-console.log(name)
 
 const showingNavigationDropdown = ref(false);
 
@@ -52,6 +51,9 @@ const logout = () => {
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
+                                </NavLink>
+                                <NavLink :href="route('messages')" :active="route().current('messages')">
+                                    Messages
                                 </NavLink>
                             </div>
                         </div>

@@ -1,13 +1,10 @@
 <script setup>
-import LikeButton from "./LikeButton.vue"
-import SaveButton from "./SaveButton.vue";
 import { likeArticle, saveArticle, track } from './utils.js'
 import LikesAndViews from "./LikesAndViews.vue";
 
 const props = defineProps({
     articles: Object
 })
-
 </script>
 
 <template>
