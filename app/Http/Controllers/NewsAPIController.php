@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\NewsAPIArticle;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use JetBrains\PhpStorm\NoReturn;
 
@@ -24,13 +23,13 @@ class NewsAPIController extends Controller
         if(isset($latestHeadline)) {
             $latestTimestamp = $latestHeadline->created_at;
             if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
-                $this->getLatest();
+                $this->top_headlines();
             }
         } else {
-            $this->getLatest();
+            $this->top_headlines();
         }
     }
-    #[NoReturn] public function getLatest()
+    #[NoReturn] public function top_headlines()
     {
         try {
             $response = Http::get('https://newsapi.org/v2/top-headlines', [
@@ -40,33 +39,24 @@ class NewsAPIController extends Controller
 
             $articles = $response->json()['articles'];
 
-//            if(isset($request->searchQuery)) {
-//                $search = Http::get(env('NEWSAPI_ORG_URL'), [
-//                    'q' => $request->searchQuery,
-//                    'apiKey' => env('NEWSAPI_ORG_KEY')
-//                ]);
-//                $searchJson = $search->json()['articles'];
-//                $allArticles = array_merge($articles, $searchJson);
-//            }
-
             for($x = 0; $x < count($articles); $x++) {
                 if (
                     isset($articles[$x]['author']) &&
                     isset($articles[$x]['content']) &&
                     ! NewsAPIArticle::where('title', $articles[$x]['title'])->exists()
                 ) {
-                    $topHeadline = new NewsAPIArticle;
-                    $topHeadline->api_source = 'newsapi.org';
+                    $newsApiArticle = new NewsAPIArticle;
+                    $newsApiArticle->api_source = 'newsapi.org';
 
-                    $topHeadline->source = $articles[$x]['source']['name'];
-                    $topHeadline->author = $articles[$x]['author'];
-                    $topHeadline->title = $articles[$x]['title'];
-                    $topHeadline->description = $articles[$x]['description'];
-                    $topHeadline->url = $articles[$x]['url'];
-                    $topHeadline->urlToImage = $articles[$x]['urlToImage'];
-                    $topHeadline->publishedAt = $articles[$x]['publishedAt'];
-                    $topHeadline->content = $articles[$x]['content'];
-                    $topHeadline->save();
+                    $newsApiArticle->source = $articles[$x]['source']['name'];
+                    $newsApiArticle->author = $articles[$x]['author'];
+                    $newsApiArticle->title = $articles[$x]['title'];
+                    $newsApiArticle->description = $articles[$x]['description'];
+                    $newsApiArticle->url = $articles[$x]['url'];
+                    $newsApiArticle->urlToImage = $articles[$x]['urlToImage'];
+                    $newsApiArticle->publishedAt = $articles[$x]['publishedAt'];
+                    $newsApiArticle->content = $articles[$x]['content'];
+                    $newsApiArticle->save();
                 }
             }
 
@@ -74,13 +64,4 @@ class NewsAPIController extends Controller
             dd($e);
         }
     }
-
-//    public function show(NewsAPIArticle $topHeadlines)
-//    {
-//        return Inertia::render('NewsReader', [
-//            'news' => $topHeadlines::orderBy('id', 'DESC')->limit(10)->get(),
-//            'canLogin' => Route::has('login'),
-//            'canRegister' => Route::has('register')
-//        ]);
-//    }
 }

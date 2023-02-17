@@ -50,12 +50,12 @@ const news = computed(() => newsStore.searchResults)
                         <!--                <p class="text-sm text-gray-500 mt-2 hover:text-red-700 line-clamp-3">{{article.description || article.excerpt}}</p>-->
                     </a>
                     <div v-if="!article.notfound" class="my-4">
-                        <LikeButton
-                            :article_id="article.id"
-                            :api_source="i"
-                            :props="props"
-                            @liked="likeArticle"
-                        />
+<!--                        <LikeButton-->
+<!--                            :article_id="article.id"-->
+<!--                            :api_source="i"-->
+<!--                            :props="props"-->
+<!--                            @liked="likeArticle"-->
+<!--                        />-->
                         <small
                             v-if="article.favs > 0"
                             class="text-gray-600 mt-2 ml-4"

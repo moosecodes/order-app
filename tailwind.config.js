@@ -14,7 +14,7 @@ module.exports = {
         extend: {
             fontFamily: {
                 sans: ['Helvetica Nueue', ...defaultTheme.fontFamily.sans],
-            }
+            },
         },
     },
 

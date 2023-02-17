@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Http;
 
 class NewsBaseController extends Controller
 {
-    public function all()
+    public function business()
     {
 
     }
@@ -32,10 +32,10 @@ class NewsBaseController extends Controller
         return $article;
     }
 
-    public function save()
-    {
-        return NewsBaseController::where()->update(['saved' => true]);
-    }
+//    public function save()
+//    {
+//        return NewsBaseController::where()->update(['saved' => true]);
+//    }
 
     public function viewed(Request $request) {
         $article = NewsAPIArticle::find($request->article_id);

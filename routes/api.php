@@ -33,7 +33,7 @@ Route::middleware([
 Route::middleware([
     'news'
 ])->group(function() {
-    Route::put('/all', [NewsBaseController::class, 'all']);
+    Route::get('/business', [NewsBaseController::class, 'business']);
     Route::put('/like', [NewsBaseController::class, 'like']);
     Route::put('/save', [NewsBaseController::class, 'save']);
     Route::post('/viewed', [NewsBaseController::class, 'viewed']);
