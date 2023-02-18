@@ -23,7 +23,7 @@ class HomepageController extends Controller
         $this->saveVisitCount();
 
         // Slack notification
-        HomepageEvent::dispatch([ 'message' => $_SERVER['REMOTE_ADDR']]);
+//        HomepageEvent::dispatch([ 'message' => $_SERVER['REMOTE_ADDR']]);
 
         // render homepage
         return Inertia::render('Homepage', [
@@ -52,7 +52,7 @@ class HomepageController extends Controller
         } else {
             $visit = new LandingPageVisit;
             $visit->remote_addr = $_SERVER['REMOTE_ADDR'];
-            $visit->server_name = $_SERVER['SERVER_NAME'];
+            $visit->server_name = $_SERVER['HTTP_USER_AGENT'];
             $visit->count = 1;
             $visit->save();
         }

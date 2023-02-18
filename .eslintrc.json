@@ -5,7 +5,7 @@
     },
     "extends": [
         "eslint:recommended",
-        "plugin:vue/vue3-essential"
+        "plugin:vue/vue3-recommended"
     ],
     "overrides": [
     ],
@@ -19,7 +19,7 @@
     "rules": {
         "indent": [
             "error",
-            4
+            2
         ],
         "linebreak-style": [
             "error",
@@ -32,6 +32,9 @@
         "semi": [
             "error",
             "never"
+        ],
+        "vue/order-in-components": [
+            "error"
         ]
     }
 }
