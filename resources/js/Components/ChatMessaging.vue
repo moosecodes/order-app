@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <div>
-        chat messaging
-    </div>
+  <div>
+    chat messaging
+  </div>
 </template>
