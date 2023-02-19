@@ -8,8 +8,8 @@ onMounted(() => {
   locations.forEach(l => getWeather(l))
 })
 
-function getWeather(zip = '90004') {
-  let response = axios.get(`/api/weather/${zip}`)
+async function getWeather(zip = '90004') {
+  let response = await axios.get(`/api/weather/${zip}`)
   currentTemp.value = [
     ...currentTemp.value,
     `${response.data.temp_f} F in ${response.data.city}, ${response.data.region}`
