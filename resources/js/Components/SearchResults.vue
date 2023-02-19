@@ -5,14 +5,9 @@ import { useNewsStore } from '../stores/news'
 const newsStore = useNewsStore()
 
 const likeArticle = ({article_id, api_source, props}) => {
-  axios.put('/api/like', { article_id, api_source })
-    .then(function (response) {
-      const article = props.articles[api_source].filter(a =>  a.id === response.data.id)
-      article[0].favs = response.data.favs
-    })
-    .catch(function (error) {
-      console.log(error)
-    })
+  let response = axios.put('/api/like', { article_id, api_source })
+  const article = props.articles[api_source].filter(a =>  a.id === response.data.id)
+  article[0].favs = response.data.favs
 }
 
 const props = defineProps({
