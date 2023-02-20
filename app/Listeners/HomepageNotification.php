@@ -11,6 +11,7 @@ class HomepageNotification implements ShouldQueue
 
     public function __construct()
     {
+
     }
 
     public function __invoke()

@@ -1,11 +1,11 @@
 <script setup>
 import PrimaryButton from './Inertia/PrimaryButton.vue'
+
 defineProps({
   article_id: Number,
   api_source: String,
-  props: Object
 })
-const emit = defineEmits([
+defineEmits([
   'liked'
 ])
 </script>
@@ -13,7 +13,7 @@ const emit = defineEmits([
 <template>
   <PrimaryButton
     class="mr-2"
-    @click.stop="$emit('liked', {article_id, api_source, props})"
+    @click.stop="$emit('liked', {article_id, api_source})"
   >
     Like
   </PrimaryButton>

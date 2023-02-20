@@ -23,11 +23,11 @@ class HomepageController extends Controller
         $this->saveVisitCount();
 
         // Slack notification
-//        HomepageEvent::dispatch([ 'message' => $_SERVER['REMOTE_ADDR']]);
+        HomepageEvent::dispatch([ 'message' => $_SERVER['REMOTE_ADDR']]);
 
         // render homepage
         return Inertia::render('Homepage', [
-            'articles' => [
+            'sources' => [
                 'newsapi' => $newsAPIArticle::orderBy('id', 'DESC')->limit(12)->get(),
                 'newscatcherapi' => $newsCatcherArticle::orderBy('id', 'DESC')->limit(12)->get(),
                 'newsdataapi' => $newsDataArticle::orderBy('id', 'DESC')->limit(12)->get(),

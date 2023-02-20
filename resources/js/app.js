@@ -2,7 +2,7 @@ import './bootstrap'
 import '../css/app.css'
 
 import { createApp, h } from 'vue'
-import { createPinia, defineStore } from 'pinia'
+import { createPinia } from 'pinia'
 import { createInertiaApp } from '@inertiajs/vue3'
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m'

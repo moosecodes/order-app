@@ -1,19 +1,27 @@
 <script setup>
-import dummyResults from './dummyResults'
-import {ref, onMounted, computed} from 'vue'
-import { storeToRefs } from 'pinia'
-import { useNewsStore } from '../stores/news'
+import {ref, computed, onMounted} from 'vue'
+import { useNewsStore } from '@/stores/news'
 import LoginLinks from './LoginLinks.vue'
 import NewsArticles from './NewsArticles.vue'
-import WeatherWidget from '../Components/WeatherWidget.vue'
-import TrendingHeadlines from '../Components/TrendingHeadlines.vue'
+import WeatherWidget from '@/Components/WeatherWidget.vue'
 import SearchPrimitive from './SearchPrimitive.vue'
 import SearchResults from './SearchResults.vue'
+import TrendingHeadlines from '@/Components/TrendingHeadlines.vue'
 
 const newsStore = useNewsStore()
 // let { searchResults, newest, trending } = storeToRefs(newsStore)
 
 let userInput = ref('')
+
+const props = defineProps({
+  sources: Object,
+  trending: Object
+})
+
+onMounted(() => {
+  newsStore.newest = props.sources
+  newsStore.trending = props.trending
+})
 
 const searchNews = async (searchQuery) => {
   userInput.value = searchQuery
@@ -22,7 +30,10 @@ const searchNews = async (searchQuery) => {
     newsStore.searchResults = [...response.data['newsapi']]
   }
   if(Object.keys(response.data['newsdataapi']).length) {
-    newsStore.searchResults = [...newsStore.searchResults, ...response.data['newsdataapi']]
+    newsStore.searchResults = [
+      ...newsStore.searchResults,
+      ...response.data['newsdataapi']
+    ]
   }
 }
 const clear = () => {
@@ -40,7 +51,9 @@ const heading = computed(() => {
 
     <LoginLinks
       v-if="$page.props.canLogin"
-      :props="$page.props"
+      :user="$page.props.user"
+      :can-login="$page.props.canLogin"
+      :can-register="$page.props.canRegister"
     />
 
     <SearchPrimitive
@@ -55,8 +68,8 @@ const heading = computed(() => {
       :search-results="newsStore.searchResults"
     />
 
-    <TrendingHeadlines :trending="$page.props.trending" />
+    <TrendingHeadlines :trending="newsStore.trending" />
 
-    <NewsArticles :articles="$page.props.articles" />
+    <NewsArticles :sources="newsStore.newest" />
   </section>
 </template>

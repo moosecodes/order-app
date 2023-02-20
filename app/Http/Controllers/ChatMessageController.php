@@ -8,7 +8,7 @@ class ChatMessageController extends Controller
 {
     public function show(): \Inertia\Response
     {
-        return Inertia::render('ChatMessaging', [
+        return Inertia::render('ChatPage', [
             'laravelVersion' => Application::VERSION,
             'phpVersion' => PHP_VERSION,
         ]);

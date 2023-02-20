@@ -1,10 +1,9 @@
 <script setup>
 import LikeButton from './LikeButton.vue'
 
-const props = defineProps({
+defineProps({
   article: Object,
-  api: String,
-  props: Object
+  api_source: String,
 })
 defineEmits([
   'liked'
@@ -12,11 +11,13 @@ defineEmits([
 </script>
 
 <template>
-  <div v-if="!article.notfound && $page.props.user">
+  <div
+    v-if="!article.notfound && $page.props.user"
+    class="my-8"
+  >
     <LikeButton
       :article_id="article.id"
-      :api_source="api"
-      :props="props"
+      :api_source="api_source"
       @liked="details => $emit('liked', details)"
     />
     <small
