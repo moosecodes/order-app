@@ -1,8 +1,8 @@
 <script setup>
-import LikeButton from './LikeButton.vue'
+import LikeButton from '../LikeButton.vue'
 
 defineProps({
-  article: Object,
+  article: String,
   api_source: String,
 })
 defineEmits([
@@ -12,7 +12,7 @@ defineEmits([
 
 <template>
   <div
-    v-if="!article.notfound && $page.props.user"
+    v-if="!article.notfound"
     class="my-8"
   >
     <LikeButton

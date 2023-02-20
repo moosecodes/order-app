@@ -1,6 +1,6 @@
 <script setup>
 import { likeArticle, track } from './utils'
-import LikesAndViews from './LikesAndViews.vue'
+import LikesAndViews from './Article/LikesAndViews.vue'
 
 const props = defineProps({
   trending: Object
