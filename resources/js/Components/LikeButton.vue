@@ -3,7 +3,7 @@ import PrimaryButton from './Inertia/PrimaryButton.vue'
 
 defineProps({
   article_id: Number,
-  api_source: String,
+  source: String
 })
 defineEmits([
   'liked'
@@ -13,7 +13,7 @@ defineEmits([
 <template>
   <PrimaryButton
     class="mr-2"
-    @click.stop="$emit('liked', {article_id, api_source})"
+    @click.stop="$emit('liked', {article_id, source})"
   >
     Like
   </PrimaryButton>

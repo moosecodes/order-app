@@ -2,8 +2,8 @@
 import LikeButton from '../LikeButton.vue'
 
 defineProps({
-  article: String,
-  api_source: String,
+  article: Object,
+  source: String
 })
 defineEmits([
   'liked'
@@ -17,7 +17,7 @@ defineEmits([
   >
     <LikeButton
       :article_id="article.id"
-      :api_source="api_source"
+      :source="source"
       @liked="details => $emit('liked', details)"
     />
     <small

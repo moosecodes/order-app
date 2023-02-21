@@ -6,22 +6,27 @@ import LikesAndViews from '@/Components/Article/LikesAndViews.vue'
 import ArticleTitleAndDescription from '@/Components/Article/ArticleTitleAndDescription.vue'
 import {likeArticle} from '@/Components/utils'
 
-defineProps({
-  article: Object
+const props = defineProps({
+  article: Object,
+  source: String
 })
+
+function handleLike(likeDetails) {
+  likeArticle(likeDetails)
+}
 </script>
 
 <template>
   <div>
-    <ArticleLink :article="article">
-      <ArticleImage :article="article" />
-      <ArticlePubDate :article="article" />
-      <ArticleTitleAndDescription :article="article" />
+    <ArticleLink :article="props.article">
+      <ArticleImage :article="props.article" />
+      <ArticlePubDate :article="props.article" />
+      <ArticleTitleAndDescription :article="props.article" />
     </ArticleLink>
     <LikesAndViews
-      :article="article"
-      :api_source="article"
-      @liked="likeArticle"
+      :article="props.article"
+      :source="props.source"
+      @liked="handleLike"
     />
   </div>
 </template>

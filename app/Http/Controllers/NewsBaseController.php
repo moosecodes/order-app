@@ -11,20 +11,35 @@ use Illuminate\Support\Facades\Http;
 class NewsBaseController extends Controller
 {
     public function like(Request $request) {
-        $apiSource = $request->api_source;
-        $article = NewsAPIArticle::find($request->article_id);
-        $article?->update(['favs' => $article->favs + 1]);
+        $source = $request->source;
+        $id = $request->article_id;
 
-        Http::withHeaders(['Content-type' => 'application/json'])->post(
-            env('SLACK_WEBHOOK_JETSTORM'),
-            [
-                'text' =>
-                    "👍 Article {$article->id} liked! - {$article->favs} total likes\n" .
-                    substr($article->title, 0, 140) . "\n\n"
-            ]
-        );
+        if($source === 'newsapi') {
+            $article = NewsAPIArticle::find($id);
+        } else if($source === 'newsdataapi') {
+            $article = NewsDataArticle::find($id);
+        } else if($source === 'newscatcherapi') {
+            $article = NewsCatcherArticle::find($id);
+        }
 
-        return $article;
+        if(isset($article)) {
+            $article?->update(['favs' => $article->favs + 1]);
+
+            Http::withHeaders(['Content-type' => 'application/json'])->post(
+                env('SLACK_WEBHOOK_JETSTORM'),
+                [
+                    'text' =>
+                        "👍 Article {$article->id} liked! - {$article->favs} total likes\n" .
+                        substr($article->title, 0, 140) . "\n\n"
+                ]
+            );
+
+            return $article;
+        } else {
+            return 'erroor';
+        }
+
+
     }
 
 //    public function save()
