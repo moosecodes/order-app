@@ -7,6 +7,7 @@ const props = defineProps({
 })
 </script>
 
+
 <template>
   <div class="max-sm:hidden">
     <div
@@ -14,7 +15,6 @@ const props = defineProps({
       class="font-bold text-indigo-900 items-center my-4"
     >
       <span>Trending Headlines</span>
-      <small> ({{ Object.keys($page.props.trending).length }} trending)</small>
     </div>
 
     <section
