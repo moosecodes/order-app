@@ -33,9 +33,9 @@ class HomepageController extends Controller
                 'newsdataapi' => $newsDataArticle::orderBy('id', 'DESC')->limit(12)->get(),
             ],
             'trending' => [
-                'newsapi' => NewsAPIArticle::orderBy('favs', 'DESC')->where('favs', '>', 0)->limit(2)->get(),
-                'newsdataapi' => NewsDataArticle::orderBy('favs', 'DESC')->where('favs', '>', 0)->limit(2)->get(),
-                'newscatcherapi' => NewsCatcherArticle::orderBy('favs', 'DESC')->where('favs', '>', 0)->limit(2)->get(),
+                'newsapi' => NewsAPIArticle::orderBy('favs', 'DESC')->where('favs', '>', 0)->limit(4)->get(),
+                'newsdataapi' => NewsDataArticle::orderBy('favs', 'DESC')->where('favs', '>', 0)->limit(4)->get(),
+                'newscatcherapi' => NewsCatcherArticle::orderBy('favs', 'DESC')->where('favs', '>', 0)->limit(4)->get(),
             ],
             'canLogin'          => Route::has('login'),
             'canRegister'       => Route::has('register')
