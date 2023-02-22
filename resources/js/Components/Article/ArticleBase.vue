@@ -3,7 +3,7 @@ import ArticleLink from '@/Components/Article/ArticleLink.vue'
 import ArticleImage from '@/Components/Article/ArticleImage.vue'
 import LikesAndViews from '@/Components/Article/LikesAndViews.vue'
 import ArticleTitleAndDescription from '@/Components/Article/ArticleMetaData.vue'
-import {likeArticle} from '@/Components/utils'
+import {likeArticle, saveArticle, track} from '@/Components/utils'
 import {onMounted, ref} from 'vue'
 
 const props = defineProps({
@@ -21,11 +21,25 @@ async function handleLike(likeDetails) {
   const likedResponse = await likeArticle(likeDetails)
   currentArticle.value.favs = likedResponse.favs
 }
+
+async function handleSave(saveDetails) {
+  const savedResponse = await saveArticle(saveDetails)
+  currentArticle.value.saves = savedResponse.saves
+}
+
+async function handleView(viewDetails) {
+  const viewedResponse = await track(viewDetails)
+  currentArticle.value.views = viewedResponse.views
+}
 </script>
 
 <template>
   <section>
-    <ArticleLink :article="currentArticle">
+    <ArticleLink
+      :article="currentArticle"
+      :source="source"
+      @viewed="handleView"
+    >
       <ArticleImage :article="currentArticle" />
       <ArticleTitleAndDescription :article="currentArticle" />
     </ArticleLink>
@@ -33,6 +47,7 @@ async function handleLike(likeDetails) {
       :article="currentArticle"
       :source="source"
       @liked="handleLike"
+      @saved="handleSave"
     />
   </section>
 </template>

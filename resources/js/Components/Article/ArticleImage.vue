@@ -6,8 +6,8 @@ defineProps({
 
 <template>
   <img
-    v-if="article.urlToImage || article.media || 'https://picsum.photos/375/210'"
-    :src="article.urlToImage || article.media || 'https://picsum.photos/375/210'"
+    v-if="article.urlToImage || article.media || 'https://picsum.photos/700/500'"
+    :src="article.urlToImage || article.media || 'https://picsum.photos/700/500'"
     :alt="article.title"
     class="rounded mb-4 aspect-video m-auto bg-black"
   >

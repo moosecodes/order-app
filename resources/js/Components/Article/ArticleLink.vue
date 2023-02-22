@@ -1,16 +1,17 @@
 <script setup>
-import { track } from '@/Components/utils'
-
+defineEmits([
+  'viewed'
+])
 defineProps({
   article: Object,
-  api_source: String
+  source: String
 })
 </script>
 <template>
   <a
     :href="article.link || article.url"
     target="_blank"
-    @click="track({article_id: article.id, api_source: api_source})"
+    @click="$emit('viewed', {article_id: article.id, source})"
   >
     <slot />
   </a>

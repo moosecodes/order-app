@@ -1,8 +1,9 @@
 <script setup>
 import PrimaryButton from '../Inertia/PrimaryButton.vue'
+
 defineProps({
   article_id: Number,
-  api_source: String
+  source: String
 })
 defineEmits([
   'saved'
@@ -12,7 +13,7 @@ defineEmits([
 <template>
   <PrimaryButton
     class="mr-2"
-    @click.stop="$emit('saved', {article_id, api_source})"
+    @click.stop="$emit('saved', {article_id, source})"
   >
     Save
   </PrimaryButton>

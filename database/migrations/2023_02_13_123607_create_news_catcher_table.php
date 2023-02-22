@@ -15,28 +15,29 @@ return new class extends Migration
     {
         Schema::create('news_catcher_articles', function (Blueprint $table) {
             $table->id();
-            $table->integer('favs')->default(0);
-            $table->integer('views')->default(0);
-            $table->string('api_source')->nullable();
             $table->boolean('is_opinion')->nullable();
-            $table->integer('rank')->nullable();
             $table->integer('_score')->nullable();
-            $table->string('title')->nullable();
-            $table->string('author')->nullable();
-            $table->string('published_date')->nullable();
-            $table->string('published_date_precision')->nullable();
+            $table->integer('favs')->default(0);
+            $table->integer('rank')->nullable();
+            $table->integer('saves')->default(0);
+            $table->integer('views')->default(0);
+            $table->longText('excerpt')->nullable();
             $table->longText('link')->nullable();
+            $table->longText('media')->nullable();
+            $table->longText('summary')->nullable();
+            $table->string('_id')->nullable();
+            $table->string('api_source')->nullable();
+            $table->string('author')->nullable();
+            $table->string('authors')->nullable();
             $table->string('clean_url')->nullable();
-            $table->string('rights')->nullable();
-            $table->string('topic')->nullable();
             $table->string('country')->nullable();
             $table->string('language')->nullable();
-            $table->string('authors')->nullable();
+            $table->string('published_date')->nullable();
+            $table->string('published_date_precision')->nullable();
+            $table->string('rights')->nullable();
+            $table->string('title')->nullable();
+            $table->string('topic')->nullable();
             $table->string('twitter_account')->nullable();
-            $table->string('_id')->nullable();
-            $table->longText('media')->nullable();
-            $table->longText('excerpt')->nullable();
-            $table->longText('summary')->nullable();
             $table->timestamps();
         });
     }

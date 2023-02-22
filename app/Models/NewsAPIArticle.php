@@ -14,6 +14,7 @@ class NewsAPIArticle extends Model
 
     protected $fillable = [
         'favs',
-        'views'
+        'views',
+        'saves'
     ];
 }

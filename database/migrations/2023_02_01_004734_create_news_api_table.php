@@ -15,18 +15,19 @@ return new class extends Migration
     {
         Schema::create('news_api_articles', function (Blueprint $table) {
             $table->id();
-            $table->string('api_source')->nullable();
-            $table->string('source')->nullable();
-            $table->string('author')->nullable();
             $table->integer('favs')->default(0);
+            $table->integer('saves')->default(0);
             $table->integer('views')->default(0);
-            $table->string('category')->nullable();
-            $table->longText('title')->nullable();
+            $table->longText('content')->nullable();
             $table->longText('description')->nullable();
+            $table->longText('title')->nullable();
             $table->longText('url')->nullable();
             $table->longText('urlToImage')->nullable();
+            $table->string('api_source')->nullable();
+            $table->string('author')->nullable();
+            $table->string('category')->nullable();
             $table->string('publishedAt')->nullable();
-            $table->longText('content')->nullable();
+            $table->string('source')->nullable();
             $table->timestamps();
         });
     }

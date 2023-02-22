@@ -15,6 +15,7 @@ const newsStore = useNewsStore()
       :key="j"
       :article="article"
       :source="source"
+      class="mx-4"
     />
   </article>
 </template>
