@@ -19,11 +19,8 @@ onMounted(()=>{
 })
 
 async function handleLike(likeDetails) {
-  console.log(likeDetails)
   const likedResponse = await likeArticle(likeDetails)
   currentArticle.value.favs = likedResponse.favs
-  console.log(likedResponse)
-  console.log(currentArticle.value)
 }
 </script>
 
