@@ -1,6 +1,6 @@
 <script setup>
 import { Head } from '@inertiajs/vue3'
-import TheNewsPage from '@/Components/TheNewsPage.vue'
+import TheNewsPage from '@/Components/NewsPage.vue'
 </script>
 
 <template>

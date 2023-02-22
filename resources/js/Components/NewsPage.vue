@@ -2,11 +2,11 @@
 import {ref, computed, onMounted} from 'vue'
 import { useNewsStore } from '@/stores/news'
 import LoginLinks from './LoginLinks.vue'
-import NewsArticles from './NewsArticles.vue'
-import WeatherWidget from '@/Components/WeatherWidget.vue'
-import SearchPrimitive from './SearchPrimitive.vue'
-import SearchResults from './SearchResults.vue'
-import TrendingHeadlines from '@/Components/TrendingHeadlines.vue'
+import NewsArticles from './Article/NewsArticles.vue'
+import WeatherWidget from '@/Components/Weather/WeatherWidget.vue'
+import SearchPrimitive from './Search/SearchPrimitive.vue'
+import SearchResults from './Search/SearchResults.vue'
+import TrendingHeadlines from '@/Components/Article/TrendingArticles.vue'
 
 const newsStore = useNewsStore()
 // let { searchResults, newest, trending } = storeToRefs(newsStore)
@@ -59,6 +59,7 @@ const heading = computed(() => {
     <SearchPrimitive
       :heading="heading"
       :results="newsStore.searchResults"
+      class="my-8"
       @search="q => searchNews(q)"
       @clear="clear()"
     />

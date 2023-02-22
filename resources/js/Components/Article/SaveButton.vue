@@ -1,21 +1,20 @@
 <script setup>
-import PrimaryButton from './Inertia/PrimaryButton.vue'
-
+import PrimaryButton from '../Inertia/PrimaryButton.vue'
 defineProps({
   article_id: Number,
-  source: String
+  api_source: String
 })
 defineEmits([
-  'liked'
+  'saved'
 ])
 </script>
 
 <template>
   <PrimaryButton
     class="mr-2"
-    @click.stop="$emit('liked', {article_id, source})"
+    @click.stop="$emit('saved', {article_id, api_source})"
   >
-    Like
+    Save
   </PrimaryButton>
 </template>
 

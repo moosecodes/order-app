@@ -1,9 +1,8 @@
 <script setup>
 import ArticleLink from '@/Components/Article/ArticleLink.vue'
 import ArticleImage from '@/Components/Article/ArticleImage.vue'
-import ArticlePubDate from '@/Components/Article/ArticlePubDate.vue'
 import LikesAndViews from '@/Components/Article/LikesAndViews.vue'
-import ArticleTitleAndDescription from '@/Components/Article/ArticleTitleAndDescription.vue'
+import ArticleTitleAndDescription from '@/Components/Article/ArticleMetaData.vue'
 import {likeArticle} from '@/Components/utils'
 import {onMounted, ref} from 'vue'
 
@@ -25,10 +24,9 @@ async function handleLike(likeDetails) {
 </script>
 
 <template>
-  <div>
+  <section>
     <ArticleLink :article="currentArticle">
       <ArticleImage :article="currentArticle" />
-      <ArticlePubDate :article="currentArticle" />
       <ArticleTitleAndDescription :article="currentArticle" />
     </ArticleLink>
     <LikesAndViews
@@ -36,5 +34,5 @@ async function handleLike(likeDetails) {
       :source="source"
       @liked="handleLike"
     />
-  </div>
+  </section>
 </template>

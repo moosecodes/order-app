@@ -1,9 +1,9 @@
 <script setup>
 import { storeToRefs } from 'pinia'
-import { useNewsStore } from '../stores/news'
+import { useNewsStore } from '../../stores/news'
 import {ref} from 'vue'
-import TextInput from './Inertia/TextInput.vue'
-import PrimaryButton from './Inertia/PrimaryButton.vue'
+import TextInput from '../Inertia/TextInput.vue'
+import PrimaryButton from '../Inertia/PrimaryButton.vue'
 
 defineEmits([
   'search',

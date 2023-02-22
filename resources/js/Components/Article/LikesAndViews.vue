@@ -1,5 +1,5 @@
 <script setup>
-import LikeButton from '../LikeButton.vue'
+import LikeButton from './LikeButton.vue'
 
 defineProps({
   article: Object,

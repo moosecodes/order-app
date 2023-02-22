@@ -1,7 +1,7 @@
 <script setup>
-import {track} from './utils'
+import {track} from '../utils'
 import {computed} from 'vue'
-import { useNewsStore } from '../stores/news'
+import { useNewsStore } from '../../stores/news'
 const newsStore = useNewsStore()
 
 const likeArticle = ({article_id, api_source, props}) => {
