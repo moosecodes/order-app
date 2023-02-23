@@ -1,11 +1,11 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/vue3';
-import AuthenticationCard from '@/Components/Inertia/AuthenticationCard.vue';
-import AuthenticationCardLogo from '@/Components/Inertia/AuthenticationCardLogo.vue';
-import InputError from '@/Components/Inertia/InputError.vue';
-import InputLabel from '@/Components/Inertia/InputLabel.vue';
-import PrimaryButton from '@/Components/Inertia/PrimaryButton.vue';
-import TextInput from '@/Components/Inertia/TextInput.vue';
+import { Head, useForm } from "@inertiajs/vue3";
+import AuthenticationCard from "@/Components/Inertia/AuthenticationCard.vue";
+import AuthenticationCardLogo from "@/Components/Inertia/AuthenticationCardLogo.vue";
+import InputError from "@/Components/Inertia/InputError.vue";
+import InputLabel from "@/Components/Inertia/InputLabel.vue";
+import PrimaryButton from "@/Components/Inertia/PrimaryButton.vue";
+import TextInput from "@/Components/Inertia/TextInput.vue";
 
 const props = defineProps({
     email: String,
@@ -15,13 +15,13 @@ const props = defineProps({
 const form = useForm({
     token: props.token,
     email: props.email,
-    password: '',
-    password_confirmation: '',
+    password: "",
+    password_confirmation: "",
 });
 
 const submit = () => {
-    form.post(route('password.update'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
+    form.post(route("password.update"), {
+        onFinish: () => form.reset("password", "password_confirmation"),
     });
 };
 </script>
@@ -62,7 +62,10 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
+                <InputLabel
+                    for="password_confirmation"
+                    value="Confirm Password"
+                />
                 <TextInput
                     id="password_confirmation"
                     v-model="form.password_confirmation"
@@ -71,11 +74,17 @@ const submit = () => {
                     required
                     autocomplete="new-password"
                 />
-                <InputError class="mt-2" :message="form.errors.password_confirmation" />
+                <InputError
+                    class="mt-2"
+                    :message="form.errors.password_confirmation"
+                />
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+            <div class="mt-4 flex items-center justify-end">
+                <PrimaryButton
+                    :class="{ 'opacity-25': form.processing }"
+                    :disabled="form.processing"
+                >
                     Reset Password
                 </PrimaryButton>
             </div>

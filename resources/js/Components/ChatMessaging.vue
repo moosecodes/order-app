@@ -1,9 +1,5 @@
-<script setup>
-
-</script>
+<script setup></script>
 
 <template>
-  <div>
-    chat messaging
-  </div>
+    <div>chat messaging</div>
 </template>

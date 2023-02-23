@@ -1,81 +1,77 @@
 <script setup>
-import {ref, computed, onMounted} from 'vue'
-import { useNewsStore } from '@/stores/news'
-import LoginLinks from './LoginLinks.vue'
-import SourcedArticles from './Article/SourcedArticles.vue'
-import WeatherWidget from '@/Components/Weather/WeatherWidget.vue'
-import SearchPrimitive from './Search/SearchPrimitive.vue'
-import SearchResults from './Search/SearchResults.vue'
+import { ref, computed, onMounted } from "vue";
+import { useNewsStore } from "@/stores/news";
+import LoginLinks from "./LoginLinks.vue";
+import SourcedArticles from "./Article/SourcedArticles.vue";
+import WeatherWidget from "@/Components/Weather/WeatherWidget.vue";
+import SearchPrimitive from "./Search/SearchPrimitive.vue";
+import SearchResults from "./Search/SearchResults.vue";
 
-const newsStore = useNewsStore()
+const newsStore = useNewsStore();
 // let { searchResults, newest, trending } = storeToRefs(newsStore)
 
-let userInput = ref('')
+let userInput = ref("");
 
 const props = defineProps({
-  sources: Object,
-  trending: Object
-})
+    sources: Object,
+    trending: Object,
+});
 
 onMounted(() => {
-  newsStore.newest = props.sources
-  newsStore.trending = props.trending
-})
+    newsStore.newest = props.sources;
+    newsStore.trending = props.trending;
+});
 
 const searchNews = async (searchQuery) => {
-  userInput.value = searchQuery
-  let response = await axios.post('/api/search', { searchQuery })
-  if(Object.keys(response.data['newsapi']).length) {
-    newsStore.searchResults = [...response.data['newsapi']]
-  }
-  if(Object.keys(response.data['newsdataapi']).length) {
-    newsStore.searchResults = [
-      ...newsStore.searchResults,
-      ...response.data['newsdataapi']
-    ]
-  }
-}
+    userInput.value = searchQuery;
+    let response = await axios.post("/api/search", { searchQuery });
+    if (Object.keys(response.data["newsapi"]).length) {
+        newsStore.searchResults = [...response.data["newsapi"]];
+    }
+    if (Object.keys(response.data["newsdataapi"]).length) {
+        newsStore.searchResults = [
+            ...newsStore.searchResults,
+            ...response.data["newsdataapi"],
+        ];
+    }
+};
 const clear = () => {
-  newsStore.searchResults = []
-  userInput.value = ''
-}
+    newsStore.searchResults = [];
+    userInput.value = "";
+};
 const heading = computed(() => {
-  return !userInput.value.length ? 'Breaking News' : `Search results for "${userInput.value}"`
-})
+    return !userInput.value.length
+        ? "Breaking News"
+        : `Search results for "${userInput.value}"`;
+});
 </script>
 
 <template>
-  <section class="m-8">
-    <WeatherWidget class="text-sm self-center">
-      <LoginLinks
-        v-if="$page.props.canLogin"
-        :user="$page.props.user"
-        :can-login="$page.props.canLogin"
-        :can-register="$page.props.canRegister"
-      />
-    </WeatherWidget>
+    <section class="m-8">
+        <WeatherWidget class="self-center text-sm">
+            <LoginLinks
+                v-if="$page.props.canLogin"
+                :user="$page.props.user"
+                :can-login="$page.props.canLogin"
+                :can-register="$page.props.canRegister"
+            />
+        </WeatherWidget>
 
-    <SearchPrimitive
-      :heading="heading"
-      :results="newsStore.searchResults"
-      class="my-8"
-      @search="q => searchNews(q)"
-      @clear="clear()"
-    />
+        <SearchPrimitive
+            :heading="heading"
+            :results="newsStore.searchResults"
+            class="my-8"
+            @search="(q) => searchNews(q)"
+            @clear="clear()"
+        />
 
-    <SearchResults
-      v-if="newsStore.searchResults?.length"
-      :search-results="newsStore.searchResults"
-    />
+        <SearchResults
+            v-if="newsStore.searchResults?.length"
+            :search-results="newsStore.searchResults"
+        />
 
-    <SourcedArticles
-      source-type="trending"
-      store-key="newsapi"
-    />
+        <SourcedArticles source-type="trending" store-key="newsapi" />
 
-    <SourcedArticles
-      source-type="newest"
-      store-key="newsapi"
-    />
-  </section>
+        <SourcedArticles source-type="newest" store-key="newsapi" />
+    </section>
 </template>
