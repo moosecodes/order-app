@@ -17,7 +17,10 @@ class HomepageController extends Controller
 
     }
 
-    public function show(NewsAPIArticle $newsAPIArticle, NewsCatcherArticle $newsCatcherArticle, NewsDataArticle $newsDataArticle
+    public function show(
+        NewsAPIArticle $newsAPIArticle,
+        NewsCatcherArticle $newsCatcherArticle,
+        NewsDataArticle $newsDataArticle
     ): \Inertia\Response
     {
         $this->saveVisitCount();
@@ -25,20 +28,23 @@ class HomepageController extends Controller
         // Slack notification
         HomepageEvent::dispatch([ 'message' => $_SERVER['REMOTE_ADDR']]);
 
-        // render homepage
-        return Inertia::render('Homepage', [
-            'sources' => [
-                'newsapi' => $newsAPIArticle::orderBy('id', 'DESC')->limit(12)->get(),
-                'newscatcherapi' => $newsCatcherArticle::orderBy('id', 'DESC')->limit(12)->get(),
-                'newsdataapi' => $newsDataArticle::orderBy('id', 'DESC')->limit(12)->get(),
-            ],
-            'trending' => [
-                'newsapi' => NewsAPIArticle::orderBy('favs', 'DESC')->where('favs', '>', 0)->limit(4)->get(),
-                'newsdataapi' => NewsDataArticle::orderBy('favs', 'DESC')->where('favs', '>', 0)->limit(4)->get(),
-                'newscatcherapi' => NewsCatcherArticle::orderBy('favs', 'DESC')->where('favs', '>', 0)->limit(4)->get(),
-            ],
-            'canLogin'          => Route::has('login'),
-            'canRegister'       => Route::has('register')
+        $sources = [
+            'newsapi' => $newsAPIArticle::orderBy('id', 'DESC')->limit(12)->get(),
+            'newscatcherapi' => $newsCatcherArticle::orderBy('id', 'DESC')->limit(12)->get(),
+            'newsdataapi' => $newsDataArticle::orderBy('id', 'DESC')->limit(12)->get(),
+        ];
+
+        $trending = [
+            'newsapi' => NewsAPIArticle::orderBy('favs', 'DESC')->where('favs', '>', 0)->limit(4)->get(),
+            'newsdataapi' => NewsDataArticle::orderBy('favs', 'DESC')->where('favs', '>', 0)->limit(4)->get(),
+            'newscatcherapi' => NewsCatcherArticle::orderBy('favs', 'DESC')->where('favs', '>', 0)->limit(4)->get(),
+        ];
+
+        return Inertia::render('HomePage', [
+            'sources' => $sources,
+            'trending' => $trending,
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register')
         ]);
     }
 

@@ -2,11 +2,10 @@
 import {ref, computed, onMounted} from 'vue'
 import { useNewsStore } from '@/stores/news'
 import LoginLinks from './LoginLinks.vue'
-import NewsArticles from './Article/NewsArticles.vue'
+import SourcedArticles from './Article/SourcedArticles.vue'
 import WeatherWidget from '@/Components/Weather/WeatherWidget.vue'
 import SearchPrimitive from './Search/SearchPrimitive.vue'
 import SearchResults from './Search/SearchResults.vue'
-import TrendingHeadlines from '@/Components/Article/TrendingArticles.vue'
 
 const newsStore = useNewsStore()
 // let { searchResults, newest, trending } = storeToRefs(newsStore)
@@ -47,14 +46,14 @@ const heading = computed(() => {
 
 <template>
   <section class="m-8">
-    <WeatherWidget class="text-sm self-center" />
-
-    <LoginLinks
-      v-if="$page.props.canLogin"
-      :user="$page.props.user"
-      :can-login="$page.props.canLogin"
-      :can-register="$page.props.canRegister"
-    />
+    <WeatherWidget class="text-sm self-center">
+      <LoginLinks
+        v-if="$page.props.canLogin"
+        :user="$page.props.user"
+        :can-login="$page.props.canLogin"
+        :can-register="$page.props.canRegister"
+      />
+    </WeatherWidget>
 
     <SearchPrimitive
       :heading="heading"
@@ -69,8 +68,14 @@ const heading = computed(() => {
       :search-results="newsStore.searchResults"
     />
 
-    <TrendingHeadlines :trending="newsStore.trending" />
+    <SourcedArticles
+      source-type="trending"
+      store-key="newsapi"
+    />
 
-    <NewsArticles :sources="newsStore.newest" />
+    <SourcedArticles
+      source-type="newest"
+      store-key="newsapi"
+    />
   </section>
 </template>

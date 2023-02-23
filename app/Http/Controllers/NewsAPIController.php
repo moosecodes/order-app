@@ -23,13 +23,13 @@ class NewsAPIController extends Controller
         if(isset($latestHeadline)) {
             $latestTimestamp = $latestHeadline->created_at;
             if (Carbon::parse($latestTimestamp)->lte(Carbon::now()->subHour())) {
-                $this->top_headlines();
+                $this->get_top_headlines();
             }
         } else {
-            $this->top_headlines();
+            $this->get_top_headlines();
         }
     }
-    #[NoReturn] public function top_headlines()
+    #[NoReturn] public function get_top_headlines()
     {
         try {
             $response = Http::get('https://newsapi.org/v2/top-headlines', [

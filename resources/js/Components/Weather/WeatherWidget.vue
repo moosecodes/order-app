@@ -19,11 +19,15 @@ async function getWeather(zip = '90004') {
 
 <template>
   <div class="my-4 font-bold text-lg text-gray-600 text-left">
+    <slot />
     <div
       v-if="currentTemp.length"
       class="grid sm:grid-cols-1 lg:grid-cols-3"
     >
-      <div v-for="temp in currentTemp">
+      <div
+        v-for="(temp, i) in currentTemp"
+        :key="i"
+      >
         {{ temp }}
       </div>
     </div>
