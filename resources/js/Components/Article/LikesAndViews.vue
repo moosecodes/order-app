@@ -45,7 +45,7 @@ async function handleSave(saveDetails) {
     <small
       v-if="currentArticle.favs > 0"
       class="mt-2 ml-4 text-gray-600"
-    >{{ currentArticle.favs > 1 ? `${currentArticle.favs} favs` : `${currentArticle.favs} fav` }}</small>
+    >{{ currentArticle.favs > 1 ? `${currentArticle.favs} likes` : `${currentArticle.favs} like` }}</small>
     <small
       v-if="currentArticle.views > 0"
       class="mt-2 ml-4 text-gray-600"

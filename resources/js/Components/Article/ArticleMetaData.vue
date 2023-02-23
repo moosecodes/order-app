@@ -19,7 +19,7 @@ const props = defineProps({
       </span>
     </p>
     <p
-      class="my-2 text-xl font-bold text-indigo-900 line-clamp-2 hover:text-red-700"
+      class="my-2 text-xl font-bold text-red-900 line-clamp-2 hover:text-red-700"
     >
       {{ props.article.title }}
     </p>
