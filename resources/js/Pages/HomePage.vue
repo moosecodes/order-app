@@ -4,16 +4,16 @@ import TheNewsPage from "@/Components/NewsPage.vue";
 </script>
 
 <template>
-    <Head title="Breaking News" />
+  <Head title="Breaking News" />
 
-    <div class="py-12">
-        <div class="mx-auto sm:px-6 lg:px-8">
-            <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
-                <TheNewsPage
-                    :sources="$page.props.sources"
-                    :trending="$page.props.trending"
-                />
-            </div>
-        </div>
+  <div class="py-12">
+    <div class="mx-auto sm:px-6 lg:px-8">
+      <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
+        <TheNewsPage
+          :sources="$page.props.sources"
+          :trending="$page.props.trending"
+        />
+      </div>
     </div>
+  </div>
 </template>

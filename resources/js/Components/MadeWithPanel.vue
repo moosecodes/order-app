@@ -6,30 +6,27 @@ import VueLogo from "./svg/VueLogo.vue";
 import ViteLogo from "./svg/ViteLogo.vue";
 
 defineProps({
-    laravelVersion: Array,
-    phpVersion: Array,
+  laravelVersion: Array,
+  phpVersion: Array,
 });
 </script>
 
 <template>
-    <div>
-        <div class="mt-8 text-2xl">This Application</div>
+  <div>
+    <div class="mt-8 text-2xl">This Application</div>
 
-        <p>was built with the Laravel, Vue 3, and MySQL!</p>
+    <p>was built with the Laravel, Vue 3, and MySQL!</p>
 
-        <VueLogo />
-        <ViteLogo />
+    <VueLogo />
+    <ViteLogo />
 
-        <LaravelLogo
-            :laravel-version="laravelVersion"
-            :php-version="phpVersion"
-        />
-        <JetstreamLogo />
-        <InertiaLogo />
+    <LaravelLogo :laravel-version="laravelVersion" :php-version="phpVersion" />
+    <JetstreamLogo />
+    <InertiaLogo />
 
-        <div class="my-12 flex items-center justify-evenly">
-            <div>MySQL</div>
-            <div>Docker</div>
-        </div>
+    <div class="my-12 flex items-center justify-evenly">
+      <div>MySQL</div>
+      <div>Docker</div>
     </div>
+  </div>
 </template>
