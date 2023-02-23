@@ -45,14 +45,14 @@ async function handleSave(saveDetails) {
     <small
       v-if="currentArticle.favs > 0"
       class="mt-2 ml-4 text-gray-600"
-    >{{ currentArticle.favs }} likes</small>
+    >{{ currentArticle.favs > 1 ? `${currentArticle.favs} favs` : `${currentArticle.favs} fav` }}</small>
     <small
       v-if="currentArticle.views > 0"
       class="mt-2 ml-4 text-gray-600"
-    >{{ currentArticle.views }} views</small>
+    >{{ currentArticle.views > 1 ? `${currentArticle.views} views` : `${currentArticle.views} view` }}</small>
     <small
       v-if="currentArticle.saves > 0"
       class="mt-2 ml-4 text-gray-600"
-    >{{ currentArticle.saves }} saves</small>
+    >{{ currentArticle.saves > 1 ? `${currentArticle.saves} saves` : `${currentArticle.saves} save` }}</small>
   </div>
 </template>

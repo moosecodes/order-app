@@ -13,6 +13,8 @@ const props = defineProps({
     <div class="font-medium">
       {{ `${props.sourceType} articles`.toUpperCase() }}
     </div>
+    <hr class="my-8">
+
     <div
       v-if="newsStore[props.sourceType]"
       class="my-4 grid grid gap-4 sm:grid-cols-1 md:grid-cols-4"

@@ -1,49 +1,49 @@
 <script setup>
-import { ref, computed, onMounted } from "vue";
-import { useNewsStore } from "@/stores/news";
-import LoginLinks from "./LoginLinks.vue";
-import SourcedArticles from "./Article/SourcedArticles.vue";
-import WeatherWidget from "@/Components/Weather/WeatherWidget.vue";
-import SearchPrimitive from "./Search/SearchPrimitive.vue";
-import SearchResults from "./Search/SearchResults.vue";
+import { ref, computed, onMounted } from 'vue'
+import { useNewsStore } from '@/stores/news'
+import LoginLinks from './LoginLinks.vue'
+import SourcedArticles from './Article/SourcedArticles.vue'
+import WeatherWidget from '@/Components/Weather/WeatherWidget.vue'
+import SearchPrimitive from './Search/SearchPrimitive.vue'
+import SearchResults from './Search/SearchResults.vue'
 
-const newsStore = useNewsStore();
+const newsStore = useNewsStore()
 // let { searchResults, newest, trending } = storeToRefs(newsStore)
 
-let userInput = ref("");
+let userInput = ref('')
 
 const props = defineProps({
   sources: Object,
   trending: Object,
-});
+})
 
 onMounted(() => {
-  newsStore.newest = props.sources;
-  newsStore.trending = props.trending;
-});
+  newsStore.newest = props.sources
+  newsStore.trending = props.trending
+})
 
 const searchNews = async (searchQuery) => {
-  userInput.value = searchQuery;
-  let response = await axios.post("/api/search", { searchQuery });
-  if (Object.keys(response.data["newsapi"]).length) {
-    newsStore.searchResults = [...response.data["newsapi"]];
+  userInput.value = searchQuery
+  let response = await axios.post('/api/search', { searchQuery })
+  if (Object.keys(response.data['newsapi']).length) {
+    newsStore.searchResults = [...response.data['newsapi']]
   }
-  if (Object.keys(response.data["newsdataapi"]).length) {
+  if (Object.keys(response.data['newsdataapi']).length) {
     newsStore.searchResults = [
       ...newsStore.searchResults,
-      ...response.data["newsdataapi"],
-    ];
+      ...response.data['newsdataapi'],
+    ]
   }
-};
+}
 const clear = () => {
-  newsStore.searchResults = [];
-  userInput.value = "";
-};
+  newsStore.searchResults = []
+  userInput.value = ''
+}
 const heading = computed(() => {
   return !userInput.value.length
-    ? "Breaking News"
-    : `Search results for "${userInput.value}"`;
-});
+    ? 'Breaking News'
+    : `Search results for "${userInput.value}"`
+})
 </script>
 
 <template>
@@ -70,8 +70,14 @@ const heading = computed(() => {
       :search-results="newsStore.searchResults"
     />
 
-    <SourcedArticles source-type="trending" store-key="newsapi" />
+    <SourcedArticles
+      source-type="trending"
+      store-key="newsapi"
+    />
 
-    <SourcedArticles source-type="newest" store-key="newsapi" />
+    <SourcedArticles
+      source-type="newest"
+      store-key="newsapi"
+    />
   </section>
 </template>
