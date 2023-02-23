@@ -1,11 +1,11 @@
 <script setup>
-import PrimaryButton from "../Inertia/PrimaryButton.vue";
+import PrimaryButton from '../Inertia/PrimaryButton.vue'
 
 defineProps({
   article_id: Number,
   source: String,
-});
-defineEmits(["saved"]);
+})
+defineEmits(['saved'])
 </script>
 
 <template>

@@ -1,34 +1,58 @@
 <script setup>
-import LikeButton from "./LikeButton.vue";
-import SaveButton from "@/Components/Article/SaveButton.vue";
+import LikeButton from './LikeButton.vue'
+import SaveButton from '@/Components/Article/SaveButton.vue'
+import {onMounted, ref} from 'vue'
+import {likeArticle, saveArticle } from '@/Components/utils'
 
-defineProps({
+const props = defineProps({
   article: Object,
   source: String,
-});
-defineEmits(["liked", "saved"]);
+})
+defineEmits(['liked', 'saved'])
+
+const currentArticle = ref([])
+
+onMounted(() => {
+  currentArticle.value = props.article
+})
+
+async function handleLike(likeDetails) {
+  const likedResponse = await likeArticle(likeDetails)
+  currentArticle.value.favs = likedResponse.favs
+}
+
+async function handleSave(saveDetails) {
+  const savedResponse = await saveArticle(saveDetails)
+  currentArticle.value.saves = savedResponse.saves
+}
 </script>
 
 <template>
-  <div v-if="!article.notfound" class="my-8">
+  <div
+    v-if="!currentArticle.notfound"
+    class="my-8"
+  >
     <LikeButton
-      :article_id="article.id"
+      :article_id="currentArticle.id"
       :source="source"
-      @liked="(details) => $emit('liked', details)"
+      @liked="details => handleLike(details)"
     />
     <SaveButton
-      :article_id="article.id"
+      :article_id="currentArticle.id"
       :source="source"
-      @saved="(details) => $emit('saved', details)"
+      @saved="details => handleSave(details)"
     />
-    <small v-if="article.favs > 0" class="mt-2 ml-4 text-gray-600"
-      >{{ article.favs }} likes</small
-    >
-    <small v-if="article.views > 0" class="mt-2 ml-4 text-gray-600"
-      >{{ article.views }} views</small
-    >
-    <small v-if="article.saves > 0" class="mt-2 ml-4 text-gray-600"
-      >{{ article.saves }} saves</small
-    >
+    <small
+      v-if="currentArticle.favs > 0"
+      class="mt-2 ml-4 text-gray-600"
+    >{{ currentArticle.favs }} likes</small>
+    <small
+      v-if="currentArticle.views > 0"
+      class="mt-2 ml-4 text-gray-600"
+    >{{ currentArticle.views }} views</small>
+    <small
+      v-if="currentArticle.saves > 0"
+      class="mt-2 ml-4 text-gray-600"
+    >{{ currentArticle.saves }} saves</small>
   </div>
 </template>

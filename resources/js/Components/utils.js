@@ -9,7 +9,6 @@ const saveArticle = async ({article_id, source}) => {
 }
 
 const track = async ({article_id, source}) => {
-  console.log(source)
   let response = await axios.post('/api/viewed', { article_id, source })
   return response.data
 }

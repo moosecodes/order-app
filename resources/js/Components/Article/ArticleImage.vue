@@ -1,7 +1,7 @@
 <script setup>
 defineProps({
   article: Object,
-});
+})
 </script>
 
 <template>
@@ -14,5 +14,5 @@ defineProps({
     "
     :alt="article.title"
     class="m-auto mb-4 aspect-video rounded bg-black"
-  />
+  >
 </template>

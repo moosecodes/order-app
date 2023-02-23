@@ -1,11 +1,11 @@
 <script setup>
-import ArticleSource from "@/Components/Article/ArticleSource.vue";
-import { useNewsStore } from "@/stores/news";
-const newsStore = useNewsStore();
+import ArticleSource from '@/Components/Article/ArticleSource.vue'
+import { useNewsStore } from '@/stores/news'
+const newsStore = useNewsStore()
 const props = defineProps({
   sourceType: String,
   storeKey: String,
-});
+})
 </script>
 
 <template>
@@ -26,8 +26,8 @@ const props = defineProps({
       />
     </div>
     <div v-else>
-      There are no {{ props.sourceType }} articles currently available, please
-      check back soon.
+      There are no {{ props.sourceType }} articles currently available,
+      please check back soon.
     </div>
   </section>
 </template>
