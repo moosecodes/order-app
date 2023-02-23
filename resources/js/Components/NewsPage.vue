@@ -41,21 +41,19 @@ const clear = () => {
 }
 const heading = computed(() => {
   return !userInput.value.length
-    ? 'Breaking News'
+    ? 'Moose Media'
     : `Search results for "${userInput.value}"`
 })
 </script>
 
 <template>
   <section class="m-8">
-    <WeatherWidget class="self-center text-sm">
-      <LoginLinks
-        v-if="$page.props.canLogin"
-        :user="$page.props.user"
-        :can-login="$page.props.canLogin"
-        :can-register="$page.props.canRegister"
-      />
-    </WeatherWidget>
+    <LoginLinks
+      v-if="$page.props.canLogin"
+      :user="$page.props.user"
+      :can-login="$page.props.canLogin"
+      :can-register="$page.props.canRegister"
+    />
 
     <SearchPrimitive
       :heading="heading"
@@ -64,6 +62,8 @@ const heading = computed(() => {
       @search="(q) => searchNews(q)"
       @clear="clear()"
     />
+
+    <WeatherWidget class="self-center text-sm" />
 
     <SearchResults
       v-if="newsStore.searchResults?.length"

@@ -10,10 +10,12 @@ const props = defineProps({
 
 <template>
   <section>
-    <div class="font-medium">
+    <hr class="my-12">
+    <div
+      class="font-medium my-4"
+    >
       {{ `${props.sourceType} articles`.toUpperCase() }}
     </div>
-    <hr class="my-8">
 
     <div
       v-if="newsStore[props.sourceType]"
