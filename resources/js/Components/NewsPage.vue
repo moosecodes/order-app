@@ -41,7 +41,7 @@ const clear = () => {
 }
 const heading = computed(() => {
   return !userInput.value.length
-    ? 'Moose Media'
+    ? 'Breaking News'
     : `Search results for "${userInput.value}"`
 })
 </script>
@@ -55,13 +55,17 @@ const heading = computed(() => {
       :can-register="$page.props.canRegister"
     />
 
-    <SearchPrimitive
-      :heading="heading"
-      :results="newsStore.searchResults"
-      class="my-8"
-      @search="(q) => searchNews(q)"
-      @clear="clear()"
-    />
+    <div class="text-3xl text-red-800 font-bold">
+      {{ heading }}
+      <SearchPrimitive
+        :results="newsStore.searchResults"
+        class="my-8"
+        @search="(q) => searchNews(q)"
+        @clear="clear()"
+      />
+    </div>
+
+
 
     <WeatherWidget class="self-center text-sm" />
 
